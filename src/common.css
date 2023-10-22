@@ -1,0 +1,210 @@
+/* VARs */
+
+:root {
+    --gradient: 0px 0px 20px 0px rgba(0, 0, 0, 0.20);
+    --ticket-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.20);
+    --radius: 5px;
+    --blue: #0077c2;
+    --transparent-blue: #0077c222;
+    --gray: #ebebeb;
+    --grey: #ddd;
+}
+
+button:hover {
+    background-color: var(--grey);
+}
+
+button:active {
+    background-color: var(--blue);
+    color: white;
+}
+
+/* ELEMENTs */
+
+/** debug **/
+/** {
+    outline: 1px solid red;
+}*/
+
+a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    background-color: var(--gray);
+    color: black;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: 0.1s;
+    padding: 15px;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    font-family: Calibri, Candara, Segoe, sans-serif;
+    overflow-x: hidden;
+}
+
+header,
+footer {
+    overflow: hidden;
+}
+
+header {
+    z-index: 9999999;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: white;
+    box-shadow: var(--gradient);
+    -webkit-box-shadow: var(--gradient);
+    -moz-box-shadow: var(--gradient);
+}
+
+footer {
+    background-color: var(--transparent-blue);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1vw 2vh;
+    max-height: 60px;
+    overflow-y: hidden;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+}
+
+/* CLASSs */
+
+.right {
+    display: flex;
+    height: 4vh;
+    width: 12vw;
+    padding: 25px;
+    overflow: hidden;
+    /* Ajout de cette propriété */
+    min-width: 200px;
+    min-height: 40px;
+}
+
+.right-captcha {
+    display: flex;
+    height: 4vh;
+    width: 12vw;
+    padding: 25px;
+    flex: 1;
+    margin-left: 10px;
+    justify-content: center;
+}
+
+.right button {
+    width: 100%;
+    margin-right: 15px;
+}
+
+.left {
+    display: flex;
+}
+
+.form-division {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1vw 2vh;
+}
+
+.form-division>div.left {
+    flex: 1;
+    margin-right: 10px;
+    justify-content: center;
+}
+
+.video-container {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.video-container video {
+    width: 95%;
+    max-width: 1000px;
+}
+
+.special-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--transparent-blue);
+    padding-left: 1%;
+}
+
+.shadow-form {
+    box-shadow: var(--gradient);
+    -webkit-box-shadow: var(--gradient);
+    -moz-box-shadow: var(--gradient);
+}
+
+.center-text {
+    text-align: center;
+}
+
+/* IDs */
+
+#ticket-container {
+    height: 20%;
+    margin: 20px;
+    padding: 20px;
+}
+
+#ticket-container>div {
+    width: 200px;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+    border-radius: var(--radius);
+    box-shadow: var(--ticket-shadow);
+    -webkit-box-shadow: var(--ticket-shadow);
+    -moz-box-shadow: var(--ticket-shadow);
+}
+
+#ticket-container>div>p {
+    margin: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+img#logo {
+    min-height: 50px;
+    min-width: 50px;
+    margin-right: 10px;
+}
+
+#header-top-margin {
+    margin-top: 13%;
+
+}
+
+@media screen and (min-width: 1000px) {
+    #header-top-margin {
+        margin-top: 8%;
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    #header-top-margin {
+        margin-top: 5%;
+    }
+}
