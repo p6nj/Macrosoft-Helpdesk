@@ -13,6 +13,9 @@
 - test : Ajout ou mise à jour de tests
 - chore : Tâches de maintenance, mises à jour de dépendances, etc.
 
+
+- release : Lors d'un rendu de livrable.
+
 ## Portée (optionnelle) :
 La portée du commit, c'est-à-dire la partie spécifique du projet sur laquelle le commit a un impact.
 
