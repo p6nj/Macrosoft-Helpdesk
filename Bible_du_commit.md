@@ -1,6 +1,6 @@
 # Bible du commit
 
-## Patterne
+## Motif
 [Type de commit] ([Portée]): [Description];
 
 ## Type de commit (obligatoire) :
@@ -23,13 +23,13 @@ La portée du commit, c'est-à-dire la partie spécifique du projet sur laquelle
 Une description concise du commit, expliquant ce qui a été fait et pourquoi c'est important.
 
 ##  Exemples de commits:
-- feat (authentification) : Ajoute une fonctionnalité de connexion par e-mail;
-- fix (panier) : Corrige un bogue qui empêche l'ajout d'articles au panier;
-- docs (readme) : Met à jour la documentation d'installation;
-- style (lint) : Réorganise les imports et les espaces inutiles;
-- refactor (api) : Réécrit la logique de validation des données de l'API;
-- test (authentification) : Ajoute des tests unitaires pour le module d'authentification;
-- chore (dépendances) : Met à jour les dépendances du projet;
+- feat (authentification): Ajoute une fonctionnalité de connexion par e-mail;
+- fix (panier): Corrige un bogue qui empêche l'ajout d'articles au panier;
+- docs (readme): Met à jour la documentation d'installation;
+- style (lint): Réorganise les imports et les espaces inutiles;
+- refactor (api): Réécrit la logique de validation des données de l'API;
+- test (authentification): Ajoute des tests unitaires pour le module d'authentification;
+- chore (dépendances): Met à jour les dépendances du projet;
 
 ## Règles :
 - Soyez concis et informatif.
