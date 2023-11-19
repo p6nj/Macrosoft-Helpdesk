@@ -154,7 +154,7 @@ La page d'inscription doit contenir :
 
 **Garantie en cas de succès :** Connexion au site web.
 
-## <a id="part5"></a>Cas d'utilisations
+## <a id="part5"></a>Intégration
 
 ### Introduction
 
