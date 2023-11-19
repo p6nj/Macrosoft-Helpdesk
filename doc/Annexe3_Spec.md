@@ -6,6 +6,7 @@
 * [**Chapitre 2**](#part2) **:** _Charte graphique_
 * [**Chapitre 3**](#part3) **:** _Maquettes Web_
 * [**Chapitre 4**](#part4) **:** _Cas d'utilisations_
+* [**Chapitre 5**](#part5) **:** _Intégration_
 
 ---
 
@@ -152,3 +153,28 @@ La page d'inscription doit contenir :
 **Niveau** : Sous-fonction
 
 **Garantie en cas de succès :** Connexion au site web.
+
+## <a id="part5"></a>Cas d'utilisations
+
+### Introduction
+
+Il nous est demandé dans le cahier des charges d’intégrer notre site sur un Raspberry Pi 4b fourni par le client. Ainsi y doivent être centralisés la base de données, le serveur web et les fichiers source. Naturellement, nous avons pensé à utiliser une solution contenairisée : Docker / Podman, NixOS… Finalement, nous avons opté pour une solution proposée directement par Raspberry sur GitHub, `pi-gen`.
+
+### Pi-Gen
+
+Pi-Gen est un outil de génération d’image Linux et plus précisément RaspOS, la distribution de Raspberry basée sur Debian. L’outil assemble des stages Linux du *bootstrap* à l'environnement graphique complet. Ces stages sont représentés sous forme de dossiers avec des scripts et des listes de paquets à installer exécutables sur l’hôte et l’invité. En effet, après le *bootstrap* initial, l'environnement RaspOS est *chrootable* c’est-à-dire qu’on peut émuler ses composants “à froid”, sans *boot*. La construction est donc entièrement personnalisable et nous permet de produire une image sur-mesure sans intervention manuelle.
+
+Notre image se limite au stage 2 qui équivaut à une installation *lite* ou minimale en ligne de commande. Nous avons ajouté une étape au stage 2 en ajoutant un sous-dossier au dossier du stage avec à l’intérieur de quoi installer entre autres mariadb (mysql), php et apache2 et un script qui ajoute l’utilisateur "p6nj", lui permet un *sudo* sans mot de passe, clone la repo de Macrosoft en exécutant le script d’installation qui y est contenu et configure la connexion automatique en local.
+Un snapshot de la repo dans laquelle cette configuration a eu lieu vous sera fournie en zip.
+
+Ce processus pose tout-de-même un problème ; même si la portabilité de l’outil est garanti par un script passant par Docker (install-docker.sh), la génération prend au moins 30 minutes pendants lesquelles on ne peut ni toucher aux scripts ni éteindre la machine sur laquelle le script tourne. Il faut aussi une bonne puissance et une bonne connexion réseau. Nous avons donc pensé à déléguer cette tâche à un serveur en ligne, et nous sommes partis sur une *GitHub Action*.
+
+### Github Actions
+
+Une action GitHub est un fichier en YML décrivant une procédure à effectuer en rapport avec le projet GitHub sur laquelle elle est exécutée. Cela peut servir à compiler du code, effectuer des tests avant un commit ou un merge, etc. Nous avons ainsi détaillé la génération de l’image customisée par une machine virtuelle sous Ubuntu à réaliser à chaque commit. Cette image est ensuite mise en ligne dans une release avec une description informative.
+La génération a lieu sur un "runner" public de GitHub (image Docker sur un serveur) ; toute erreur est traçable avec un log et notifiée par mail. Cela rend le tout plus pratique et portable tout en fournissant un accès constant aux différentes images qui sont lourdes à déplacer (>1Go compressées).
+
+### Conclusion
+
+Cette pile permet donc de générer des images prêtes à l’emploi de manière complètement automatique.
+Ces images sont ensuite simplement gravées sur une carte SD (via dd) et insérées dans la Raspberry.
