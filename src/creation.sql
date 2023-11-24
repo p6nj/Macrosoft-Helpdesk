@@ -1,11 +1,17 @@
-CREATE DATABASE Macrosoft;
-USE Macrosoft;
+DROP DATABASE MacrosoftDB;
+DROP ROLE UTILISATEUR;
+DROP ROLE TECHNICIEN;
+DROP ROLE ADMIN_SYS;
+DROP ROLE ADMIN_WEB;
+DROP ROLE VISITEUR;
+CREATE DATABASE MacrosoftDB;
+USE MacrosoftDB;
 
 -- Création de la table Utilisateur
 CREATE TABLE Utilisateur (
     login VARCHAR(255) PRIMARY KEY,
     mdp VARCHAR(255) NOT NULL,
-    role VARCHAR(20) DEFAULT 'Technicien' CHECK (role IN ('Admin sys', 'Admin web', 'Technicien'))
+    role VARCHAR(20) CHECK (role IN ('Admin sys', 'Admin web', 'Technicien'))
 );
 
 -- Création de la table Libelle
@@ -24,6 +30,9 @@ CREATE TABLE Ticket (
     niv_urgence INT NOT NULL CHECK (niv_urgence IN (1, 2, 3, 4)),
     etat VARCHAR(22) NOT NULL CHECK (etat IN ('Ouvert', 'En cours de traitement', 'Fermé')),
     description TEXT,
+    date DATE NOT NULL,
+    IP VARCHAR(15) NOT NULL CHECK (IP LIKE '%.%.%.%'),
+    og_niv_urgence INT NOT NULL CHECK (og_niv_urgence IN (1, 2, 3, 4)),
     demandeur VARCHAR(255) NOT NULL,
     cible VARCHAR(255) NOT NULL,
     technicien VARCHAR(255),
@@ -33,23 +42,13 @@ CREATE TABLE Ticket (
     FOREIGN KEY (technicien) REFERENCES Utilisateur(login)
 );
 
--- Création de la table Log_tickets_valides
-CREATE TABLE Log_tickets_valides (
-    idLT INT AUTO_INCREMENT PRIMARY KEY,
-    idT INT NOT NULL,
-    date DATE NOT NULL,
-    IP VARCHAR(255) NOT NULL,
-    niv_urgence INT NOT NULL CHECK (niv_urgence IN (1, 2, 3, 4)),
-    FOREIGN KEY (idT) REFERENCES Ticket(idT)
-);
-
 -- Création de la table Log_connection_echec
 CREATE TABLE Log_connection_echec (
     idLC INT AUTO_INCREMENT PRIMARY KEY,
     date DATE NOT NULL,
     login_tente VARCHAR(255) NOT NULL,
     mdp_tente VARCHAR(255) NOT NULL,
-    IP VARCHAR(255) NOT NULL
+    IP VARCHAR(15) NOT NULL CHECK (IP LIKE '%.%.%.%')
 );
 
 -- Création de la vue pour afficher les libellés non archivés
@@ -60,7 +59,7 @@ WHERE archive = FALSE;
 
 -- Création de la vue pour afficher tous les tickets ouverts
 CREATE VIEW VueTicketsOuverts AS
-SELECT idT, intitule AS libelle, niv_urgence, etat, description, demandeur, cible, technicien, idL
+SELECT idT, intitule AS libelle, niv_urgence, etat, description, demandeur, cible, date, IP, technicien, idL
 FROM Ticket t
 JOIN Libelle l ON t.lib = l.idL
 WHERE t.etat IN ('Ouvert', 'En cours de traitement');
@@ -69,7 +68,7 @@ WHERE t.etat IN ('Ouvert', 'En cours de traitement');
 CREATE VIEW VueDerniersTicketsOuverts AS
 SELECT *
 FROM VueTicketsOuverts
-ORDER BY idT DESC
+ORDER BY date DESC
 LIMIT 10;
 
 -- Création de la vue pour afficher tous les tickets non traités
@@ -96,6 +95,12 @@ SELECT *
 FROM VueTicketsOuverts
 WHERE technicien = USER();
 
+-- Création de la vue des journaux d'activité de tickets validés
+CREATE VIEW VueLogTicketsValides AS
+SELECT idt, date, IP, demandeur AS login, og_niv_urgence AS niv_urgence
+FROM Ticket t
+JOIN Utilisateur u ON t.demandeur = u.login;
+
 -- Création des rôles
 CREATE ROLE UTILISATEUR;
 CREATE ROLE TECHNICIEN;
@@ -108,7 +113,6 @@ GRANT SELECT ON VueProfilUtilisateur TO UTILISATEUR, TECHNICIEN, ADMIN_SYS, ADMI
 
 -- Attribution des permissions au rôle Utilisateur
 GRANT SELECT ON VueTicketsUtilisateur TO UTILISATEUR;
-GRANT INSERT ON Log_tickets_valides TO UTILISATEUR;
 GRANT INSERT ON Ticket TO UTILISATEUR;
 
 -- Attribution des permissions au rôle Technicien
@@ -116,7 +120,7 @@ GRANT SELECT, UPDATE (etat) ON VueTicketsTechnicien TO TECHNICIEN;
 GRANT SELECT, UPDATE (technicien) ON VueTicketsNonTraites TO TECHNICIEN;
 
 -- Attribution des permissions au rôle Admin système
-GRANT SELECT ON Log_tickets_valides TO ADMIN_SYS;
+GRANT SELECT ON VueLogTicketsValides TO ADMIN_SYS;
 GRANT SELECT ON Log_connection_echec TO ADMIN_SYS;
 
 -- Attribution des permissions au rôle Admin web
