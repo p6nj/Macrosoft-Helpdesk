@@ -98,10 +98,19 @@ main {
 .right {
     display: flex;
     height: 4vh;
-    width: 12vw;
+    width: 15vw;
     padding: 25px;
     overflow: hidden;
-    /* Ajout de cette propriété */
+    min-width: 200px;
+    min-height: 40px;
+}
+
+.far-right {
+    display: flex;
+    height: 4vh;
+    width: 27vw;
+    padding: 25px;
+    overflow: hidden;
     min-width: 200px;
     min-height: 40px;
 }
@@ -119,6 +128,29 @@ main {
 .right button {
     width: 100%;
     margin-right: 15px;
+}
+
+#pfp {
+    padding: 1px;
+    max-width: fit-content;
+    max-height: fit-content;
+    clip-path: ellipse(50%, 50%);
+}
+
+.right img {
+    size: 100%;
+    object-fit: cover;
+}
+
+.far-right button {
+    width: 100%;
+    margin-right: 15px;
+    display: flex;
+}
+
+.far-right img {
+    height: 100%;
+    width: 100%;
 }
 
 .left {
