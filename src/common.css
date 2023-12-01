@@ -44,9 +44,11 @@ button {
 
 body {
     width: 100%;
+    height: 100%;
     margin: 0;
     font-family: Calibri, Candara, Segoe, sans-serif;
     overflow-x: hidden;
+    position: relative;
 }
 
 header,
@@ -68,6 +70,10 @@ header {
 footer {
     background-color: var(--transparent-blue);
     padding-left: 1%;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 9;
 }
 
 nav {
@@ -84,6 +90,7 @@ main {
     flex-direction: column;
     width: 70%;
     margin: 0 auto;
+    padding: 1em 1em 5em;
 }
 
 /* CLASSs */
@@ -139,13 +146,6 @@ main {
 .video-container video {
     width: 95%;
     max-width: 1000px;
-}
-
-.special-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--transparent-blue);
 }
 
 .shadow-form {
