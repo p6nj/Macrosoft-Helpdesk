@@ -42,7 +42,7 @@ INSERT INTO Libelle (intitule, archive, lib_sup) VALUES
 ('Problème de serveur', FALSE, 3),
 ('Demande de dépannage', FALSE, 1);
 
-INSERT INTO Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible, technicien) VALUES
+INSERT INTO Ticket (lib, niv_urgence, etat, description, `date`, IP, og_niv_urgence, demandeur, cible, technicien) VALUES
 (1, 3, 'Fermé', 'Impossible de se connecter au réseau', '2023-11-01', '192.168.1.5', 3, 'alice', 'frank', 'tec2'),
 (2, 2, 'En cours de traitement', 'L\'imprimante ne fonctionne pas', '2023-11-02', '192.168.1.8', 2, 'queen', 'queen', 'tec1'),
 (3, 1, 'En cours de traitement', 'Problème avec le logiciel X', '2023-11-03', '192.168.1.12', 1, 'charlie', 'alice', 'tec3'),

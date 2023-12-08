@@ -75,19 +75,19 @@ WHERE etat = 'Ouvert';
 CREATE VIEW VueProfilUtilisateur AS
 SELECT *
 FROM Utilisateur
-WHERE login = USER();
+WHERE login = substring_index(user(),'@',1);
 
 -- Création de la vue des tickets concernant l'utilisateur connecté
 CREATE VIEW VueTicketsUtilisateur AS
 SELECT *
 FROM VueTicketsOuverts
-WHERE demandeur = USER() OR cible = USER();
+WHERE demandeur = substring_index(user(),'@',1) OR cible = substring_index(user(),'@',1);
 
 -- Création de la vue des tickets gérés par le technicien
 CREATE VIEW VueTicketsTechnicien AS
 SELECT *
 FROM VueTicketsOuverts
-WHERE technicien = USER();
+WHERE technicien = substring_index(user(),'@',1);
 
 -- Création de la vue des journaux d'activité de tickets validés
 CREATE VIEW VueLogTicketsValides AS
