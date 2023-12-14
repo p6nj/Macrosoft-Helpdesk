@@ -1,5 +1,7 @@
 CREATE DATABASE MacrosoftDB;
 USE MacrosoftDB;
+DROP TRIGGER IF EXISTS VerifierRoleTechnicienInsert;
+DROP TRIGGER IF EXISTS VerifierRoleTechnicienUpdate;
 
 -- Création de la table Utilisateur
 CREATE TABLE Utilisateur (
@@ -128,3 +130,32 @@ GRANT SELECT ON VueDerniersTicketsOuverts TO VISITEUR;
 -- Attribution des permissions au visiteur (lors de la création de compte et de l'échec de connexion uniquement)
 GRANT INSERT ON Log_connection_echec TO VISITEUR;
 GRANT INSERT ON Utilisateur TO VISITEUR;
+
+-- TRIGGERS
+DELIMITER $$
+
+CREATE TRIGGER VerifierRoleTechnicienInsert
+BEFORE INSERT ON Ticket
+FOR EACH ROW
+BEGIN
+    DECLARE role_utilisateur VARCHAR(20);
+    SELECT role INTO role_utilisateur FROM Utilisateur WHERE login = NEW.technicien;
+    IF role_utilisateur != 'Technicien' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Seuls les utilisateurs avec le rôle Technicien peuvent être assignés comme technicien pour un ticket.';
+    END IF;
+END$$
+
+CREATE TRIGGER VerifierRoleTechnicienUpdate
+BEFORE UPDATE ON Ticket
+FOR EACH ROW
+BEGIN
+    DECLARE role_utilisateur VARCHAR(20);
+    SELECT role INTO role_utilisateur FROM Utilisateur WHERE login = NEW.technicien;
+    IF role_utilisateur != 'Technicien' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Seuls les utilisateurs avec le rôle Technicien peuvent être assignés comme technicien pour un ticket.';
+    END IF;
+END$$
+
+DELIMITER ;
