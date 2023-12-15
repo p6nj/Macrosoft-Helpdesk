@@ -66,7 +66,7 @@ INSERT INTO Ticket (lib, niv_urgence, etat, description, `date`, IP, og_niv_urge
 (19, 1, 'En cours de traitement', 'Problème de connexion internet', '2023-11-19', '192.168.1.90', 1, 'marie', 'eric', 'tec2'),
 (20, 4, 'En cours de traitement', 'Problème d\'installation de logiciel', '2023-11-20', '192.168.1.95', 4, 'diana', 'isabel', 'tec5');
 
-INSERT INTO Log_connection_echec (date, login_tente, mdp_tente, IP) VALUES
+INSERT INTO Log_connexion_echec (date, login_tente, mdp_tente, IP) VALUES
 ('2023-11-01', 'john_doe', '8c32f5a6c9a00a52e6028da4e4b462ed', '192.168.1.5'),
 ('2023-11-02', 'user123', 'e150a7f07c5f81b13e6ba283b2e9c98b', '192.168.1.8'),
 ('2023-11-03', 'test_user', 'ebc3ee94d56b98b99c700f9e1f27c6d6', '192.168.1.12'),

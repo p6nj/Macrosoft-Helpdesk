@@ -38,8 +38,8 @@ CREATE TABLE Ticket (
     FOREIGN KEY (technicien) REFERENCES Utilisateur(login)
 );
 
--- Création de la table Log_connection_echec
-CREATE TABLE Log_connection_echec (
+-- Création de la table Log_connexion_echec
+CREATE TABLE Log_connexion_echec (
     idLC INT AUTO_INCREMENT PRIMARY KEY,
     date DATE NOT NULL,
     login_tente VARCHAR(255) NOT NULL,
@@ -117,7 +117,7 @@ GRANT SELECT, UPDATE (technicien) ON VueTicketsNonTraites TO TECHNICIEN;
 
 -- Attribution des permissions au rôle Admin système
 GRANT SELECT ON VueLogTicketsValides TO ADMIN_SYS;
-GRANT SELECT ON Log_connection_echec TO ADMIN_SYS;
+GRANT SELECT ON Log_connexion_echec TO ADMIN_SYS;
 
 -- Attribution des permissions au rôle Admin web
 GRANT SELECT, UPDATE (etat, niv_urgence, libelle, technicien) ON VueTicketsOuverts TO ADMIN_WEB;
@@ -128,7 +128,7 @@ GRANT INSERT ON Utilisateur TO ADMIN_WEB;
 GRANT SELECT ON VueDerniersTicketsOuverts TO VISITEUR;
 
 -- Attribution des permissions au visiteur (lors de la création de compte et de l'échec de connexion uniquement)
-GRANT INSERT ON Log_connection_echec TO VISITEUR;
+GRANT INSERT ON Log_connexion_echec TO VISITEUR;
 GRANT INSERT ON Utilisateur TO VISITEUR;
 
 -- TRIGGERS

@@ -205,7 +205,7 @@ de développement. Ainsi, il pourra facilement rectifier les erreurs commises ou
 a en tête. 
 
 Le développement en PHP & MYSQL a été imposé par le cahier des charges, et il sera nécessaire d'héberger le site web sur un Raspberry
-Pi, établir une connection ssh avec n'importe quel ordinateur de l'IUT, et configurer une Carte SD pour le serveur.
+Pi, établir une connexion ssh avec n'importe quel ordinateur de l'IUT, et configurer une Carte SD pour le serveur.
 
 ### Sécurité
 

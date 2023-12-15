@@ -377,7 +377,7 @@ La page d'inscription doit contenir :
 **Précondition :** L'utilisateur ne doit pas être connecté.
 **Garantie minimale :** Seuls les 10 derniers tickets ouverts peuvent être affichés. Aucun ticket fermé ne sera affiché.
 **Garantie en cas de succès :** Afficher les 10 derniers tickets ouverts.
-**Déclencheur :** On souhaite consultes les tickets sur la page d'acceuil.
+**Déclencheur :** On souhaite consultes les tickets sur la page d'accueil.
 **Scénario nominal :**
 1. Les 10 derniers tickets ouverts sont affichés sur un tableau dans la page d'accueil des utilisateurs non connectés.
 
@@ -749,7 +749,7 @@ La page d'inscription doit contenir :
 ***
 #### Cas d'utilisation 28 : Page d'accueil
 **Nom :** Consulter page d'accueil
-**Contexte d'utilisation :** Une personne accédant au site doit arriver sur une page d'acceuil.
+**Contexte d'utilisation :** Une personne accédant au site doit arriver sur une page d'accueil.
 **Portée :** 
 **Niveau :** Utilisateur 
 **Acteur principal :** Utilisateur

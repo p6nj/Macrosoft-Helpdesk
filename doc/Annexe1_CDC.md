@@ -125,7 +125,7 @@ au client. Il accède par l'intermédiaire de la plateforme web aux journaux d'a
 
 ## _Contraintes et Exigences_
 
-L'application web devra être développée en PHP & MYSQL et être installée sur un serveur porté par un RPi4, disponible en connection ssh
+L'application web devra être développée en PHP & MYSQL et être installée sur un serveur porté par un RPi4, disponible en connexion ssh
 depuis les postes des salles machines. À terme, il devra également être disponible depuis l'extérieur via un tunnel ssh.
 
 Une carte SD devra être configurée pour installer le système, le serveur web et le serveur SGBD Mysql. Le login de base de la
