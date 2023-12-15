@@ -94,8 +94,8 @@ INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_cible', 'password123', 
 INSERT INTO Libelle (intitule) VALUES ('Problème de réseau');
 INSERT INTO Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible, technicien)
 VALUES (1, 1, 'Ouvert', 'Problème de réseau', CURDATE(), '192.168.1.100', 1, 'user_demandeur', 'user_cible', 'user_technicien');
-INSERT INTO Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible, technicien)
-VALUES (1, 2, 'Ouvert', 'Problème serveur', CURDATE(), '192.168.1.101', 2, 'user_demandeur', 'user_cible', 'user_non_technicien');
+-- INSERT INTO Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible, technicien)
+-- VALUES (1, 2, 'Ouvert', 'Problème serveur', CURDATE(), '192.168.1.101', 2, 'user_demandeur', 'user_cible', 'user_non_technicien');
 UPDATE Ticket
 SET technicien = 'user_technicien'
 WHERE idT = 1;
