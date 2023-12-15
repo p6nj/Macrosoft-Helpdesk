@@ -2,7 +2,7 @@
 Version : 0.1
 
 | Document                    | Dossier de test  |
-|-----------------------------|------------------|
+| --------------------------- | ---------------- |
 | Date                        | 21/10/2023       |
 | Responsable de la rédaction | Baptiste Fournié |
 
@@ -19,20 +19,20 @@ Les tests seront des tests d'intégration visuels. Ils consisteront à comparer 
 1. Campagne de test
 
 | Paramètre                          | Valeur                                               |
-|------------------------------------|------------------------------------------------------|
+| ---------------------------------- | ---------------------------------------------------- |
 | Produit testé                      | Site web                                             |
 | Configuration logicielle           | Webstorm, Windows 10                                 |
 | Configuration matérielle           |                                                      |
 | Date de début                      | 18/09/2023                                           |
 | Date de finalisation               | 22/10/2023                                           |
 | Tests à appliquer                  | Test d'intégration visuel sur la page d'accueil.     |
-|                                    | Test d'intégration visuel sur la page d'inscription. | 
+|                                    | Test d'intégration visuel sur la page d'inscription. |
 | Responsable de la campagne de test | Baptiste Fournié                                     |
 
 2. Tests
 
 | Paramètre              | Valeur                                           |
-|------------------------|--------------------------------------------------|
+| ---------------------- | ------------------------------------------------ |
 | Identification du test | Page d'accueil                                   |
 | Description du test    | Test d'intégration visuel sur la page d'accueil. |
 | Ressources Requises    |                                                  |
@@ -44,7 +44,7 @@ La maquette web est la suivante :
 ![](img/maqAccueilVisiteur.png)
 
 | Paramètre              | Valeur                                               |
-|------------------------|------------------------------------------------------|
+| ---------------------- | ---------------------------------------------------- |
 | Identification du test | page accueil                                         |
 | Description du test    | Test d'intégration visuel sur la page d'inscription. |
 | Ressources Requises    |                                                      |
@@ -57,10 +57,10 @@ La maquette web est la suivante :
 
 3. Résultats de test
 
-| Référence du test appliqué   | Responsable        | Date de l'application du test   | Résultat du test   | Occurrences des résultats   |
-|------------------------------|--------------------|---------------------------------|--------------------|-----------------------------|
-| Page d'accueil               | Baptiste Fournié   | 22/10/2023                      | OK                 | Systématique                |
-| Page d'inscription           | Baptiste Fournié   | 22/10/2023                      | OK                 | Systématique                |
+| Référence du test appliqué | Responsable      | Date de l'application du test | Résultat du test | Occurrences des résultats |
+| -------------------------- | ---------------- | ----------------------------- | ---------------- | ------------------------- |
+| Page d'accueil             | Baptiste Fournié | 22/10/2023                    | OK               | Systématique              |
+| Page d'inscription         | Baptiste Fournié | 22/10/2023                    | OK               | Systématique              |
 
 4. Conclusion
 
