@@ -1,3 +1,5 @@
+use MacrosoftDB;
+
 INSERT INTO Utilisateur (login, mdp, role) VALUES
 ('alice', '5d41402abc4b2a76b9719d911017c592', NULL),
 ('tec1', 'a152e841783914146e4bcd4f39100686', 'Technicien'),
@@ -86,20 +88,19 @@ INSERT INTO Log_connection_echec (date, login_tente, mdp_tente, IP) VALUES
 ('2023-11-19', 'user6', '5baa61e4c9b93f3f0682250b6cf8331b', '192.168.1.90'),
 ('2023-11-20', 'admin4', '6fa92c62d0b944e7895b673eaf9ee7b8', '192.168.1.95');
 
-INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_technicien', 'password123', 'Technicien');
-INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_non_technicien', 'password123', 'Admin web');
-INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_demandeur', 'password123', 'Admin sys');
-INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_cible', 'password123', 'Admin web');
+-- INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_technicien', 'password123', 'Technicien');
+-- INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_non_technicien', 'password123', 'Admin web');
+-- INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_demandeur', 'password123', 'Admin sys');
+-- INSERT INTO Utilisateur (login, mdp, role) VALUES ('user_cible', 'password123', 'Admin web');
 
-INSERT INTO Libelle (intitule) VALUES ('Problème de réseau');
-INSERT INTO Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible, technicien)
-VALUES (1, 1, 'Ouvert', 'Problème de réseau', CURDATE(), '192.168.1.100', 1, 'user_demandeur', 'user_cible', 'user_technicien');
+-- INSERT INTO Libelle (intitule) VALUES ('Problème de réseau');
+-- INSERT INTO Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible, technicien)
+-- VALUES (1, 1, 'Ouvert', 'Problème de réseau', CURDATE(), '192.168.1.100', 1, 'user_demandeur', 'user_cible', 'user_technicien');
 -- INSERT INTO Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible, technicien)
 -- VALUES (1, 2, 'Ouvert', 'Problème serveur', CURDATE(), '192.168.1.101', 2, 'user_demandeur', 'user_cible', 'user_non_technicien');
-UPDATE Ticket
-SET technicien = 'user_technicien'
-WHERE idT = 1;
-UPDATE Ticket
-SET technicien = 'user_non_technicien'
-WHERE idT = 1;
-
+-- UPDATE Ticket
+-- SET technicien = 'user_technicien'
+-- WHERE idT = 1;
+-- UPDATE Ticket
+-- SET technicien = 'user_non_technicien'
+-- WHERE idT = 1;

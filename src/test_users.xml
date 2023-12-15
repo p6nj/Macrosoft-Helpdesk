@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<resultset statement="select * from MacrosoftDB.Utilisateur" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <row>
+	<field name="login">admin</field>
+	<field name="mdp">de5d59d6517cb6d5a8629a7f4e0bafb3</field>
+	<field name="role">Admin web</field>
+  </row>
+
+  <row>
+	<field name="login">alice</field>
+	<field name="mdp">5d41402abc4b2a76b9719d911017c592</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">charlie</field>
+	<field name="mdp">1937e316529d8b6e582d0c4cddb456c3</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">diana</field>
+	<field name="mdp">e99a18c428cb38d5f260853678922e03</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">eric</field>
+	<field name="mdp">d891893f26b9d3d9bdce7b7e77ea8b3d</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">frank</field>
+	<field name="mdp">ec83ab13db7c9e6dace9b7c98cc78c66</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">gestion</field>
+	<field name="mdp">3695c56a2c1d477cb1eaad2ccad6dae5</field>
+	<field name="role">Admin sys</field>
+  </row>
+
+  <row>
+	<field name="login">grace</field>
+	<field name="mdp">b6d767d2f8ed5d21a44b0e5886680cb9</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">isabel</field>
+	<field name="mdp">84bbd073b66596192c110a53f4080cd4</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">jack</field>
+	<field name="mdp">54b6c4b298e6696cbd07d30b96c1ae8b</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">karen</field>
+	<field name="mdp">d9355b2e1ad292853bd8e30b30b6a01a</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">louis</field>
+	<field name="mdp">ca9d93cc991648095ab9e08f3fc13b1c</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">marie</field>
+	<field name="mdp">02e74f10e0327ad868d138f2b4fdd6f0</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">queen</field>
+	<field name="mdp">b0c4a64d7f69f1880b44aafc00d4c990</field>
+	<field name="role" xsi:nil="true" />
+  </row>
+
+  <row>
+	<field name="login">tec1</field>
+	<field name="mdp">a152e841783914146e4bcd4f39100686</field>
+	<field name="role">Technicien</field>
+  </row>
+
+  <row>
+	<field name="login">tec2</field>
+	<field name="mdp">a152e841783914146e4bcd4f39100686</field>
+	<field name="role">Technicien</field>
+  </row>
+
+  <row>
+	<field name="login">tec3</field>
+	<field name="mdp">a152e841783914146e4bcd4f39100686</field>
+	<field name="role">Technicien</field>
+  </row>
+
+  <row>
+	<field name="login">tec4</field>
+	<field name="mdp">35a3a501b25c7f68110f0c5e7b9ecf85</field>
+	<field name="role">Technicien</field>
+  </row>
+
+  <row>
+	<field name="login">tec5</field>
+	<field name="mdp">a152e841783914146e4bcd4f39100686</field>
+	<field name="role">Technicien</field>
+  </row>
+
+  <row>
+	<field name="login">tec6</field>
+	<field name="mdp">a152e841783914146e4bcd4f39100686</field>
+	<field name="role">Technicien</field>
+  </row>
+</resultset>
