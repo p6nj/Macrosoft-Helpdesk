@@ -1,3 +1,4 @@
+<!-- TODO: rajouter du contexte aux erreurs de requête illégale -->
 <?php
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -9,7 +10,7 @@ class ErreurBD extends Exception
     }
 }
 
-class ConnexionImpossible extends ErreurBD
+final class ConnexionImpossible extends ErreurBD
 {
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
     {
@@ -17,7 +18,7 @@ class ConnexionImpossible extends ErreurBD
     }
 }
 
-class RequêteIllégale extends ErreurBD
+final class RequêteIllégale extends ErreurBD
 {
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
     {
@@ -40,13 +41,15 @@ abstract class Client
             $code = $e->getCode();
             if ($code == 1045)
                 $this->echecConnexion($id, $mdp);
-            throw new ConnexionImpossible(
-                $code == 1044 ? 'Base inexistante ou connexion refusée.' : (
-                    $code == 1045 ? 'Identifiants invalides.' : (
-                        'Erreur mysqli #' . $e->getCode() . ' : ' . $e->getMessage() . '.'
-                    )
-                ), $code
-            );
+            switch ($code) {
+                case 1044:
+                    throw new ConnexionImpossible('Base inexistante ou connexion refusée.', 1, $e);
+                case 1045:
+                    throw new ConnexionImpossible('Identifiants invalides.', 2, $e);
+                    // ...
+                default:
+                    throw $e;
+            }
         }
         $this->mdp = $mdp;
         $this->id = $id;
@@ -54,15 +57,15 @@ abstract class Client
 
     public function __unserialize(array $data): void
     {
-        $this->__construct($data['l'], $data['p']);
+        $this->__construct($data['id'], $data['mdp']);
     }
 
     public function __serialize(): array
     {
         $this->close();
         return [
-            'l' => $this->id,
-            'p' => $this->mdp
+            'id' => $this->id,
+            'mdp' => $this->mdp
         ];
     }
 
@@ -97,19 +100,21 @@ abstract class Client
         return $this->id;
     }
 
-    // la date et l'IP sont à récupérer dans la fonction
     private function echecConnexion(string $id, string $mdp)
     {
-        $this->query("insert into Log_connection_echec  values ($date,$id,$mdp,$ip)");
+        $this->query("insert into Log_connection_echec values (CURRENT_DATE,$id,$mdp," . $_SERVER['REMOTE_ADDR'] . ')');
     }
 }
 
-interface ProfilInteraction
+abstract class Compte extends Client
 {
-    function getTickets(): array;
+    public function getProfil(): array
+    {
+        return $this->query('select * from VueProfilUtilisateur');
+    }
 }
 
-final class Utilisateur extends Client implements ProfilInteraction
+final class Utilisateur extends Compte
 {
     public function getTickets(): array
     {
@@ -118,7 +123,11 @@ final class Utilisateur extends Client implements ProfilInteraction
 
     public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible)
     {
-        $this->query("insert into Ticket values ($lib,$niv_urgence,'Ouvert',$desc,CURRENT_DATE," . $_SERVER['REMOTE_ADDR'] . ",$niv_urgence,getLogin()," . $cible == '' ? $cible : $this->getLogin() . ',null)');
+        try {
+            $this->query("insert into Ticket values ($lib,$niv_urgence,'Ouvert',$desc,CURRENT_DATE," . $_SERVER['REMOTE_ADDR'] . ",$niv_urgence,getLogin()," . $cible == '' ? $cible : $this->getLogin() . ',null)');
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale(`Impossible d'ajouter ce ticket`, 1, $e);
+        }
     }
 }
 
@@ -131,21 +140,23 @@ final class Visiteur extends Client
 
     public function getTickets(): array
     {
-        return $this->query('select * from VueTicketsUtilisateur');
+        return $this->query('select * from VueDerniersTicketsOuverts');
     }
 
-    public function inscription(string $id, string $mdp, string $verif)
+    // la vérification du mdp se fera plus en amont
+    public function inscription(string $id, string $mdp)
     {
-        if ($mdp == $verif) {
+        try {
             $this->query("insert into Utilisateur values ($id,$mdp,null)");
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale("Impossible d'ajouter l'utilisateur $id", 2, $e);
         }
-        // sinon faux donc a voir
     }
 }
 
-final class Technicien extends Client
+final class Technicien extends Compte
 {
-    public function getTicketsAttribuées(): array  // a renommer getTicketsAttribuées
+    public function getTicketsAttribuées(): array
     {
         return $this->query('select * from VueTicketsTechnicien');
     }
@@ -157,81 +168,81 @@ final class Technicien extends Client
 
     public function assigneTicket(int $id)
     {
-        $this->query("UPDATE  VueTicketsNonTraites SET technicien=getLogin() and etat='En cours de traitement' WHERE idT=$id");
+        try {
+            $this->query("UPDATE VueTicketsNonTraites SET technicien=getLogin() and etat='En cours de traitement' WHERE idT=$id");
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale("Impossible de s'assigner le ticket $id", 3, $e);
+        }
     }
 
     public function fermeTicket(int $id)
     {
-        $this->query("UPDATE VueTicketsTechnicien SET etat='Fermé' WHERE idT=$id");
+        try {
+            $this->query("UPDATE VueTicketsTechnicien SET etat='Fermé' WHERE idT=$id");
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale("Impossible de fermer le ticket $id", 4, $e);
+        }
     }
 }
 
-final class AdminSys extends Client
+final class AdminSys extends Compte
 {
     public function getTicketValidés(): array
     {
-        return $this->query('select * from VueLogTicketsValides  ');
+        return $this->query('select * from VueLogTicketsValides');
     }
 
     public function getConnexionsEchouées(): array
     {
-        return $this->query('select * from Log_connection_echec   ');
+        return $this->query('select * from Log_connection_echec');
     }
 }
 
-final class AdminWeb extends Client
+final class AdminWeb extends Compte
 {
+    public function midifieTicket(int $id, int $niveau, int $libellé, string $technicien)
+    {
+        try {
+            $this->query("UPDATE VueTicketsTechnicien SET etat='En cours de traitement' and niv_urgence=$niveau and libelle=$libellé and technicien=$technicien WHERE idT=$id");
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale("Impossible de modifier le ticket $id", 5, $e);
+        }
+    }
+
     public function getTickets(): array
     {
-        return $this->query('select * from VueTicketsOuverts    ');
+        return $this->query('select * from VueTicketsOuverts');
     }
 
     public function getLibellés(): array
     {
-        return $this->query('select * from VueLibellesNonArchives    ');
+        return $this->query('select * from VueLibellesNonArchives');
+    }
+
+    public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive)
+    {
+        try {
+            $this->query("UPDATE VueLibellesNonArchives SET intitule=$titre and lib_sup=$groupe and archive=$archive WHERE idL=$id");
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale("Impossible de modifier le libellé $id", 6, $e);
+        }
     }
 
     public function ajoutLibellé(string $titre, ?int $groupe)
     {
-        $this->query("insert into VueLibellesNonArchives  values ($titre,$groupe,FALSE)");
+        try {
+            $this->query("insert into VueLibellesNonArchives  values ($titre,$groupe,FALSE)");
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale("Impossible d'ajouter le libellé '$titre'", 7, $e);
+        }
     }
 
     public function ajoutTechnicien(string $id, string $mdp)
     {
-        $this->query("insert into Utilisateur  values ($id,$mdp,'Technicien')");
+        try {
+            $this->query("insert into Utilisateur values ($id,$mdp,'Technicien')");
+        } catch (mysqli_sql_exception $e) {
+            throw new RequêteIllégale("Impossible de créer le technicien '$id'", 8, $e);
+        }
     }
-
-    public function midifieTicket(int $id, int $niveau, int $lib, string $technicien)
-    {
-        $this->query("UPDATE VueTicketsTechnicien SET etat='En cours de traitement' and niv_urgence=$niveau and libelle=$lib and technicien=$technicien  WHERE idT=$id");
-    }  // Trouver un moyen pour recuperer l'id du Ticket
-
-    public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive)
-    {
-        $this->query("UPDATE VueLibellesNonArchives  SET intitule=$titre and lib_sup=$groupe and archive=$archive WHERE idL=$id");
-    }  // Trouver un moyen pour recuperer l'id du Libellé
 }
-
-/*
- * // admettons qu'un admin web et sys peuvent voir tous les tickets
- * class Admin extends Client
- * {
- *     public function getAllTickets(): array
- *     {
- *         return $this->query('select * from VueTicketsTechnicien');
- *     }
- * }
- *
- * final class AdminSys extends Admin
- * {
- *     public function getLogTicketsValides(): array
- *     {
- *         return $this->query('select * from VueLogTicketsValides');
- *     }
- *
- *     public function getLogConnectionEchec(): array
- *     {
- *         return $this->query('select * from Log_connection_echec');
- *     }
- * }
- */
