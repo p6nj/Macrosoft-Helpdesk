@@ -1,6 +1,6 @@
 from xml.dom.minidom import parse
 
-doc = parse('src/test_users.xml')
+doc = parse('src/bd/test_users.xml')
 for i in doc.getElementsByTagName('row'):
     child = i.childNodes
     user="`"+child[1].firstChild.data+"`@localhost";

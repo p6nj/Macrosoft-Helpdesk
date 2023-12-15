@@ -1,5 +1,5 @@
 #!/bin/bash -e
-cd src/
+cd src/bd/
 mariadb < destruction.sql
 mariadb < creation.sql
 mariadb < test_bd.sql
