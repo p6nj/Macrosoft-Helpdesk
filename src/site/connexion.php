@@ -34,7 +34,24 @@
                         <input name="password" id="password" type="password">
                         <br>
                         <br>
-                        <button>Se connecter</button>
+                        <input type="submit" value="Se connecter">
+                        <br>
+                        <?php
+                            require_once 'includes/profils.php';
+                            require_once 'includes/misc.php';
+                            debug();
+                            if (isset($_SESSION['client']))
+                                redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.html' : 'accueil.html');
+                            if (isset($_POST['username']) && isset($_POST['password'])) {
+                                session_start();
+                                try {
+                                    $_SESSION['client'] = (new Visiteur())->connecte($_POST['username'], $_POST['password']);
+                                    redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.html' : 'accueil.html');
+                                } catch (ErreurBD $e) {
+                                    echo $e->getMessage();
+                                }
+                            }
+                        ?>
                     </form>
                 </div>
                 <div class="right-captcha">

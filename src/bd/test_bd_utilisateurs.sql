@@ -17,7 +17,8 @@ drop user `admin` @localhost,
 `tec3` @localhost,
 `tec4` @localhost,
 `tec5` @localhost,
-`tec6` @localhost;
+`tec6` @localhost,
+visiteur @localhost;
 create user `admin` @localhost identified by 'de5d59d6517cb6d5a8629a7f4e0bafb3';
 grant ADMIN_WEB to `admin` @localhost;
 set default role ADMIN_WEB for `admin` @localhost;
@@ -78,3 +79,6 @@ set default role TECHNICIEN for `tec5` @localhost;
 create user `tec6` @localhost identified by 'a152e841783914146e4bcd4f39100686';
 grant TECHNICIEN to `tec6` @localhost;
 set default role TECHNICIEN for `tec6` @localhost;
+create user visiteur @localhost identified by 'MRxgP2qH43zDY2Bql4lYcHX2hNUtahthjxdJ92jC4eUHVR';
+grant VISITEUR to visiteur @localhost;
+set default role VISITEUR for visiteur @localhost;
