@@ -105,7 +105,7 @@ final class Utilisateur extends Compte
     public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible)
     {
         try {
-            $this->insert("into Ticket values ($lib,$niv_urgence,'Ouvert',$desc,CURRENT_DATE," . $_SERVER['REMOTE_ADDR'] . ",$niv_urgence,getLogin()," . $cible == '' ? $cible : $this->getLogin() . ',null)');
+            $this->insert("into Ticket values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence," . $this->getLogin() . ",'" . $cible == '' ? $cible : $this->getLogin() . "',null)");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale(`Impossible d'ajouter ce ticket`, 1, $e);
         }
@@ -176,7 +176,7 @@ final class Technicien extends Compte
     public function assigneTicket(int $id)
     {
         try {
-            $this->update("VueTicketsNonTraites SET technicien=getLogin() and etat='En cours de traitement' WHERE idT=$id");
+            $this->update('VueTicketsNonTraites SET technicien=' . $this->getLogin() . " and etat='En cours de traitement' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible de s'assigner le ticket $id", 3, $e);
         }
@@ -207,7 +207,7 @@ final class AdminSys extends Compte
 
 final class AdminWeb extends Compte
 {
-    public function midifieTicket(int $id, int $niveau, int $libellé, string $technicien)
+    public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien)
     {
         try {
             $this->update("VueTicketsTechnicien SET etat='En cours de traitement' and niv_urgence=$niveau and libelle=$libellé and technicien=$technicien WHERE idT=$id");

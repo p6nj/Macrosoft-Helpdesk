@@ -7,6 +7,13 @@
     <link rel="stylesheet" type="text/css" href="common.css">
 </head>
 
+<?php
+// GET vars : 'erreur', 'message', 'déco'
+require_once 'includes/profils.php';
+require_once 'includes/misc.php';
+debug();
+?>
+
 <body>
     <header>
         <nav>
@@ -36,22 +43,34 @@
                         <br>
                         <input type="submit" value="Se connecter">
                         <br>
+                        <div class="error">
                         <?php
-                            require_once 'includes/profils.php';
-                            require_once 'includes/misc.php';
-                            debug();
-                            if (isset($_SESSION['client']))
-                                redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.html' : 'accueil.html');
-                            if (isset($_POST['username']) && isset($_POST['password'])) {
-                                session_start();
-                                try {
-                                    $_SESSION['client'] = (new Visiteur())->connecte($_POST['username'], $_POST['password']);
+                            // à réécrire
+                            try {
+                                session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
+                                if (isset($_GET['déco']))  // la page précédente a demandé la déconnexion
+                                    session_destroy() && session_start();
+                                if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
+                                    $_SESSION['client'] = new Visiteur();
+                                else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
                                     redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.html' : 'accueil.html');
-                                } catch (ErreurBD $e) {
-                                    echo $e->getMessage();
+                                if (isset($_POST['username']) && isset($_POST['password'])) {  // résultat du formulaire
+                                    $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
+                                    redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.html' : 'accueil.html');
                                 }
+                            } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
+                                echo $e->getMessage();
                             }
+                            if (isset($_GET['erreur']))
+                                echo $_GET['erreur'];
                         ?>
+                        </div>
+                        <div class="message">
+                            <?php
+                                if (isset($_GET['message']))
+                                    echo $_GET['message'];
+                            ?>
+                        </div>
                     </form>
                 </div>
                 <div class="right-captcha">
