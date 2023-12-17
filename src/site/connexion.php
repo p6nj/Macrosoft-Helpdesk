@@ -22,8 +22,8 @@ debug();
                 <h1>HelpDesk</h1>
             </div>
             <div class="right">
-                <button>Accueil</button>
-                <button>Inscription</button>
+                <button onclick="window.location.href='accueil.php';">Accueil</button>
+                <button onclick="window.location.href='inscription.html';">Inscription</button>
             </div>
         </nav>
     </header>
