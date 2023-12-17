@@ -52,10 +52,10 @@ debug();
                                 if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
                                     $_SESSION['client'] = new Visiteur();
                                 else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
-                                    redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.html' : 'accueil.html');
+                                    redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.html');
                                 if (isset($_POST['username']) && isset($_POST['password'])) {  // résultat du formulaire
                                     $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
-                                    redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.html' : 'accueil.html');
+                                    redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.html');
                                 }
                             } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
                                 echo $e->getMessage();

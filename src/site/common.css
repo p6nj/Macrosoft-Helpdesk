@@ -10,11 +10,13 @@
     --grey: #ddd;
 }
 
-button:hover {
+button:hover,
+input[type='submit']:hover {
     background-color: var(--grey);
 }
 
-button:active {
+button:active,
+input[type='submit']:active {
     background-color: var(--blue);
     color: white;
 }
@@ -32,7 +34,8 @@ a {
     font-weight: bold;
 }
 
-button {
+button,
+input[type='submit'] {
     border: none;
     background-color: var(--gray);
     color: black;
@@ -239,4 +242,14 @@ img#logo {
     #header-top-margin {
         margin-top: 5%;
     }
+}
+
+::backdrop {
+    background-color: var(--gray);
+    opacity: 0.75;
+}
+
+dialog {
+    border: none;
+    border-radius: var(--radius);
 }

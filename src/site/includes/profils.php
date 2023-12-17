@@ -107,7 +107,7 @@ final class Utilisateur extends Compte
         try {
             $this->insert("into Ticket values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence," . $this->getLogin() . ",'" . $cible == '' ? $cible : $this->getLogin() . "',null)");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale(`Impossible d'ajouter ce ticket`, 1, $e);
+            throw new RequêteIllégale("Impossible d'ajouter ce ticket : " . $e->getMessage(), 1, $e);
         }
     }
 }
