@@ -45,7 +45,6 @@ debug();
                         <br>
                         <div class="error">
                         <?php
-                            // à réécrire
                             try {
                                 session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
                                 if (isset($_GET['déco']))  // la page précédente a demandé la déconnexion
