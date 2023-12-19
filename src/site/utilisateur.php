@@ -33,9 +33,20 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
-                <button onclick="document.querySelector(' dialog').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
+                <button onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
                 <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
-                <button id="pfp" title="<?= $_SESSION['client']->getProfil()[0]['login']; ?>"><img src="https://i.pinimg.com/474x/8f/e6/66/8fe66626ec212bb54e13fa94e84c105c.jpg" alt="photo de profil"></button>
+                <button id="pfp" title="<?= $_SESSION['client']->getProfil()[0]['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
+                    <img src="https://i.pinimg.com/474x/8f/e6/66/8fe66626ec212bb54e13fa94e84c105c.jpg" alt="photo de profil">
+                </button>
+                <dialog id="profil">
+                    <h2>Profil</h2>
+                    <?php $profil = $_SESSION['client']->getProfil(); ?>
+                    Login : <?=$profil['login']?><br>
+                    Mot de passe : <hidden id='mdp'><?=$profil['mdp']?></hidden>
+                    <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de passe</button>
+                    <br>
+                    <button onclick="document.querySelector(' dialog#profil').close()">Fermer</button>
+                </dialog>
             </div>
         </nav>
     </header>
@@ -62,7 +73,7 @@ try {
                 <?php endforeach; ?>
             </div>
         </div>
-        <dialog>
+        <dialog id="add-ticket">
             <h2>Ajouter un ticket</h2>
             <p>Une fois créé, ce ticket sera assigné à un technicien compétent qui vous assistera dans les plus brefs délais.</p>
             <form method="post">
@@ -90,7 +101,7 @@ try {
                 <br>
                 <input type="text" name="cible" id="">
                 <br>
-                <button onclick="document.querySelector(' dialog').close()">Annuler</button>
+                <button onclick="document.querySelector(' dialog#add-ticket').close()">Annuler</button>
                 <input autofocus type="submit" value="Enregistrer">
             </form>
         </dialog>

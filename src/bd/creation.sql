@@ -136,7 +136,8 @@ GRANT SELECT ON VueDerniersTicketsOuverts TO VISITEUR;
 GRANT INSERT ON Log_connexion_echec TO VISITEUR;
 GRANT INSERT ON Utilisateur TO VISITEUR;
 -- TRIGGERS
-DELIMITER $$ CREATE TRIGGER VerifierRoleTechnicienInsert BEFORE
+DELIMITER $$
+CREATE TRIGGER VerifierRoleTechnicienInsert BEFORE
 INSERT ON Ticket FOR EACH ROW BEGIN
 DECLARE role_utilisateur VARCHAR(20);
 SELECT role INTO role_utilisateur
@@ -145,7 +146,8 @@ WHERE login = NEW.technicien;
 IF role_utilisateur != 'Technicien' THEN SIGNAL SQLSTATE '45000'
 SET MESSAGE_TEXT = 'Seuls les utilisateurs avec le rôle Technicien peuvent être assignés comme technicien pour un ticket.';
 END IF;
-END $$ CREATE TRIGGER VerifierRoleTechnicienUpdate BEFORE
+END $$
+CREATE TRIGGER VerifierRoleTechnicienUpdate BEFORE
 UPDATE ON Ticket FOR EACH ROW BEGIN
 DECLARE role_utilisateur VARCHAR(20);
 SELECT role INTO role_utilisateur
@@ -154,4 +156,5 @@ WHERE login = NEW.technicien;
 IF role_utilisateur != 'Technicien' THEN SIGNAL SQLSTATE '45000'
 SET MESSAGE_TEXT = 'Seuls les utilisateurs avec le rôle Technicien peuvent être assignés comme technicien pour un ticket.';
 END IF;
-END $$ DELIMITER;
+END $$
+DELIMITER ;

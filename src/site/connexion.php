@@ -40,6 +40,8 @@ debug();
                         <label for="password">Mot de passe :</label><br>
                         <input name="password" id="password" type="password">
                         <br>
+                        <a href="maintenance.php?message=La page de réinitialisation de mot de passe est en cours de construction.">Mot de passe oublié</a>
+                        <br>
                         <br>
                         <input type="submit" value="Se connecter">
                         <br>

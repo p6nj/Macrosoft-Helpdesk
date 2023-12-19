@@ -1,3 +1,4 @@
+<?php header("Content-Type:image/svg+xml; charset: UTF-8");?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 163">
   <defs>
     <filter id="glow">
@@ -7,17 +8,20 @@
       <rect x="0" y="0" width="100%" height="100%" fill="white" />
       <rect x="39.999" y="30" width="17.39" height="130" fill="black" />
       <rect x="81.95" y="89" width="17.39" height="60" fill="black" />
-      <path d="M39.999 89.6705 c0 -29.6705 59.341 -29.6705 59.341 0 h-17.39 c0 -10.6705 -24.561 -10.6705 -24.561 0 z" fill="black" />
+      <path
+        d="M39.999 89.6705 c0 -29.6705 59.341 -29.6705 59.341 0 h-17.39 c0 -10.6705 -24.561 -10.6705 -24.561 0 z"
+        fill="black" />
     </mask>
   </defs>
   <style>
     text {
-      font-family: Calibri;
-      font-weight: bold;
+    font-family: Calibri;
+    font-weight: bold;
     }
   </style>
   <circle cx="69" cy="70" r="57" fill="#0077c2" filter="url(#glow)" mask="url(#mask)" />
   <circle cx="69" cy="80" r="62" fill="#0077c2" mask="url(#mask)" />
-  <text x="55%" y="95%" dominant-baseline="middle" text-anchor="middle" font-size="26" fill="#0077c2">Macrosoft™</text>
+  <text x="55%" y="95%" dominant-baseline="middle" text-anchor="middle" font-size="26"
+    fill="#0077c2">Macrosoft™</text>
 
 </svg>

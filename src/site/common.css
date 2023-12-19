@@ -184,6 +184,12 @@ main {
     max-width: 1000px;
 }
 
+.video-container img {
+    width: 95%;
+    max-width: 1000px;
+    max-height: 500px;
+}
+
 .shadow-form {
     box-shadow: var(--gradient);
     -webkit-box-shadow: var(--gradient);
@@ -253,4 +259,8 @@ img#logo {
 dialog {
     border: none;
     border-radius: var(--radius);
+}
+
+hidden {
+    display: none;
 }

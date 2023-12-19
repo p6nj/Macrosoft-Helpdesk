@@ -91,7 +91,7 @@ abstract class Compte extends Client
 {
     public function getProfil(): array
     {
-        return $this->select('* from VueProfilUtilisateur');
+        return $this->select('* from VueProfilUtilisateur')[0];
     }
 }
 
