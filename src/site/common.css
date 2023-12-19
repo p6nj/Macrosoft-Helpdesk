@@ -1,3 +1,5 @@
+<?php header("Content-Type:text/css; charset: UTF-8");
+?>
 /* VARs */
 
 :root {
@@ -137,11 +139,10 @@ main {
     padding: 1px;
     max-width: fit-content;
     max-height: fit-content;
-    clip-path: ellipse(50%, 50%);
+    clip-path: ellipse(100% 100% at 50% 50%);
 }
 
 .right img {
-    size: 100%;
     object-fit: cover;
 }
 
