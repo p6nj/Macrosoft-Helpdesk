@@ -18,7 +18,8 @@ drop user `admin` @localhost,
 `tec4` @localhost,
 `tec5` @localhost,
 `tec6` @localhost,
-visiteur @localhost;
+visiteur @localhost,
+sys @localhost;
 create user `admin` @localhost identified by 'de5d59d6517cb6d5a8629a7f4e0bafb3';
 grant ADMIN_WEB to `admin` @localhost;
 set default role ADMIN_WEB for `admin` @localhost;
@@ -82,3 +83,8 @@ set default role TECHNICIEN for `tec6` @localhost;
 create user visiteur @localhost identified by 'MRxgP2qH43zDY2Bql4lYcHX2hNUtahthjxdJ92jC4eUHVR';
 grant VISITEUR to visiteur @localhost;
 set default role VISITEUR for visiteur @localhost;
+create user sys @localhost identified by "4H7nvbyx8g6tfrMwWUNHUtvAeGsvngs9fjZmmf6n5FFCtLrDq6";
+grant UTILISATEUR to sys with ADMIN OPTION;
+set default role UTILISATEUR for sys;
+grant create user on *.* to sys;
+grant ALL PRIVILEGES on mysql.* to sys;

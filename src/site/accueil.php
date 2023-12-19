@@ -16,7 +16,7 @@ try {
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
         $_SESSION['client'] = new Visiteur();
     else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
-        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.html');
+        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
 } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
     redirect('connexion.php?erreur=' . $e->getMessage());
 }
@@ -30,7 +30,7 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="right">
-                <button onclick="window.location.href='inscription.html';">Inscription</button>
+                <button onclick="window.location.href='inscription.php';">Inscription</button>
                 <button onclick="window.location.href='connexion.php';">Connexion</button>
             </div>
         </nav>

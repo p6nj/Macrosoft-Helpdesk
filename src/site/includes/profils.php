@@ -76,6 +76,20 @@ abstract class Client
         $this->con->query('update ' . $q);
     }
 
+    protected function grant(string $q)
+    {
+        $this->con->query('grant ' . $q);
+    }
+
+    protected function set(string $q)
+    {
+        $this->con->query('set ' . $q);
+    }
+
+    protected function create(string $q){
+        $this->con->query('create '.$q);
+    }
+
     private function close()
     {
         $this->con->close();
@@ -105,7 +119,7 @@ final class Utilisateur extends Compte
     public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible)
     {
         try {
-            $this->insert("into Ticket values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence," . $this->getLogin() . ",'" . $cible == '' ? $cible : $this->getLogin() . "',null)");
+            $this->insert("into Ticket values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . $cible == '' ? $cible : $this->getLogin() . "',null)");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible d'ajouter ce ticket : " . $e->getMessage(), 1, $e);
         }
@@ -149,7 +163,8 @@ final class Visiteur extends Client
     public function inscription(string $id, string $mdp)
     {
         try {
-            $this->insert("into Utilisateur(login, mdp) values ($id,$mdp)");
+            (new Système())->créeUtilisateur($id, $mdp);
+            $this->insert("into Utilisateur(login, mdp) values ('$id','$mdp')");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible d'ajouter l'utilisateur $id", 2, $e);
         }
@@ -158,6 +173,21 @@ final class Visiteur extends Client
     private function echecConnexion(string $id, string $mdp)
     {
         $this->insert("into Log_connexion_echec(date, login_tente, mdp_tente, IP) values (CURRENT_DATE,'$id','$mdp','" . $_SERVER['REMOTE_ADDR'] . "')");
+    }
+}
+
+final class Système extends Client
+{
+    public function __construct()
+    {
+        parent::__construct('sys', file_get_contents('includes/mdp_sys'));
+    }
+
+    public function créeUtilisateur(string $id, string $mdp)
+    {
+        $this->create("user `$id` identified by '$mdp'");
+        $this->grant("UTILISATEUR to `$id`");
+        $this->set("default role UTILISATEUR for `$id`");
     }
 }
 
@@ -176,7 +206,7 @@ final class Technicien extends Compte
     public function assigneTicket(int $id)
     {
         try {
-            $this->update('VueTicketsNonTraites SET technicien=' . $this->getLogin() . " and etat='En cours de traitement' WHERE idT=$id");
+            $this->update("VueTicketsNonTraites SET technicien='" . $this->getLogin() . "' and etat='En cours de traitement' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible de s'assigner le ticket $id", 3, $e);
         }
@@ -210,7 +240,7 @@ final class AdminWeb extends Compte
     public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien)
     {
         try {
-            $this->update("VueTicketsTechnicien SET etat='En cours de traitement' and niv_urgence=$niveau and libelle=$libellé and technicien=$technicien WHERE idT=$id");
+            $this->update("VueTicketsTechnicien SET etat='En cours de traitement' and niv_urgence=$niveau and libelle=$libellé and technicien='$technicien' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible de modifier le ticket $id", 5, $e);
         }
@@ -229,7 +259,7 @@ final class AdminWeb extends Compte
     public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive)
     {
         try {
-            $this->update("VueLibellesNonArchives SET intitule=$titre and lib_sup=$groupe and archive=$archive WHERE idL=$id");
+            $this->update("VueLibellesNonArchives SET intitule='$titre' and lib_sup=$groupe and archive=$archive WHERE idL=$id");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible de modifier le libellé $id", 6, $e);
         }
@@ -238,7 +268,7 @@ final class AdminWeb extends Compte
     public function ajoutLibellé(string $titre, ?int $groupe)
     {
         try {
-            $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ($titre,$groupe)");
+            $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre',$groupe)");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible d'ajouter le libellé '$titre'", 7, $e);
         }

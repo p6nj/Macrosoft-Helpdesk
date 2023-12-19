@@ -17,7 +17,7 @@ try {
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
         $_SESSION['client'] = new Visiteur();
     else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
-        redirect('accueil.html');
+        redirect('accueil.php');
 } catch (ErreurBD $e) {
     redirect('connexion.php?erreur=' . $e->getMessage());
 }
