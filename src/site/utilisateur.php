@@ -8,7 +8,6 @@
 </head>
 
 <?php
-// GET vars : 'message', 'erreur'
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
 debug();
@@ -18,10 +17,14 @@ try {
         redirect('accueil.php');
     else if (isset($_POST['libellé']) && isset($_POST['niveau']) && isset($_POST['description']) && isset($_POST['cible']))
         $_SESSION['client']->ajoutTicket(
-            (int) $_POST['libellé'], (int) $_POST['niveau'], htmlspecialchars($_POST['description']), htmlspecialchars($_POST['cible'])
+            (int) $_POST['libellé'],
+            (int) $_POST['niveau'],
+            htmlspecialchars($_POST['description']),
+            htmlspecialchars($_POST['cible'])
         );
 } catch (ErreurBD $e) {
-    redirect('utilisateur.php?erreur=' . $e->getMessage());
+    $_SESSION['erreur'] = $e->getMessage();
+    redirect('utilisateur.php');
 }
 ?>
 
@@ -41,8 +44,8 @@ try {
                 <dialog id="profil">
                     <h2>Profil</h2>
                     <?php $profil = $_SESSION['client']->getProfil(); ?>
-                    Login : <?=$profil['login']?><br>
-                    Mot de passe : <hidden id='mdp'><?=$profil['mdp']?></hidden>
+                    Login : <?= $profil['login'] ?><br>
+                    Mot de passe : <hidden id='mdp'><?= $profil['mdp'] ?></hidden>
                     <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de passe</button>
                     <br>
                     <button onclick="document.querySelector(' dialog#profil').close()">Fermer</button>
@@ -53,14 +56,18 @@ try {
     <main id="header-top-margin">
         <div class="message">
             <?php
-                if (isset($_GET['message']))
-                    echo $_GET['message'];
+                if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    unset($_SESSION['message']);
+                }
             ?>
         </div>
         <div class="error">
             <?php
-                if (isset($_GET['erreur']))
-                    echo $_GET['erreur'];
+                if (isset($_SESSION['erreur'])){
+                    echo $_SESSION['erreur'];
+                    unset($_SESSION['erreur']);
+                }
             ?>
         </div>
         <div>
@@ -80,8 +87,8 @@ try {
                 <label for="libellé">Libellé :</label>
                 <br>
                 <select name="libellé" id="libellé">
-                    <option value="1265168445">Problème de trucmuche</option>
-                    <option value="8498436251">Problème de machin</option>
+                    <option value="1">Problème de trucmuche</option>
+                    <option value="2">Problème de machin</option>
                 </select>
                 <br>
                 <label for="niveau">Niveau d'urgence :</label>
@@ -102,7 +109,7 @@ try {
                 <input type="text" name="cible" id="">
                 <br>
                 <button onclick="document.querySelector(' dialog#add-ticket').close()">Annuler</button>
-                <input autofocus type="submit" value="Enregistrer">
+                <button autofocus type="submit">Enregistrer</button>
             </form>
         </dialog>
     </main>
