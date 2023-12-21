@@ -125,6 +125,23 @@ final class Utilisateur extends Compte
             throw new RequêteIllégale("Impossible d'ajouter ce ticket : " . $e->getMessage(), 1, $e);
         }
     }
+
+    public function getLibellés()
+    {
+        return
+            array_map(function (array $i): array {
+                $i['inf'] = $this->getLibellésInf($i['idL']);
+                return $i;
+            }, $this->select('idL, intitule from VueLibellesNonArchives where lib_sup is null or lib_sup not in (select idL from VueLibellesNonArchives)'));
+    }
+
+    private function getLibellésInf(int $idL)
+    {
+        return array_map(function (array $i): array {
+            $i['inf'] = $this->getLibellésInf($i['idL']);
+            return $i;
+        }, $this->select("idL, intitule from VueLibellesNonArchives where lib_sup = $idL"));
+    }
 }
 
 final class Visiteur extends Client

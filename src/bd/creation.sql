@@ -115,6 +115,7 @@ GRANT SELECT ON VueProfilUtilisateur TO UTILISATEUR,
 -- Attribution des permissions au rôle Utilisateur
 GRANT SELECT ON VueTicketsUtilisateur TO UTILISATEUR;
 GRANT INSERT ON Ticket TO UTILISATEUR;
+GRANT SELECT ON VueLibellesNonArchives to UTILISATEUR;
 -- Attribution des permissions au rôle Technicien
 GRANT SELECT,
     UPDATE (etat) ON VueTicketsTechnicien TO TECHNICIEN;
