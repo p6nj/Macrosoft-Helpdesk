@@ -65,12 +65,11 @@ $confirmation = false;
                             if ($_POST['password'] == $_POST['cpassword']) {
                                 $_SESSION['client']->inscription(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
                                 $confirmation = true;
-                            }
-                            else
+                            } else
                                 echo 'Le mot de passe et la confirmation du mot de passe sont différents.';
                         }
                     } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
-                        echo $e;
+                        echo $e->getMessage();
                     }
                     if (isset($_GET['erreur']))
                         echo $_GET['erreur'];
@@ -78,7 +77,7 @@ $confirmation = false;
             </div>
             <div class="message">
                 <?php if ($confirmation): ?>
-                Inscription réussie : vous pouvez vous connecter.
+                    Inscription réussie : vous pouvez vous connecter.
                 <?php endif; ?>
             </div>
         </div>
