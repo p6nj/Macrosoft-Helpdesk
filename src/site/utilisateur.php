@@ -49,7 +49,7 @@ try {
                     Mot de passe : <hidden id='mdp'><?= $profil['mdp'] ?></hidden>
                     <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de passe</button>
                     <br>
-                    <button onclick="document.querySelector(' dialog#profil').close()">Fermer</button>
+                    <button onclick="document.querySelector(' dialog#profil').close(); document.getElementById('mdp').style.display='none'">Fermer</button>
                 </dialog>
             </div>
         </nav>
@@ -57,24 +57,24 @@ try {
     <main id="header-top-margin">
         <div class="message">
             <?php
-                if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
-                    unset($_SESSION['message']);
-                }
+            if (isset($_SESSION['message'])) {
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+            }
             ?>
         </div>
         <div class="error">
             <?php
-                if (isset($_SESSION['erreur'])) {
-                    echo $_SESSION['erreur'];
-                    unset($_SESSION['erreur']);
-                }
+            if (isset($_SESSION['erreur'])) {
+                echo $_SESSION['erreur'];
+                unset($_SESSION['erreur']);
+            }
             ?>
         </div>
         <div>
             <h1>Derniers tickets</h1>
             <div id="ticket-container">
-                <?php foreach ($_SESSION['client']->getTickets() as $ticket): ?>
+                <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
                     <div>
                         <p><?= $ticket['description'] ?></p>
                     </div>
@@ -89,15 +89,15 @@ try {
                 <br>
                 <select name="libellé" id="libellé">
                     <?php
-                        function affiche_lib(array $lib, int $niveau = 0)
-                        {
-                            echo '<option value=' . $lib['idL'] . '>' . str_repeat('&emsp;', $niveau) . $lib['intitule'] . '</option>';
-                            foreach ($lib['inf'] as $inf)
-                                affiche_lib($inf, $niveau + 1);
-                        }
+                    function affiche_lib(array $lib, int $niveau = 0)
+                    {
+                        echo '<option value=' . $lib['idL'] . '>' . str_repeat('&emsp;', $niveau) . $lib['intitule'] . '</option>';
+                        foreach ($lib['inf'] as $inf)
+                            affiche_lib($inf, $niveau + 1);
+                    }
 
-                        foreach ($_SESSION['client']->getLibellés() as $v)
-                            affiche_lib($v);
+                    foreach ($_SESSION['client']->getLibellés() as $v)
+                        affiche_lib($v);
                     ?>
                 </select>
                 <br>
