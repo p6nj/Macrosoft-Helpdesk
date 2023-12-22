@@ -56,24 +56,24 @@ try {
     <main id="header-top-margin">
         <div class="message">
             <?php
-                if (isset($_SESSION['message'])) {
-                    echo $_SESSION['message'];
-                    unset($_SESSION['message']);
-                }
+            if (isset($_SESSION['message'])) {
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+            }
             ?>
         </div>
         <div class="error">
             <?php
-                if (isset($_SESSION['erreur'])){
-                    echo $_SESSION['erreur'];
-                    unset($_SESSION['erreur']);
-                }
+            if (isset($_SESSION['erreur'])) {
+                echo $_SESSION['erreur'];
+                unset($_SESSION['erreur']);
+            }
             ?>
         </div>
         <div>
             <h1>Derniers tickets</h1>
             <div id="ticket-container">
-                <?php foreach ($_SESSION['client']->getTickets() as $ticket): ?>
+                <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
                     <div>
                         <p><?= $ticket['description'] ?></p>
                     </div>
@@ -87,9 +87,16 @@ try {
                 <label for="libellé">Libellé :</label>
                 <br>
                 <select name="libellé" id="libellé">
-                    <option value="1">Problème de trucmuche</option>
-                    <option value="2">Problème de machin</option>
+                    <?php
+                    function affiche_lib(array $lib, int $niveau = 0)
+                    {
+                        echo '<option value=' . $lib['idL'] . '>' . str_repeat('&emsp;', $niveau) . $lib['intitule'] . '</option>';
+                        foreach ($lib['inf'] as $inf) affiche_lib($inf, $niveau + 1);
+                    }
+                    foreach ($_SESSION['client']->getLibellés() as $v) affiche_lib($v);
+                    ?>
                 </select>
+                <br>
                 <br>
                 <label for="niveau">Niveau d'urgence :</label>
                 <br>
@@ -100,16 +107,19 @@ try {
                     <option value="4">Urgent</option>
                 </select>
                 <br>
+                <br>
                 <label for="description">Description du problème :</label>
                 <br>
                 <input type="text" name="description" id="">
+                <br>
                 <br>
                 <label for="cible">Login de l'utilisateur cible :</label>
                 <br>
                 <input type="text" name="cible" id="">
                 <br>
-                <button onclick="document.querySelector(' dialog#add-ticket').close()">Annuler</button>
+                <br>
                 <button autofocus type="submit">Enregistrer</button>
+                <input type="button" onclick="document.getElementById('add-ticket').close()" value="Annuler">
             </form>
         </dialog>
     </main>
