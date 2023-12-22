@@ -39,8 +39,8 @@ try {
             <div class="far-right">
                 <button onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
                 <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
-                <button id="pfp" title="<?= $_SESSION['client']->getProfil()[0]['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
-                    <img src="https://i.pinimg.com/474x/8f/e6/66/8fe66626ec212bb54e13fa94e84c105c.jpg" alt="photo de profil">
+                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
+                    Profil
                 </button>
                 <dialog id="profil">
                     <h2>Profil</h2>
