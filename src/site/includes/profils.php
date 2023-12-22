@@ -211,7 +211,7 @@ final class Système extends Client
 
 final class Technicien extends Compte
 {
-    public function getTicketsAttribuées(): array
+    public function getTicketsAttribués(): array
     {
         return $this->select('* from VueTicketsTechnicien');
     }
