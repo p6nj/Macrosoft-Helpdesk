@@ -15,14 +15,15 @@ try {
     session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Utilisateur)  // l'utilisateur n'est pas connecté
         redirect('accueil.php');
-    else if (isset($_POST['libellé']) && isset($_POST['niveau']) && isset($_POST['description']) && isset($_POST['cible']))
+    else if (isset($_POST['libellé']) && isset($_POST['niveau']) && isset($_POST['description']) && isset($_POST['cible'])) {
         $_SESSION['client']->ajoutTicket(
             (int) $_POST['libellé'],
             (int) $_POST['niveau'],
             htmlspecialchars($_POST['description']),
             htmlspecialchars($_POST['cible'])
         );
-    $_SESSION['message'] = 'Ticket ajouté avec succès.';
+        $_SESSION['message'] = 'Ticket ajouté avec succès.';
+    }
 } catch (ErreurBD $e) {
     $_SESSION['erreur'] = $e->getMessage();
     redirect('utilisateur.php');
