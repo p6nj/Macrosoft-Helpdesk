@@ -11,7 +11,6 @@
 // GET vars : 'message'
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
-debug();
 try {
     session_start();
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
@@ -32,8 +31,7 @@ try {
             </div>
             <div class="far-right">
                 <button onclick="window.location.href='accueil.php';">Accueil</button>
-                <button
-                    onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
             </div>
         </nav>
     </header>

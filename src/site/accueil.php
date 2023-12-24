@@ -10,7 +10,6 @@
 <?php
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
-debug();
 try {
     session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
@@ -49,9 +48,9 @@ try {
             <h1>Derniers tickets</h1>
             <div id="ticket-container">
                 <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
-                <div>
-                    <p><?= $ticket['description'] ?></p>
-                </div>
+                    <div>
+                        <p><?= $ticket['description'] ?></p>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>

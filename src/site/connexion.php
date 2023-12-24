@@ -11,7 +11,6 @@
 // GET vars : 'erreur', 'message', 'déco'
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
-debug();
 ?>
 
 <body>
@@ -40,8 +39,7 @@ debug();
                         <label for="password">Mot de passe :</label><br>
                         <input name="password" id="password" type="password">
                         <br>
-                        <a
-                            href="maintenance.php?message=La page de réinitialisation de mot de passe est en cours de construction.">Mot
+                        <a href="maintenance.php?message=La page de réinitialisation de mot de passe est en cours de construction.">Mot
                             de passe oublié</a>
                         <br>
                         <br>

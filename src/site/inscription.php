@@ -11,7 +11,6 @@
 // GET vars : 'erreur', 'message'
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
-debug();
 $confirmation = false;
 ?>
 
@@ -79,7 +78,7 @@ $confirmation = false;
             </div>
             <div class="message">
                 <?php if ($confirmation) : ?>
-                Inscription réussie : vous pouvez vous connecter.
+                    Inscription réussie : vous pouvez vous connecter.
                 <?php endif; ?>
             </div>
         </div>

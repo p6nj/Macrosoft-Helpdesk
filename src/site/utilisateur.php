@@ -10,7 +10,6 @@
 <?php
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
-debug();
 try {
     session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Utilisateur) {
@@ -39,12 +38,9 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
-                <button
-                    onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
-                <button
-                    onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
-                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>"
-                    onclick="document.querySelector(' dialog#profil').showModal()">
+                <button onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
+                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
                 <dialog id="profil">
@@ -55,8 +51,7 @@ try {
                     <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de
                         passe</button>
                     <br>
-                    <button
-                        onclick="document.querySelector(' dialog#profil').close(); document.getElementById('mdp').style.display='none'">Fermer</button>
+                    <button onclick="document.querySelector(' dialog#profil').close(); document.getElementById('mdp').style.display='none'">Fermer</button>
                 </dialog>
             </div>
         </nav>
@@ -82,9 +77,9 @@ try {
             <h1>Derniers tickets</h1>
             <div id="ticket-container">
                 <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
-                <div>
-                    <p><?= $ticket['description'] ?></p>
-                </div>
+                    <div>
+                        <p><?= $ticket['description'] ?></p>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
