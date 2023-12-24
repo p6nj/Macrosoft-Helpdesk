@@ -62,11 +62,13 @@ $confirmation = false;
                     else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
                         redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
                     if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword'])) {  // résultat du formulaire
-                        if ($_POST['password'] == $_POST['cpassword']) {
-                            $_SESSION['client']->inscription(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
-                            $confirmation = true;
-                        } else
-                            echo 'Le mot de passe et la confirmation du mot de passe sont différents.';
+                        if ($_POST['username'] != '') {
+                            if ($_POST['password'] == $_POST['cpassword']) {
+                                $_SESSION['client']->inscription(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
+                                $confirmation = true;
+                            } else
+                                echo 'Le mot de passe et la confirmation du mot de passe sont différents.';
+                        } else echo 'Le champ `identifiant` ne peut pas être vide.';
                     }
                 } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
                     echo $e->getMessage();

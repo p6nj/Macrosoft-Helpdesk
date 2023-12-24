@@ -13,7 +13,7 @@ final class ConnexionImpossible extends ErreurBD {
 
 final class RequêteIllégale extends ErreurBD {
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null) {
-        parent::__construct('Requête illégale : ' . $message, $code, $previous);
+        parent::__construct('Demande rejetée, ' . $message, $code, $previous);
     }
 }
 
@@ -102,7 +102,8 @@ final class Utilisateur extends Compte {
         try {
             $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . ($cible != '' ? $cible : $this->getLogin()) . "')");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("Impossible d'ajouter ce ticket : " . $e->getMessage(), 1, $e);
+            $code = $e->getCode();
+            throw new RequêteIllégale("impossible de créer ce ticket : " . ($code == 1452 ? 'cible introuvable' : 'erreur inconnue'), 1, $e);
         }
     }
 
@@ -157,7 +158,8 @@ final class Visiteur extends Client {
             (new Système())->créeUtilisateur($id, $mdp);
             $this->insert("into Utilisateur(login, mdp) values ('$id','$mdp')");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("Impossible d'ajouter l'utilisateur $id", 2, $e);
+            $code = $e->getCode();
+            throw new RequêteIllégale("impossible d'ajouter l'utilisateur '$id' : " . ($code == 1396 ? 'cet identifiant est déjà pris' : 'raison inconnue'), 2, $e);
         }
     }
 
@@ -219,7 +221,7 @@ final class AdminWeb extends Compte {
         try {
             $this->update("VueTicketsTechnicien SET etat='En cours de traitement', niv_urgence=$niveau, libelle=$libellé, technicien='$technicien' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("Impossible de modifier le ticket $id", 5, $e);
+            throw new RequêteIllégale("impossible de modifier le ticket $id", 5, $e);
         }
     }
 
@@ -235,7 +237,7 @@ final class AdminWeb extends Compte {
         try {
             $this->update("VueLibellesNonArchives SET intitule='$titre', lib_sup=$groupe, archive=$archive WHERE idL=$id");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("Impossible de modifier le libellé $id", 6, $e);
+            throw new RequêteIllégale("impossible de modifier le libellé $id", 6, $e);
         }
     }
 
@@ -243,7 +245,7 @@ final class AdminWeb extends Compte {
         try {
             $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre',$groupe)");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("Impossible d'ajouter le libellé '$titre'", 7, $e);
+            throw new RequêteIllégale("impossible d'ajouter le libellé '$titre'", 7, $e);
         }
     }
 
@@ -251,7 +253,7 @@ final class AdminWeb extends Compte {
         try {
             $this->insert("into Utilisateur(login, mdp, role) values ($id,$mdp,'Technicien')");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("Impossible de créer le technicien '$id'", 8, $e);
+            throw new RequêteIllégale("impossible de créer le technicien '$id'", 8, $e);
         }
     }
 }
