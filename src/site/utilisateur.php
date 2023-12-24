@@ -12,10 +12,11 @@ require_once 'includes/profils.php';
 require_once 'includes/misc.php';
 debug();
 try {
-    session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
-    if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Utilisateur)  // l'utilisateur n'est pas connecté
+    session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
+    if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Utilisateur) {
+        // l'utilisateur n'est pas connecté
         redirect('accueil.php');
-    else if (isset($_POST['libellé']) && isset($_POST['niveau']) && isset($_POST['description']) && isset($_POST['cible'])) {
+    } else if (isset($_POST['libellé']) && isset($_POST['niveau']) && isset($_POST['description']) && isset($_POST['cible'])) {
         $_SESSION['client']->ajoutTicket(
             (int) $_POST['libellé'],
             (int) $_POST['niveau'],
@@ -38,9 +39,12 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
-                <button onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
-                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
-                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
+                <button
+                    onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
+                <button
+                    onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>"
+                    onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
                 <dialog id="profil">
@@ -48,9 +52,11 @@ try {
                     <?php $profil = $_SESSION['client']->getProfil(); ?>
                     Login : <?= $profil['login'] ?><br>
                     Mot de passe : <hidden id='mdp'><?= $profil['mdp'] ?></hidden>
-                    <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de passe</button>
+                    <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de
+                        passe</button>
                     <br>
-                    <button onclick="document.querySelector(' dialog#profil').close(); document.getElementById('mdp').style.display='none'">Fermer</button>
+                    <button
+                        onclick="document.querySelector(' dialog#profil').close(); document.getElementById('mdp').style.display='none'">Fermer</button>
                 </dialog>
             </div>
         </nav>
@@ -76,29 +82,32 @@ try {
             <h1>Derniers tickets</h1>
             <div id="ticket-container">
                 <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
-                    <div>
-                        <p><?= $ticket['description'] ?></p>
-                    </div>
+                <div>
+                    <p><?= $ticket['description'] ?></p>
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>
         <dialog id="add-ticket">
             <h2>Ajouter un ticket</h2>
-            <p>Une fois créé, ce ticket sera assigné à un technicien compétent qui vous assistera dans les plus brefs délais.</p>
+            <p>Une fois créé, ce ticket sera assigné à un technicien compétent qui vous assistera dans les plus brefs
+                délais.</p>
             <form method="post">
                 <label for="libellé">Libellé :</label>
                 <br>
                 <select name="libellé" id="libellé">
                     <?php
-                    function affiche_lib(array $lib, int $niveau = 0)
-                    {
+                    function affiche_lib(array $lib, int $niveau = 0) {
                         echo '<option value=' . $lib['idL'] . '>' . str_repeat('&emsp;', $niveau) . $lib['intitule'] . '</option>';
-                        foreach ($lib['inf'] as $inf)
+                        foreach ($lib['inf'] as $inf) {
                             affiche_lib($inf, $niveau + 1);
+                        }
                     }
 
-                    foreach ($_SESSION['client']->getLibellés() as $v)
+                    foreach ($_SESSION['client']->getLibellés() as $v) {
                         affiche_lib($v);
+                    }
+
                     ?>
                 </select>
                 <br>

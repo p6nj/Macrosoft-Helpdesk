@@ -2,33 +2,28 @@
 // TODO: rajouter du contexte aux erreurs de requête illégale
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-class ErreurBD extends Exception {}
+class ErreurBD extends Exception {
+}
 
-final class ConnexionImpossible extends ErreurBD
-{
-    public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
-    {
+final class ConnexionImpossible extends ErreurBD {
+    public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null) {
         parent::__construct('Connexion impossible : ' . $message, $code, $previous);
     }
 }
 
-final class RequêteIllégale extends ErreurBD
-{
-    public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
-    {
+final class RequêteIllégale extends ErreurBD {
+    public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null) {
         parent::__construct('Requête illégale : ' . $message, $code, $previous);
     }
 }
 
-abstract class Client
-{
+abstract class Client {
     private const bd_nom = 'MacrosoftDB', bd_hôte = 'localhost';
 
     private readonly mysqli $con;
     private readonly string $mdp, $id;
 
-    public function __construct(string $id, string $mdp)
-    {
+    public function __construct(string $id, string $mdp) {
         try {
             $this->con = mysqli_connect(Client::bd_hôte, $id, $mdp, Client::bd_nom);
         } catch (mysqli_sql_exception $e) {
@@ -47,13 +42,11 @@ abstract class Client
         $this->id = $id;
     }
 
-    public function __unserialize(array $data): void
-    {
+    public function __unserialize(array $data): void {
         $this->__construct($data['id'], $data['mdp']);
     }
 
-    public function __serialize(): array
-    {
+    public function __serialize(): array {
         $this->close();
         return [
             'id' => $this->id,
@@ -61,64 +54,51 @@ abstract class Client
         ];
     }
 
-    protected function select(string $q): array
-    {
+    protected function select(string $q): array {
         return $this->con->query('select ' . $q)->fetch_all(MYSQLI_ASSOC);
     }
 
-    protected function insert(string $q)
-    {
+    protected function insert(string $q) {
         $this->con->query('insert ' . $q);
     }
 
-    protected function update(string $q)
-    {
+    protected function update(string $q) {
         $this->con->query('update ' . $q);
     }
 
-    protected function grant(string $q)
-    {
+    protected function grant(string $q) {
         $this->con->query('grant ' . $q);
     }
 
-    protected function set(string $q)
-    {
+    protected function set(string $q) {
         $this->con->query('set ' . $q);
     }
 
-    protected function create(string $q)
-    {
+    protected function create(string $q) {
         $this->con->query('create ' . $q);
     }
 
-    private function close()
-    {
+    private function close() {
         $this->con->close();
     }
 
-    protected function getLogin(): string
-    {
+    protected function getLogin(): string {
         return $this->id;
     }
 }
 
-abstract class Compte extends Client
-{
-    public function getProfil(): array
-    {
+abstract class Compte extends Client {
+    public function getProfil(): array {
         return $this->select('* from VueProfilUtilisateur')[0];
     }
 }
 
-final class Utilisateur extends Compte
-{
-    public function getTickets(): array
-    {
+final class Utilisateur extends Compte {
+    public function getTickets(): array {
         return $this->select('* from VueTicketsUtilisateur');
     }
 
-    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible)
-    {
+    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible) {
         try {
             $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . ($cible != '' ? $cible : $this->getLogin()) . "')");
         } catch (mysqli_sql_exception $e) {
@@ -126,8 +106,7 @@ final class Utilisateur extends Compte
         }
     }
 
-    public function getLibellés()
-    {
+    public function getLibellés() {
         return
             array_map(function (array $i): array {
                 $i['inf'] = $this->getLibellésInf($i['idL']);
@@ -135,8 +114,7 @@ final class Utilisateur extends Compte
             }, $this->select('idL, intitule from VueLibellesNonArchives where lib_sup is null or lib_sup not in (select idL from VueLibellesNonArchives)'));
     }
 
-    private function getLibellésInf(int $idL)
-    {
+    private function getLibellésInf(int $idL) {
         return array_map(function (array $i): array {
             $i['inf'] = $this->getLibellésInf($i['idL']);
             return $i;
@@ -144,15 +122,12 @@ final class Utilisateur extends Compte
     }
 }
 
-final class Visiteur extends Client
-{
-    public function __construct()
-    {
+final class Visiteur extends Client {
+    public function __construct() {
         parent::__construct('visiteur', file_get_contents('includes/mdp_visiteur'));
     }
 
-    public function connecte($id, $mdp): Client
-    {
+    public function connecte($id, $mdp): Client {
         try {
             $temp = new Utilisateur($id, $mdp);
         } catch (ConnexionImpossible $e) {
@@ -172,14 +147,12 @@ final class Visiteur extends Client
         }
     }
 
-    public function getTickets(): array
-    {
+    public function getTickets(): array {
         return $this->select('* from VueDerniersTicketsOuverts');
     }
 
     // la vérification du mdp se fera plus en amont
-    public function inscription(string $id, string $mdp)
-    {
+    public function inscription(string $id, string $mdp) {
         try {
             (new Système())->créeUtilisateur($id, $mdp);
             $this->insert("into Utilisateur(login, mdp) values ('$id','$mdp')");
@@ -188,41 +161,33 @@ final class Visiteur extends Client
         }
     }
 
-    private function echecConnexion(string $id, string $mdp)
-    {
+    private function echecConnexion(string $id, string $mdp) {
         $this->insert("into Log_connexion_echec (date, login_tente, mdp_tente, IP) values (CURRENT_DATE,'$id','$mdp','" . $_SERVER['REMOTE_ADDR'] . "')");
     }
 }
 
-final class Système extends Client
-{
-    public function __construct()
-    {
+final class Système extends Client {
+    public function __construct() {
         parent::__construct('sys', file_get_contents('includes/mdp_sys'));
     }
 
-    public function créeUtilisateur(string $id, string $mdp)
-    {
+    public function créeUtilisateur(string $id, string $mdp) {
         $this->create("user `$id` identified by '$mdp'");
         $this->grant("UTILISATEUR to `$id`");
         $this->set("default role UTILISATEUR for `$id`");
     }
 }
 
-final class Technicien extends Compte
-{
-    public function getTicketsAttribués(): array
-    {
+final class Technicien extends Compte {
+    public function getTicketsAttribués(): array {
         return $this->select('* from VueTicketsTechnicien');
     }
 
-    public function getTicketsNonAttribués(): array
-    {
+    public function getTicketsNonAttribués(): array {
         return $this->select('* from VueTicketsNonTraites ');
     }
 
-    public function assigneTicket(int $id)
-    {
+    public function assigneTicket(int $id) {
         try {
             $this->update("VueTicketsNonTraites SET technicien='" . $this->getLogin() . "', etat='En cours de traitement' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
@@ -230,8 +195,7 @@ final class Technicien extends Compte
         }
     }
 
-    public function fermeTicket(int $id)
-    {
+    public function fermeTicket(int $id) {
         try {
             $this->update("VueTicketsTechnicien SET etat='Fermé' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
@@ -240,23 +204,18 @@ final class Technicien extends Compte
     }
 }
 
-final class AdminSys extends Compte
-{
-    public function getTicketValidés(): array
-    {
+final class AdminSys extends Compte {
+    public function getTicketValidés(): array {
         return $this->select('* from VueLogTicketsValides');
     }
 
-    public function getConnexionsEchouées(): array
-    {
+    public function getConnexionsEchouées(): array {
         return $this->select('* from Log_connection_echec');
     }
 }
 
-final class AdminWeb extends Compte
-{
-    public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien)
-    {
+final class AdminWeb extends Compte {
+    public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien) {
         try {
             $this->update("VueTicketsTechnicien SET etat='En cours de traitement', niv_urgence=$niveau, libelle=$libellé, technicien='$technicien' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
@@ -264,18 +223,15 @@ final class AdminWeb extends Compte
         }
     }
 
-    public function getTickets(): array
-    {
+    public function getTickets(): array {
         return $this->select('* from VueTicketsOuverts');
     }
 
-    public function getLibellés(): array
-    {
+    public function getLibellés(): array {
         return $this->select('* from VueLibellesNonArchives');
     }
 
-    public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive)
-    {
+    public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive) {
         try {
             $this->update("VueLibellesNonArchives SET intitule='$titre', lib_sup=$groupe, archive=$archive WHERE idL=$id");
         } catch (mysqli_sql_exception $e) {
@@ -283,8 +239,7 @@ final class AdminWeb extends Compte
         }
     }
 
-    public function ajoutLibellé(string $titre, ?int $groupe)
-    {
+    public function ajoutLibellé(string $titre, ?int $groupe) {
         try {
             $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre',$groupe)");
         } catch (mysqli_sql_exception $e) {
@@ -292,8 +247,7 @@ final class AdminWeb extends Compte
         }
     }
 
-    public function ajoutTechnicien(string $id, string $mdp)
-    {
+    public function ajoutTechnicien(string $id, string $mdp) {
         try {
             $this->insert("into Utilisateur(login, mdp, role) values ($id,$mdp,'Technicien')");
         } catch (mysqli_sql_exception $e) {

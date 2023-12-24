@@ -40,7 +40,9 @@ debug();
                         <label for="password">Mot de passe :</label><br>
                         <input name="password" id="password" type="password">
                         <br>
-                        <a href="maintenance.php?message=La page de réinitialisation de mot de passe est en cours de construction.">Mot de passe oublié</a>
+                        <a
+                            href="maintenance.php?message=La page de réinitialisation de mot de passe est en cours de construction.">Mot
+                            de passe oublié</a>
                         <br>
                         <br>
                         <input type="submit" value="Se connecter">
@@ -52,29 +54,29 @@ debug();
             </div>
             <div class="error">
                 <?php
-                    try {
-                        session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
-                        if (isset($_GET['déco']))  // la page précédente a demandé la déconnexion
-                            session_destroy() && session_start();
-                        if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
-                            $_SESSION['client'] = new Visiteur();
-                        else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
-                            redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
-                        if (isset($_POST['username']) && isset($_POST['password'])) {  // résultat du formulaire
-                            $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
-                            redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
-                        }
-                    } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
-                        echo $e->getMessage();
+                try {
+                    session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
+                    if (isset($_GET['déco']))  // la page précédente a demandé la déconnexion
+                        session_destroy() && session_start();
+                    if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
+                        $_SESSION['client'] = new Visiteur();
+                    else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
+                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
+                    if (isset($_POST['username']) && isset($_POST['password'])) {  // résultat du formulaire
+                        $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
+                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
                     }
-                    if (isset($_GET['erreur']))
-                        echo $_GET['erreur'];
+                } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
+                    echo $e->getMessage();
+                }
+                if (isset($_GET['erreur']))
+                    echo $_GET['erreur'];
                 ?>
             </div>
             <div class="message">
                 <?php
-                    if (isset($_GET['message']))
-                        echo $_GET['message'];
+                if (isset($_GET['message']))
+                    echo $_GET['message'];
                 ?>
             </div>
         </div>
