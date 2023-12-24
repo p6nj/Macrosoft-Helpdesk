@@ -216,7 +216,7 @@ main {
     padding: 20px
 }
 
-#ticket-container>div {
+ticket {
     -moz-box-shadow: var(--ticket-shadow);
     -webkit-box-shadow: var(--ticket-shadow);
     border-radius: var(--radius);
@@ -227,7 +227,11 @@ main {
     width: 200px
 }
 
-#ticket-container>div>p {
+ticket.clickable:hover {
+    cursor: pointer;
+}
+
+ticket>p {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     display: -webkit-box;
