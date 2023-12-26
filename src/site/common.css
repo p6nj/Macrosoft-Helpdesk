@@ -112,6 +112,22 @@ niv,demandeur{
     float: right;
 }
 
+table{
+    width: 100%;
+    -moz-box-shadow: var(--ticket-shadow);
+    -webkit-box-shadow: var(--ticket-shadow);
+    border-radius: var(--radius);
+    box-shadow: var(--ticket-shadow);
+}
+thead{
+    background-color: steelblue;
+    color: white;
+}
+tr:nth-child(even){
+    background-color: var(--transparent-blue);
+
+}
+
 /* CLASSES */
 
 .right {
