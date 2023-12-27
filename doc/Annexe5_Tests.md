@@ -79,6 +79,86 @@ La maquette web est la suivante :
 
      2.2 Livrable 3
 
+| Paramètre                             | Valeur                                               |
+|---------------------------------------| ---------------------------------------------------- |
+| Identification du test : calcul_proba | version 0.5                           |
+| Description du test                   | Test Unitaire sur la fonction "calcul_proba" en utilisant la méthode des boites noires. |
+| Ressources Requises                   | Rstudio                                                     |
+| Responsable                           | Baptiste Fournié                                     |
+
+
+Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix , le libéllé peut etre divisé en 3 sous ensembles: all qui veut dire tous les tickets , un libéllé inexistant , un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide
+
+
+| Classe |                   Libéllé                   | Résultat attendu |
+|:------:|:-------------------------------------------:|:----------------:|
+|   P0   |                     all                     |             1    |
+|   P1   |          libélle inexistant                 |         0        |
+|   P2   |              libélle existant               |nb tickets possédant le libéllé dans la plage de date / nb tickets dans la plage de date |   
+
+
+| Classe | libéllé|Résultat  |
+|:------:|:-----:|:---------:|
+|   P0   | all   | 1        |
+|   P1   | manger une choucroutte|0|
+|   P2   |Problème logiciel|2/10 = 0,2|
+
+on considére qu'il y a 10 tickets et que la plage des dates prend toute l'année
+
+
+| Paramètre              | Valeur                                               |
+| ---------------------- | ---------------------------------------------------- |
+| Identification du test : calcul_nombre | version 0.5                           |
+| Description du test    | Test Unitaire sur la fonction "calcul_nombre" en utilisant la méthode des boites noires. |
+| Ressources Requises    | Rstudio                                               |
+| Responsable            | Baptiste Fournié                                     |
+
+
+Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix, la plage des dates peut etre divisé en 2 sous ensembles : soit la plage date fait un mois donc une seul ligne dans le data frame soit la plage datez comporte plusieurs mois donc il y aura plusieurs lignes dans le data frame. Le libéllé peut etre divisé en 3 sous ensembles: all qui veut dire tous les tickets , un libéllé inexistant , un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide
+
+
+| Classe |             Libéllé       |             Plage date        | Résultat attendu |
+|:------:|:-------------------------:|:-----------------------------:|:----------------:|
+|   P0   |   all                     |         1 mois               |   nombre de tickets dans ce mois|
+|   P1   |   all                     |         plusieurs mois       |   nombre de tickets pour chaque  mois present dans la plage date|
+|   P2   |   libélle inexistant      | Quelque soit la plage date   |  0 pour chaque mois présent dans la plage date |
+|   P3   |   libélle existant        |           1 mois             |  nombre de tickets possédant ce libéllé dans ce mois|
+|   P4   |   libélle existant        |         plusieurs mois       | nombre de tickets possédant ce libéllé pour chaque  mois present dans la plage date|
+
+
+|  Classe |             Libéllé        |             Plage date        | Résultat attendu |
+|:-------:|:-------------------------:|:-----------------------------:|:----------------:|
+|   P0    |   all                     |         janvier               |  janvier : 2     |
+|   P1    |   all                     |         janvier à fevrier     |  janvier : 2 , fevrier 2|
+|   P2    |  manger une choucroutte   |         janvier               |  janvier : 0     |
+|   P3    |   Problème logiciel        |        janvier               |  janvier : 1     |
+|   P4    |   Problème logiciel        |        janvier à fevrier     | janvier : 1 , fevrier 1|
+
+On considére qu'il y a 12 tickets et que chaque mois posséde 1 ticket probléme logiciel et un autre.
+
+| Paramètre              | Valeur                                               |
+| ---------------------- | ---------------------------------------------------- |
+| Identification du test : calcul_loi_Normale | version 0.5                     |
+| Description du test    | Test Unitaire sur la fonction "calcul_loi_Normale" en utilisant la méthode des boites noires. |
+| Ressources Requises    | Rstudio                                              |
+| Responsable            | Baptiste Fournié                                     |
+
+
+Choix de partition: On considére que la moyenne et l'ecart type  est égale ou supérieur à 0. Le data frame contenant le nombre de tickets par mois peut etre divisé en 2 sous ensembles : soit il n'y a qu'une seul valeur dans le data frame soit il y en a plusieurs . Dans résultat attend loi1N signifie les valeurs comprise entre moyenne - écart type et moyenne + écart  type. et loi2N signifie les valeurs comprise entre moyenne - écart type et moyenne + écart  type
+
+| Classe |             dataFrame       |  Résultat attendu  |
+|:------:|:-------------------------:|:------------------:|
+|   P0   |   une seule valeur        |Loi1N = 10 loi2N = 1|
+|   P1   |   pluesieurs valeurs      |loi1N = [moy-sd, moy+sd] loi2N = [moy-2sd, moy+2sd]|
+
+
+| Classe |             dataFrame       |   Résultat attendu    |
+|:------:|:-------------------------:|:---------------------:|
+|   P0   |   janvier : 2             |Loi1N = 100 loi2N = 100|
+|   P1   |   janvier : 3 , fevrier 2, mars : 0 |loi1N = 100/3  loi2N =100 |
+
+
+
 3. Résultats de test
 
      3.1 Livrable 1
