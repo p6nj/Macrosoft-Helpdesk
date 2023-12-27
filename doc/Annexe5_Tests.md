@@ -13,7 +13,7 @@ Ce document est un dossier de tests pour le projet de plateforme de ticketing in
 
 * Les objectifs du premier livrable sont de faire une maquette des pages de l'application web et de vérifier si les pages HTML ressemblent aux maquettes graphiques. 
 * Les objectifs du second livrable sont de créer la base de données pour l'application web et de vérifier si la base de données est opérationnelle (Les tests sont dans le dossier src/bd).
-* Les objectifs du troisiéme livrable sont de faire les pages dynamiques de l'application web grâce aux maquettes du premier livrable, de faire une étude analytique sur les données de l'application web et de vérifier si les outils pour réaliser l'étude sont opérationnelles .
+* Les objectifs du troisiéme livrable sont de faire les pages dynamiques de l'application web grâce aux maquettes du premier livrable, de faire une étude analytique sur les données de l'application web et de vérifier si les outils pour réaliser l'étude sont opérationnels .
 
 ### Description de la procédure de test
 Pour le premier livrable ,les tests seront des tests d'intégration visuels. Ils consisteront à comparer le visuel de la page web à la maquette graphique et de voir si elles sont identiques. Donc il n'y aura de partition.
@@ -194,4 +194,4 @@ Résultat :
 
 4. Conclusion
 
-Les pages du site web ressemblent à leur maquette graphique. Le dossier tests sera mis à jour lors du 2ᵉ livrable.
+Les pages du site web ressemblent à leur maquette graphique et les outils de l'étude analytique sont opérationels. Le dossier tests sera mis à jour lors du livrable 4.
