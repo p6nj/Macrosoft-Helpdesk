@@ -157,7 +157,18 @@ Choix de partition: On considére que la moyenne et l'ecart type  est égale ou 
 |   P0   |   janvier : 2             |Loi1N = 100 loi2N = 100|
 |   P1   |   janvier : 3 , fevrier 2, mars : 0 |loi1N = 100/3  loi2N =100 |
 
+| Paramètre              | Valeur                                                                         |
+| ---------------------- |--------------------------------------------------------------------------------|
+| Identification du test | Interface graphique                                                            |
+| Description du test    | Test d'intégration visuel sur l'interface graphique sur l'analyse des tickets. |
+| Ressources Requises    |                                                                                |
+| Responsable            | Lucas Da Silva Ferreira                                                        |
 
+Pour l'interface nous allons refaire les tests faits précedemment et voir si il retourne bien les mêmes résultats(Seuls les classes avec libéllé inexistant ne seront pas faites car dans l'interface graphique , l'utilisateur ne peut que choisir des libéllés existants) . 
+
+Prévision :
+
+![](img/Maquette_R.png)
 
 3. Résultats de test
 
