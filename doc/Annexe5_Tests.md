@@ -169,6 +169,11 @@ Choix de partition: On considére que la moyenne et l'ecart type  est égale ou 
 | Page d'inscription         | Baptiste Fournié | 22/10/2023                    | OK               | Systématique              |
 
     3.2 Livrable 3
+| Référence du test appliqué | Responsable      | Date de l'application du test | Résultat du test | Occurrences des résultats |
+| -------------------------- | ---------------- | ----------------------------- | ---------------- | ------------------------- |
+| calcul proba               | Baptiste Fournié | 27/12/2023                    | OK               | Systématique              |
+| calcul nombre              | Baptiste Fournié | 27/12/2023                    | OK               | Systématique              |
+| calcul_loi_normale         | Baptiste Fournié | 27/12/2023                    | OK               | Systématique              |
 
 4. Conclusion
 
