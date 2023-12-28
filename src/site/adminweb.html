@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Macrosoft HelpDesk</title>
+  <link rel="stylesheet" type="text/css" href="common.css">
+</head>
+<script>
+  function modticket() {
+    let target = event.relatedTarget;
+    let dialog = document.getElementById('ticket-dialog');
+    let form = document.forms['ticket'];
+    form.elements['idT'].value = target.id;
+    form.elements['libelle'].value = target.children[0].id;
+    form.elements['niveau'].value = target.children[1].id;
+    form.elements['tech'].value = target.children[7].innerText;
+    dialog.showModal();
+  }
+  function modlib() {
+    let target = event.relatedTarget;
+    event.cancelBubble = true; // don't trigger parent elements
+    let dialog = document.getElementById('lib-dialog');
+    let form = document.forms['libelle'];
+    form.elements['idL'].value = target.id;
+    form.elements['titre'].value = target.children[0].innerText;
+    form.elements['sup'].value = target.parentElement.id;
+    form.elements['archive'].checked = false;
+    dialog.showModal();
+  }
+</script>
+
+<body>
+  <header>
+    <nav>
+      <div class="left">
+        <img id="logo" src="img/logo.svg" alt="Logo Macrosoft Helpdesk">
+        <h1>HelpDesk</h1>
+      </div>
+      <div class="far-right">
+        <button>
+          ajout Libellé
+        </button>
+        <button>
+          ajout Technicien
+        </button>
+        <button
+          onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+        <button title="login">
+          Profil
+        </button>
+      </div>
+    </nav>
+  </header>
+  <main id="header-top-margin">
+    <div class="message">
+    </div>
+    <div class="error">
+    </div>
+    <div>
+      <h1>Libellés</h1>
+      <div class="ticket-container">
+        <libellé class="clickable" onclick="modlib()" id="1">
+          <nom>Nom Libellé</nom>
+          <div class="ticket-container">
+            <libellé class="inf clickable" onclick="modlib()" id="2">
+              <nom>Nom Libellé</nom>
+            </libellé>
+            <libellé class="inf clickable" onclick="modlib()" id="3">
+              <nom>Nom Libellé</nom>
+            </libellé>
+          </div>
+        </libellé>
+        <libellé class="clickable" onclick="modlib()" id="4">
+          <nom>Nom Libellé</nom>
+          <div class="ticket-container">
+            <libellé class="inf clickable" onclick="modlib()" id="5">
+              <nom>Nom Libellé</nom>
+              <div class="ticket-container">
+                <libellé class="inf clickable" onclick="modlib()" id="6">
+                  <nom>Nom libellé</nom>
+                  </libell>
+              </div>
+            </libellé class="clickable" onclick="modlib()" id="7">
+            <libellé class="inf clickable" onclick="modlib()" id="8">
+              <nom>Nom Libellé</nom>
+            </libellé>
+          </div>
+        </libellé>
+      </div>
+    </div>
+    <div>
+      <h1>Tickets</h1>
+      <div class="ticket-container">
+        <ticket onclick="modticket()" class="clickable" tid="1">
+          <lib id="1">Libellé</lib>
+          <niv id="4">Urgent</niv>
+          <p class="center-text">Description</p>
+          <cible>breval</cible>
+          <etat>Ouvert</etat>
+          <br>
+          <demandeur>william</demandeur>
+          <technicien></technicien>
+        </ticket>
+        <ticket onclick="modticket()" class="clickable" tid="2">
+          <lib id="2">Libellé</lib>
+          <niv id="3">Très important</niv>
+          <p class="center-text">Description</p>
+          <cible>breval</cible>
+          <etat>Ouvert</etat>
+          <br>
+          <demandeur>william</demandeur>
+          <technicien>tec1</technicien>
+        </ticket>
+      </div>
+    </div>
+    <dialog id="ticket-dialog">
+      <h2>Modifier le ticket</h2>
+      <p>Modifiez les informations ci-dessous puis enregistrez pour modifier le ticket dans la base.</p>
+      <br><br>
+      <form method="form" id="ticket">
+        <input type="hidden" name="idT">
+        <label for="niveau">Niveau d'urgence :</label>
+        <br>
+        <select name="niveau" id="niveau">
+          <option value="1">Moindre</option>
+          <option value="2">Important</option>
+          <option value="3">Très important</option>
+          <option value="4">Urgent</option>
+        </select>
+        <br><br>
+        <label for="libelle">Libellé :</label>
+        <br>
+        <select name="libelle" id="libelle">
+          <option value="1">Libellé 1</option>
+          <option value="2">&emsp;Libellé 2</option>
+          <option value="3">Libellé 3</option>
+        </select>
+        <br><br>
+        <label for="tech">Technicien assigné :</label>
+        <br>
+        <input type="text" name="tech" id="tech">
+        <br><br>
+        <button type="submit">Enregistrer</button>
+        <input type="button" onclick="document.getElementById('ticket-dialog').close()" value="Annuler">
+      </form>
+    </dialog>
+    <dialog id="lib-dialog">
+      <h2>Modifier le libellé</h2>
+      <p>Modifiez les informations ci-dessous puis enregistrez pour modifier le libellé dans la base.</p>
+      <br><br>
+      <form method="form" id="libelle">
+        <input type="hidden" name="idL">
+        <label for="titre">Titre :</label>
+        <br>
+        <input type="text" name="titre" id="titre">
+        <br><br>
+        <label for="sup">Libellé supérieur :</label>
+        <br>
+        <select name="sup" id="sup">
+          <option value="1">Libellé 1</option>
+          <option value="2">&emsp;Libellé 2</option>
+          <option value="3">Libellé 3</option>
+        </select>
+        <br><br>
+        <label for="archive">Archivé </label>
+        <input type="checkbox" name="archive" id="archive">
+        <br><br>
+        <button type="submit">Enregistrer</button>
+        <input type="button" onclick="document.getElementById('lib-dialog').close()" value="Annuler">
+      </form>
+    </dialog>
+  </main>
+  <footer>
+    <p>&copy; 2023 Macrosoft Helpdesk</p>
+  </footer>
+</body>
+
+</html>

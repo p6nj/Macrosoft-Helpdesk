@@ -108,22 +108,26 @@ main {
     width: 70%
 }
 
-niv,demandeur{
+niv,
+demandeur,
+etat {
     float: right;
 }
 
-table{
+table {
     width: 100%;
     -moz-box-shadow: var(--ticket-shadow);
     -webkit-box-shadow: var(--ticket-shadow);
     border-radius: var(--radius);
     box-shadow: var(--ticket-shadow);
 }
-thead{
+
+thead {
     background-color: steelblue;
     color: white;
 }
-tr:nth-child(even){
+
+tr:nth-child(even) {
     background-color: var(--transparent-blue);
 
 }
@@ -235,6 +239,7 @@ tr:nth-child(even){
     margin: 20px;
     padding: 20px
 }
+
 .ticket-container {
     height: 40%;
     margin: 20px;
@@ -252,7 +257,22 @@ ticket {
     width: 200px
 }
 
-ticket.clickable:hover {
+libellé {
+    -moz-box-shadow: var(--ticket-shadow);
+    -webkit-box-shadow: var(--ticket-shadow);
+    border-radius: var(--radius);
+    box-shadow: var(--ticket-shadow);
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    width: 300px
+}
+
+.inf {
+    width: 90%
+}
+
+.clickable:hover {
     cursor: pointer;
 }
 
@@ -300,4 +320,3 @@ dialog {
 hidden {
     display: none
 }
-

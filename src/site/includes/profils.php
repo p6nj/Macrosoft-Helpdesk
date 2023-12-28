@@ -93,20 +93,7 @@ abstract class Compte extends Client {
     }
 }
 
-final class Utilisateur extends Compte {
-    public function getTickets(): array {
-        return $this->select('* from VueTicketsUtilisateur');
-    }
-
-    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible) {
-        try {
-            $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . ($cible != '' ? $cible : $this->getLogin()) . "')");
-        } catch (mysqli_sql_exception $e) {
-            $code = $e->getCode();
-            throw new RequêteIllégale("impossible de créer ce ticket : " . ($code == 1452 ? 'cible introuvable' : 'erreur inconnue'), 1, $e);
-        }
-    }
-
+abstract class AccesseurLibellé extends Compte {
     public function getLibellés() {
         return
             array_map(function (array $i): array {
@@ -120,6 +107,21 @@ final class Utilisateur extends Compte {
             $i['inf'] = $this->getLibellésInf($i['idL']);
             return $i;
         }, $this->select("idL, intitule from VueLibellesNonArchives where lib_sup = $idL"));
+    }
+}
+
+final class Utilisateur extends AccesseurLibellé {
+    public function getTickets(): array {
+        return $this->select('* from VueTicketsUtilisateur');
+    }
+
+    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible) {
+        try {
+            $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . ($cible != '' ? $cible : $this->getLogin()) . "')");
+        } catch (mysqli_sql_exception $e) {
+            $code = $e->getCode();
+            throw new RequêteIllégale("impossible de créer ce ticket : " . ($code == 1452 ? 'cible introuvable' : 'erreur inconnue'), 1, $e);
+        }
     }
 }
 
@@ -216,7 +218,7 @@ final class AdminSys extends Compte {
     }
 }
 
-final class AdminWeb extends Compte {
+final class AdminWeb extends AccesseurLibellé {
     public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien) {
         try {
             $this->update("VueTicketsTechnicien SET etat='En cours de traitement', niv_urgence=$niveau, libelle=$libellé, technicien='$technicien' WHERE idT=$id");
@@ -227,10 +229,6 @@ final class AdminWeb extends Compte {
 
     public function getTickets(): array {
         return $this->select('* from VueTicketsOuverts');
-    }
-
-    public function getLibellés(): array {
-        return $this->select('* from VueLibellesNonArchives');
     }
 
     public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive) {
