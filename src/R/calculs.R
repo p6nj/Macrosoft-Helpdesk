@@ -7,30 +7,28 @@
 #'
 #' @return La probabilité d'occurrence du libellé spécifié dans la plage de dates donnée.
 #'
-calcule_proba = function(tickets, libelle, dateDebut, dateFin) {
-  # Convertir les dates de début et de fin en format POSIXct
-  dateDebut = as.POSIXct(dateDebut)
-  dateFin = as.POSIXct(dateFin)
-
-  # Initialiser le compteur des tickets adéquats et le compteur total des tickets dans la plage de dates
+calcule_proba = function(tickets,libelle,dateDebut,dateFin)
+{
+  if(libelle =="all"){
+    return (1)
+  }
+  dateDebut = as.POSIXct(dateDebut -1)
+  dateFin = as.POSIXct(dateFin +1)
   ticket_apte = 0
   ticket_date = 0
-
-  # Parcourir tous les tickets
-  for (ticket in tickets) {
-    # Vérifier si le ticket est dans la plage de dates spécifiée
-    if ((ticket$date_creation >= dateDebut) && (ticket$date_creation <= dateFin)) {
+  for (ticket in tickets)
+  {
+    if((ticket$date_creation >= dateDebut) && (ticket$date_creation <=dateFin))
+    {
       ticket_date = ticket_date + 1
+      if(ticket$libelle == libelle)
+      {
 
-      # Vérifier si le libellé du ticket correspond au libellé spécifié
-      if (ticket$libelle == libelle) {
         ticket_apte = ticket_apte + 1
       }
     }
   }
-
-  # Calculer la probabilité d'occurrence du libellé spécifié
-  return(ticket_apte / ticket_date)
+  return (ticket_apte/ticket_date)
 }
 
 #' Calcule le nombre de tickets par mois pour un libellé spécifique dans une plage de dates donnée.
@@ -44,11 +42,14 @@ calcule_proba = function(tickets, libelle, dateDebut, dateFin) {
 #'
 calcule_nombre = function(tickets, libelle, dateDebut, dateFin)
 {
-  dateDebut = as.POSIXct(dateDebut)
-  dateFin = as.POSIXct(dateFin)
+
+  dateMoisDebut = as.POSIXct(dateDebut)
+  dateMoisFin = as.POSIXct(dateFin)
+  dateDebut = as.POSIXct(dateDebut-1)
+  dateFin = as.POSIXct(dateFin+1)
 
   # Générer tous les mois entre dateDebut et dateFin
-  mois_entre_dates = seq(from = as.Date(cut(dateDebut, "month")), to = as.Date(cut(dateFin, "month")), by = "month")
+  mois_entre_dates = seq(from = as.Date(cut(dateMoisDebut, "month")), to = as.Date(cut(dateMoisFin, "month")), by = "month")
   mois_entre_dates = unique(format(mois_entre_dates, "%Y-%m"))
 
   # Créer un dataframe résultat avec les mois et le nombre de tickets
@@ -120,13 +121,13 @@ calcule_loi_normale = function(moyenne, sd1, ticketsMois) {
   loiN1 = 0
   loiN2 = 0
   for (mois in ticketsMois) {
-    if ((mois > moyenne - sd1) && (mois < moyenne + sd1)) {
+    if ((mois >= moyenne - sd1) && (mois <= moyenne + sd1)) {
       loiN1 = loiN1 + 1
     }
-    if ((mois > moyenne - 2 * sd1) && (mois < moyenne + 2 * sd1)) {
+    if ((mois >= moyenne - 2 * sd1) && (mois <= moyenne + 2 * sd1)) {
       loiN2 = loiN2 + 1
     }
   }
-  loi = c((loiN1 / length(ticketsMois) * 100), (loiN2 / length(ticketsMois) * 100))
+  loi = c((loiN1 / length(ticketsMois)*100), (loiN2 / length(ticketsMois)*100))
   return(loi)
 }
