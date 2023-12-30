@@ -110,21 +110,21 @@ Vous verrez ci-dessous un diagramme de classe commenté.
 
 #### Client
 
-Tout est centré autour de la classe Client, qui est une généralisation des utilisateurs physiques ou virtuels de la plateforme. Chaque Client possède un identifiant et un mot de passe permettant de se connecter à un compte de la base de données. Cette connection est également stockée dans la classe Client, et elle possède des champs statiques contenant l'hôte et le nom de la base de données afin de pouvoir s'y connecter ou reconnecter. Cette classe surcharge les méthodes dites "magiques" de sérialisation pour qu'une instance soit transmise d'une page à l'autre dans la session PHP. Interfaçant avec la base, elle met à disposition des méthodes de requête.  
+Tout est centré autour de la classe `Client`, qui est une généralisation des utilisateurs physiques ou virtuels de la plateforme. Chaque `Client` possède un identifiant et un mot de passe permettant de se connecter à un compte de la base de données. Cette connection est également stockée dans la classe `Client`, et elle possède des champs statiques contenant l'hôte et le nom de la base de données afin de pouvoir s'y connecter ou reconnecter. Cette classe surcharge les méthodes dites "magiques" de sérialisation pour qu'une instance soit transmise d'une page à l'autre dans la session PHP. Interfaçant avec la base, elle met à disposition des méthodes de requête.  
 C'est une classe abstraite, ce qui veut dire que d'autres types d'utilisateurs plus précis et avec des méthodes supplémentaires hériteront de ses caractéristiques.
 
 #### Client virtuel et visiteur
 
-Chaque utilisateur non connecté se verra attribué un objet `Visiteur` hérité de Client avec des méthodes restreintes pour afficher la page d'accueil. Une escalade de privilèges liée à la connexion d'un utilisateur est représentée par la méthode `connecte` renvoyant un Client de la classe fille correspondante à son role dans la base ; c'est l'équivalent d'un objet `Factory` en *Factory Design Pattern*.  
+Chaque utilisateur non connecté se verra attribué un objet `Visiteur` hérité de `Client` avec des méthodes restreintes pour afficher la page d'accueil. Une escalade de privilèges liée à la connexion d'un utilisateur est représentée par la méthode `connecte` renvoyant un `Client` de la classe fille correspondante à son role dans la base ; c'est l'équivalent d'un objet `Factory` en *Factory Design Pattern*.  
 La classe Système représente un visiteur virtuel et permet simplement d'ajouter des utilisateurs, ayant les droits nécessaires dans la base de donnée.  
 
-Ces deux classes surchargent le constructeur de Client pour utiliser des identifiants statiques puisqu'elles sont reliées à un seul utilisateur MySQL chacune.
+Ces deux classes surchargent le constructeur de `Client` pour utiliser des identifiants statiques puisqu'elles sont reliées à un seul utilisateur MySQL chacune.
 
 #### Compte et AccesseurLibellé
 
-La classe Compte est l'abstraction d'un utilisateur connecté. Non-instanciable, elle généralise les différents rôles d'utilisateurs : Utilisateur, Technicien, AdminSys, AdminWeb. Chaque rôle, comme Visiteur, est équippé de méthodes pour afficher sa page respective et effectuer ses opérations permises dans la base de données et dérivées du dossier de spécifications. Bien que n'ayant qu'une méthode, elle s'avère utile pour différencier un utilisateur connecté d'un utilisateur non-connecté.  
-AccesseurLibellé héritant de cette classe contient une méthode publique de récupération de libellés partagée entre deux rôles. 
+La classe `Compte` est l'abstraction d'un utilisateur connecté. Non-instanciable, elle généralise les différents rôles d'utilisateurs : `Utilisateur`, `Technicien`, `AdminSys`, `AdminWeb`. Chaque rôle, comme `Visiteur`, est équippé de méthodes pour afficher sa page respective et effectuer ses opérations permises dans la base de données et dérivées du dossier de spécifications. Bien que n'ayant qu'une méthode, elle s'avère utile pour différencier un utilisateur connecté d'un utilisateur non-connecté.  
+`AccesseurLibellé` héritant de cette classe contient une méthode publique de récupération de libellés partagée entre deux rôles. 
 
 #### Erreurs
 
-Notre conception permet d'identifier les deux sujets d'erreur rencontrés dans le fonctionnement de cette structure : la connexion à la base de données et le résultat des requêtes. Nous avons représenté ces deux sujets par les classes ConnexionImpossible et RequêteIllégale, surchargeant le constructeur pour indiquer la nature de l'erreur et héritant d'une classe réservée à toutes nos erreurs "maison" (relatives à notre système), ErreurBD. Ainsi, il est possible de prendre en charge les erreurs intentionnelles du système tout en laissant les erreurs inattendues interrompre le chargement des pages pour nous être directement visibles.
+Notre conception permet d'identifier les deux sujets d'erreur rencontrés dans le fonctionnement de cette structure : la connexion à la base de données et le résultat des requêtes. Nous avons représenté ces deux sujets par les classes `ConnexionImpossible` et `RequêteIllégale`, surchargeant le constructeur pour indiquer la nature de l'erreur et héritant d'une classe réservée à toutes nos erreurs "maison" (relatives à notre système), `ErreurBD`. Ainsi, il est possible de prendre en charge les erreurs intentionnelles du système tout en laissant les erreurs inattendues interrompre le chargement des pages pour nous être directement visibles.

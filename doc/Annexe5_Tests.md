@@ -16,9 +16,9 @@ Ce document est un dossier de tests pour le projet de plateforme de ticketing in
 * Les objectifs du troisiéme livrable sont de faire les pages dynamiques de l'application web grâce aux maquettes du premier livrable, de faire une étude analytique sur les données de l'application web et de vérifier si les outils pour réaliser l'étude sont opérationnels .
 
 ### Description de la procédure de test
-Pour le premier livrable ,les tests seront des tests d'intégration visuels. Ils consisteront à comparer le visuel de la page web à la maquette graphique et de voir si elles sont identiques. Donc il n'y aura de partition.
-Pour le second livrable , les tests de la base de données font partie intégrantes des différents fichiers SQL dans la section bd.
-Pour le troisiéme  livrable , les tests seront des tests unitaires en utilisant la méthode des boites noires pour tout ce qui est du backend . Pour le fronted, le test sera un test d'intégration visuels.
+Pour le premier livrable, les tests seront des tests d'intégration visuels. Ils consisteront à comparer le visuel de la page web à la maquette graphique et de voir si elles sont identiques. Donc il n'y aura de partition.
+Pour le second livrable, les tests de la base de données font partie intégrantes des différents fichiers SQL dans la section bd.
+Pour le troisiéme  livrable, les tests seront des tests unitaires en utilisant la méthode des boites noires pour tout ce qui est du backend . Pour le fronted, le test sera un test d'intégration visuels.
 ### Description des informations à enregistrer pour les tests
 
 1. Campagne de test
@@ -87,7 +87,7 @@ La maquette web est la suivante :
 | Responsable                           | Baptiste Fournié                                     |
 
 
-Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix , le libéllé peut etre divisé en 3 sous ensembles: all qui veut dire tous les tickets , un libéllé inexistant , un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide
+Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix, le libéllé peut etre divisé en 3 sous ensembles : all qui veut dire tous les tickets, un libéllé inexistant, un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide
 
 
 | Classe |                   Libéllé                   | Résultat attendu |
@@ -114,7 +114,7 @@ on considére qu'il y a 10 tickets et que la plage des dates prend toute l'anné
 | Responsable            | Baptiste Fournié                                     |
 
 
-Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix, la plage des dates peut etre divisé en 2 sous ensembles : soit la plage date fait un mois donc une seul ligne dans le data frame soit la plage datez comporte plusieurs mois donc il y aura plusieurs lignes dans le data frame. Le libéllé peut etre divisé en 3 sous ensembles: all qui veut dire tous les tickets , un libéllé inexistant , un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide
+Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix, la plage des dates peut etre divisé en 2 sous ensembles : soit la plage date fait un mois donc une seul ligne dans le data frame soit la plage datez comporte plusieurs mois donc il y aura plusieurs lignes dans le data frame. Le libéllé peut etre divisé en 3 sous ensembles: all qui veut dire tous les tickets, un libéllé inexistant, un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide
 
 
 | Classe |             Libéllé       |             Plage date        | Résultat attendu |
@@ -129,12 +129,12 @@ Choix de partition: On considére que la plage de date est correcte car elle est
 |  Classe |             Libéllé        |             Plage date        | Résultat attendu |
 |:-------:|:-------------------------:|:-----------------------------:|:----------------:|
 |   P0    |   all                     |         janvier               |  janvier : 2     |
-|   P1    |   all                     |         janvier à fevrier     |  janvier : 2 , fevrier 2|
+|   P1    |   all                     |         janvier à fevrier     |  janvier : 2, fevrier 2|
 |   P2    |  manger une choucroutte   |         janvier               |  janvier : 0     |
 |   P3    |   Problème logiciel        |        janvier               |  janvier : 1     |
-|   P4    |   Problème logiciel        |        janvier à fevrier     | janvier : 1 , fevrier 1|
+|   P4    |   Problème logiciel        |        janvier à fevrier     | janvier : 1, fevrier 1|
 
-On considére qu'il y a 12 tickets et que chaque mois posséde 1 ticket probléme logiciel et un autre.
+On considére qu'il y a 12 tickets et que chaque mois posséde 1 ticket problème logiciel et un autre.
 
 | Paramètre              | Valeur                                               |
 | ---------------------- | ---------------------------------------------------- |
@@ -155,7 +155,7 @@ Choix de partition: On considére que la moyenne et l'ecart type  est égale ou 
 | Classe |             dataFrame       |   Résultat attendu    |
 |:------:|:-------------------------:|:---------------------:|
 |   P0   |   janvier : 2             |Loi1N = 100 loi2N = 100|
-|   P1   |   janvier : 3 , fevrier 2, mars : 0 |loi1N = 100/3  loi2N =100 |
+|   P1   |   janvier : 3, fevrier 2, mars : 0 |loi1N = 100/3  loi2N =100 |
 
 | Paramètre              | Valeur                                                                         |
 | ---------------------- |--------------------------------------------------------------------------------|
@@ -164,7 +164,7 @@ Choix de partition: On considére que la moyenne et l'ecart type  est égale ou 
 | Ressources Requises    |                                                                                |
 | Responsable            | Lucas Da Silva Ferreira                                                        |
 
-Pour l'interface nous allons refaire les tests faits précedemment et voir si il retourne bien les mêmes résultats(Seuls les classes avec libéllé inexistant ne seront pas faites car dans l'interface graphique , l'utilisateur ne peut que choisir des libéllés existants) . 
+Pour l'interface nous allons refaire les tests faits précedemment et voir s'ils retournent bien les mêmes résultats (seuls les classes avec libéllé inexistant ne seront pas faites car dans l'interface graphique, l'utilisateur ne peut que choisir des libéllés existants). 
 
 Prévision :
 
