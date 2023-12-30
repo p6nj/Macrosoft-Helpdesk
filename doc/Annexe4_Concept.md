@@ -6,6 +6,7 @@
 * [**Chapitre 2**](#part1) **:** _Approche_
 * [**Chapitre 3**](#part2) **:** _Conception architecturale_
 * [**Chapitre 4**](#part3) **:** _Conception de la base de données_
+* [**Chapitre 5**](#part4) **:** _Conception des pages dynamiques_
 
 ## <a id="intro"></a>Introduction
 
@@ -94,3 +95,36 @@ Nous aimerions expliquer quelques points supplémentaires sur le modèle de base
 Par exemple, il est possible en mettant ces journaux sous la forme de tables de regarder si le login tenté dans le journal d'activité de connexions échouées corresponds bien à un login existant dans la table **Utilisateur**. Si c'est le cas, il pourrait s'agir d'un simple oubli de mot de passe. Ou encore, si on voit beaucoup de lignes correspondant à cette requête, on peut suspecter une tentative d'attaque. 
 
 Il nous semble également important d'expliquer l'absence d'une table **Log_tickets_valides**. Le fait est qu'un journal d'activité de ticket est intrinsèquement lié à son ticket. Ces deux entités sont créées simultanément, partagent des informations similaires telles que la date ou le niveau d'urgence, et peuvent être récupérées sous forme de journal assez aisément à travers une vue. Du point de vue de la conception et de la cohérence des données, la décision a été prise de fusionner les tables **Ticket** et **Log_Tickets_Valides** en une unique table **Ticket**.
+
+## <a id="part4"></a>Conception des pages dynamiques
+
+### Introduction
+Pour les pages dynamiques, nous avons décidé d'utiliser du PHP objet afin de rendre le code plus modulaire, lisible et efficace. Les différentes classes que nous allons utiliser permettront d'éviter l'usage de fonctions éparpillées dans des modules, et plutôt utiliser des méthodes d'objets, plus claires et plus pratiques d'utilisation. Un autre avantage à utiliser l'objet est que les objets peuvent être sérialisés, assurant ainsi la protection des données stockées dans ces derniers. Enfin, utiliser des méthodes pour accéder à la base de données limite les possibilités d'abus d'accès à la base.  
+La conception a été précédée d'un prototype preuve du concept et est donc sensible et intimement liée à son implémentation.  
+Vous verrez ci-dessous un diagramme de classe commenté.
+
+### Diagramme de classe
+![](img/PHPobjet.png)
+
+### Explications
+
+#### Client
+
+Tout est centré autour de la classe Client, qui est une généralisation des utilisateurs physiques ou virtuels de la plateforme. Chaque Client possède un identifiant et un mot de passe permettant de se connecter à un compte de la base de données. Cette connection est également stockée dans la classe Client, et elle possède des champs statiques contenant l'hôte et le nom de la base de données afin de pouvoir s'y connecter ou reconnecter. Cette classe surcharge les méthodes dites "magiques" de sérialisation pour qu'une instance soit transmise d'une page à l'autre dans la session PHP. Interfaçant avec la base, elle met à disposition des méthodes de requête.  
+C'est une classe abstraite, ce qui veut dire que d'autres types d'utilisateurs plus précis et avec des méthodes supplémentaires hériteront de ses caractéristiques.
+
+#### Client virtuel et visiteur
+
+Chaque utilisateur non connecté se verra attribué un objet `Visiteur` hérité de Client avec des méthodes restreintes pour afficher la page d'accueil. Une escalade de privilèges liée à la connexion d'un utilisateur est représentée par la méthode `connecte` renvoyant un Client de la classe fille correspondante à son role dans la base ; c'est l'équivalent d'un objet `Factory` en *Factory Design Pattern*.  
+La classe Système représente un visiteur virtuel et permet simplement d'ajouter des utilisateurs, ayant les droits nécessaires dans la base de donnée.  
+
+Ces deux classes surchargent le constructeur de Client pour utiliser des identifiants statiques puisqu'elles sont reliées à un seul utilisateur MySQL chacune.
+
+#### Compte et AccesseurLibellé
+
+La classe Compte est l'abstraction d'un utilisateur connecté. Non-instanciable, elle généralise les différents rôles d'utilisateurs : Utilisateur, Technicien, AdminSys, AdminWeb. Chaque rôle, comme Visiteur, est équippé de méthodes pour afficher sa page respective et effectuer ses opérations permises dans la base de données et dérivées du dossier de spécifications. Bien que n'ayant qu'une méthode, elle s'avère utile pour différencier un utilisateur connecté d'un utilisateur non-connecté.  
+AccesseurLibellé héritant de cette classe contient une méthode publique de récupération de libellés partagée entre deux rôles. 
+
+#### Erreurs
+
+Notre conception permet d'identifier les deux sujets d'erreur rencontrés dans le fonctionnement de cette structure : la connexion à la base de données et le résultat des requêtes. Nous avons représenté ces deux sujets par les classes ConnexionImpossible et RequêteIllégale, surchargeant le constructeur pour indiquer la nature de l'erreur et héritant d'une classe réservée à toutes nos erreurs "maison" (relatives à notre système), ErreurBD. Ainsi, il est possible de prendre en charge les erreurs intentionnelles du système tout en laissant les erreurs inattendues interrompre le chargement des pages pour nous être directement visibles.
