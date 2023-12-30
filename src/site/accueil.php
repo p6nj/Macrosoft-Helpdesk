@@ -48,9 +48,9 @@ try {
             <h1>Derniers tickets</h1>
             <div id="ticket-container">
                 <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
-                    <div>
-                        <p><?= $ticket['description'] ?></p>
-                    </div>
+                <ticket>
+                    <p><?= $ticket['description'] ?></p>
+                </ticket>
                 <?php endforeach; ?>
             </div>
         </div>
