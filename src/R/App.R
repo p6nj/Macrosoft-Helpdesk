@@ -19,7 +19,7 @@ source("calculs.R")
 #' @return Retourne TRUE si le mois de début est inférieur ou égal au mois de fin, FALSE sinon.
 #'
 #'
-verifier_dates <- function(start_date, end_date) {
+verifier_dates = function(start_date, end_date) {
   # Vérifier que le mois de début est inférieur ou égal au mois de fin
   if (start_date > end_date) {
     # Afficher un message d'erreur
@@ -49,39 +49,39 @@ verifier_dates <- function(start_date, end_date) {
 #'
 #' @return Aucune valeur de retour. Les résultats sont affichés dans l'application Shiny.
 #'
-traiter_affichage <- function(tickets, output, start_date, end_date, selected_libelle, affichage_type) {
-  mois_debut <- format(start_date, "%b")
-  mois_fin <- format(end_date, "%b")
+traiter_affichage = function(tickets, output, start_date, end_date, selected_libelle, affichage_type) {
+  mois_debut = format(start_date, "%b")
+  mois_fin = format(end_date, "%b")
 
   if (affichage_type == "proba") {
     proba = calcule_proba(tickets, selected_libelle, start_date, end_date)
     print("Affichage des probabilités")
 
-    output$ticket_texte <- renderPrint({
+    output$ticket_texte = renderPrint({
       cat(paste("Votre analyse porte sur les tickets possédant le label", selected_libelle,
                 "compris entre", mois_debut, "et", mois_fin), "\n")
       cat(paste("Probabilité :", proba), "\n")
     })
   } else {
-    resultat_nombre <- calcule_nombre(tickets, selected_libelle, start_date, end_date)
+    resultat_nombre = calcule_nombre(tickets, selected_libelle, start_date, end_date)
     nbTotal = sum(resultat_nombre$NombreTickets)
     moyenne = moy1(resultat_nombre$NombreTickets)
     sd = sd1(resultat_nombre$NombreTickets)
     loiN = calcule_loi_normale(moyenne, sd, resultat_nombre$NombreTickets)
 
-    output$ticket_texte <- renderPrint({
+    output$ticket_texte = renderPrint({
       cat(paste("Votre analyse porte sur les tickets possédant le label", selected_libelle,
                 "compris entre", mois_debut, "et", mois_fin), "\n")
       cat(paste("Nombre de tickets :", nbTotal), "\n")
       cat(paste("Moyenne :", moyenne), "\n")
       cat(paste("Écart type  :", sd), "\n")
-      loiN <- calcule_loi_normale(moyenne, sd, resultat_nombre$NombreTickets)
+      loiN = calcule_loi_normale(moyenne, sd, resultat_nombre$NombreTickets)
       cat(paste("Le pourcentage de valeurs comprises entre moyenne-ecart type et moyenne + ecart type est  :", loiN[1]), "\n")
       cat(paste("Le pourcentage de valeurs comprises entre moyenne-2ecart type et moyenne + 2ecart type est  :", loiN[2]), "\n")
     })
 
     # Utiliser ggplot2 pour créer un graphique
-    output$ticket_plot <- renderPlot({
+    output$ticket_plot = renderPlot({
       ggplot(resultat_nombre, aes(x = Mois, y = NombreTickets)) +
         geom_bar(stat = "identity") +
         geom_hline(aes(yintercept = moyenne, color = "Moyenne"), linetype = "dashed", size = 1.5) +
@@ -103,7 +103,7 @@ traiter_affichage <- function(tickets, output, start_date, end_date, selected_li
 
 
 # Définir l'interface utilisateur (UI)
-ui <- fluidPage(
+ui = fluidPage(
   titlePanel("Analyse des tickets"),
   sidebarLayout(
     sidebarPanel(
@@ -127,15 +127,15 @@ ui <- fluidPage(
   )
 )
 # Définir le serveur
-server <- function(input, output) {
+server = function(input, output) {
   observe({
 
-    start_month <- input$start_month
-    end_month <- input$end_month
-    selected_libelle <- input$selected_libelle
-    affichage_probabilites <- input$affichage
+    start_month = input$start_month
+    end_month = input$end_month
+    selected_libelle = input$selected_libelle
+    affichage_probabilites = input$affichage
 
-    output$infos_texte <- renderPrint({
+    output$infos_texte = renderPrint({
 
       # Affichage des informations simulées
       cat("Le jeu de données est fictif et le nombre de tickets s'élève à", length(tickets_2022), "\n")
@@ -145,15 +145,15 @@ server <- function(input, output) {
 
   observeEvent(input$valider_btn,
   {
-    start_date <- as.Date(paste("2022", match(input$start_month, month.abb), "01", sep = "-"))
-    end_date <- as.Date(paste("2022", match(input$end_month, month.abb), "01", sep = "-"))
-    end_date <- ceiling_date(end_date, "month") - days(1)
+    start_date = as.Date(paste("2022", match(input$start_month, month.abb), "01", sep = "-"))
+    end_date = as.Date(paste("2022", match(input$end_month, month.abb), "01", sep = "-"))
+    end_date = ceiling_date(end_date, "month") - days(1)
 
     # Appele la fonction pour vérifier les dates
     if (verifier_dates(start_date, end_date))
     {
-      output$ticket_plot <- renderPlot(NULL)
-      output$ticket_texte <- renderPrint(NULL)
+      output$ticket_plot = renderPlot(NULL)
+      output$ticket_texte = renderPrint(NULL)
       # Appeler la fonction pour traiter l'affichage
       traiter_affichage(tickets_2022,output,start_date, end_date, input$selected_libelle, input$affichage)
     }

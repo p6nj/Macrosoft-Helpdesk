@@ -42,25 +42,25 @@ calcule_proba = function(tickets, libelle, dateDebut, dateFin) {
 #'
 #' @return Un dataframe contenant le nombre de tickets par mois pour le libellé spécifié dans la plage de dates donnée.
 #'
-calcule_nombre <- function(tickets, libelle, dateDebut, dateFin)
+calcule_nombre = function(tickets, libelle, dateDebut, dateFin)
 {
-  dateDebut <- as.POSIXct(dateDebut)
-  dateFin <- as.POSIXct(dateFin)
+  dateDebut = as.POSIXct(dateDebut)
+  dateFin = as.POSIXct(dateFin)
 
   # Générer tous les mois entre dateDebut et dateFin
-  mois_entre_dates <- seq(from = as.Date(cut(dateDebut, "month")), to = as.Date(cut(dateFin, "month")), by = "month")
-  mois_entre_dates <- unique(format(mois_entre_dates, "%Y-%m"))
+  mois_entre_dates = seq(from = as.Date(cut(dateDebut, "month")), to = as.Date(cut(dateFin, "month")), by = "month")
+  mois_entre_dates = unique(format(mois_entre_dates, "%Y-%m"))
 
   # Créer un dataframe résultat avec les mois et le nombre de tickets
-  resultat <- data.frame(Mois = mois_entre_dates, NombreTickets = 0)
+  resultat = data.frame(Mois = mois_entre_dates, NombreTickets = 0)
   if (libelle == "all")
   {
     for (ticket in tickets)
     {
       if (ticket$date_creation >= dateDebut && ticket$date_creation <= dateFin)
       {
-        mois_ticket <- format(ticket$date_creation, "%Y-%m")
-        resultat[resultat$Mois == mois_ticket, "NombreTickets"] <- resultat[resultat$Mois == mois_ticket, "NombreTickets"] + 1
+        mois_ticket = format(ticket$date_creation, "%Y-%m")
+        resultat[resultat$Mois == mois_ticket, "NombreTickets"] = resultat[resultat$Mois == mois_ticket, "NombreTickets"] + 1
       }
     }
   }
@@ -70,8 +70,8 @@ calcule_nombre <- function(tickets, libelle, dateDebut, dateFin)
     {
       if (ticket$date_creation >= dateDebut && ticket$date_creation <= dateFin && ticket$libelle == libelle)
       {
-        mois_ticket <- format(ticket$date_creation, "%Y-%m")
-        resultat[resultat$Mois == mois_ticket, "NombreTickets"] <- resultat[resultat$Mois == mois_ticket, "NombreTickets"] + 1
+        mois_ticket = format(ticket$date_creation, "%Y-%m")
+        resultat[resultat$Mois == mois_ticket, "NombreTickets"] = resultat[resultat$Mois == mois_ticket, "NombreTickets"] + 1
       }
     }
 
@@ -88,9 +88,7 @@ calcule_nombre <- function(tickets, libelle, dateDebut, dateFin)
 #'
 #' @return La moyenne du vecteur.
 #'
-moy1 = function(a) {
-  return(sum(a) / length(a))
-}
+moy1 = function(a) sum(a) / length(a)
 
 #' Calcule la variance d'un vecteur.
 #'
@@ -98,9 +96,7 @@ moy1 = function(a) {
 #'
 #' @return La variance du vecteur.
 #'
-var1 = function(a) {
-  return(moy1(a**2) - (moy1(a)**2))
-}
+var1 = function(a) moy1(a**2) - (moy1(a)**2)
 
 #' Calcule l'écart-type d'un vecteur.
 #'
@@ -108,9 +104,7 @@ var1 = function(a) {
 #'
 #' @return L'écart-type du vecteur.
 #'
-sd1 = function(a) {
-  return(sqrt(var1(a)))
-}
+sd1 = function(a) sqrt(var1(a))
 
 
 #' Calcule les pourcentages d'occurrence des valeurs dans l'intervalle [moyenne - sd1, moyenne + sd1]
@@ -122,17 +116,17 @@ sd1 = function(a) {
 #'
 #' @return Un vecteur contenant les pourcentages d'occurrence dans les deux intervalles spécifiés.
 #'
-calcule_loi_normale <- function(moyenne, sd1, ticketsMois) {
-  loiN1 <- 0
-  loiN2 <- 0
+calcule_loi_normale = function(moyenne, sd1, ticketsMois) {
+  loiN1 = 0
+  loiN2 = 0
   for (mois in ticketsMois) {
     if ((mois > moyenne - sd1) && (mois < moyenne + sd1)) {
-      loiN1 <- loiN1 + 1
+      loiN1 = loiN1 + 1
     }
     if ((mois > moyenne - 2 * sd1) && (mois < moyenne + 2 * sd1)) {
-      loiN2 <- loiN2 + 1
+      loiN2 = loiN2 + 1
     }
   }
-  loi <- c((loiN1 / length(ticketsMois) * 100), (loiN2 / length(ticketsMois) * 100))
+  loi = c((loiN1 / length(ticketsMois) * 100), (loiN2 / length(ticketsMois) * 100))
   return(loi)
 }

@@ -1,17 +1,19 @@
+if (!require("testthat")) install.packages("testthat")
 library(testthat)
 source("calculs.R")
+source("tickets.R")
 
 # Tests
 test_that("Test de la fonction calcule_proba", {
   # Créer des tickets de test
-  libelles_valides <- c(
+  libelles_valides = c(
     "all",
     "Problème matériel", "Problème logiciel", "Problème Réseau",
     "Problème de sécurité", "Problème d'accès et d'authentification",
     "Problème de Performances", "Problème de serveur", "Problème de sauvegarde"
   )
 
-  tickets <- list(
+  tickets = list(
     Ticket("Problème logiciel", "Utilisateur1", 2, "Ouvert", as.POSIXct("2022-01-01")),
     Ticket("Problème logiciel", "Utilisateur2", 3, "En cours de traitement", as.POSIXct("2022-02-01")),
     Ticket("Problème matériel", "Utilisateur3", 1, "Fermée", as.POSIXct("2022-03-01")),
@@ -36,7 +38,7 @@ test_that("Test de la fonction calcule_proba", {
 
 test_that("Test de la fonction calcule_nombre", {
   # Créer des tickets de test manuellement
-  tickets <- list(
+  tickets = list(
     Ticket("Problème logiciel", "Utilisateur1", 2, "Ouvert", as.POSIXct("2022-01-01")),
     Ticket("Problème matériel", "Utilisateur2", 3, "En cours de traitement", as.POSIXct("2022-01-31")),
     Ticket("Problème matériel", "Utilisateur3", 1, "Fermée", as.POSIXct("2022-02-01")),
@@ -63,8 +65,8 @@ test_that("Test de la fonction calcule_nombre", {
     Ticket("Problème logiciel", "Utilisateur24", 3, "En cours de traitement", as.POSIXct("2022-12-31"))
   )
 
-  resultat_attendu <- data.frame(Mois = c("2022-01"), NombreTickets = c(2.0))
-  resultat_reel <- calcule_nombre(tickets, "all", as.Date("2022-01-01"), as.Date("2022-01-31"))
+  resultat_attendu = data.frame(Mois = c("2022-01"), NombreTickets = c(2.0))
+  resultat_reel = calcule_nombre(tickets, "all", as.Date("2022-01-01"), as.Date("2022-01-31"))
 
   print( resultat_reel)
   # Test d'égalité avec expect_equal
@@ -75,8 +77,8 @@ test_that("Test de la fonction calcule_nombre", {
     cat("Test réussi.")
   }
 
-  resultat_attendu <- data.frame(Mois = c("2022-01","2022-02"), NombreTickets = c(2.0,2))
-  resultat_reel <- calcule_nombre(tickets, "all", as.Date("2022-01-01"), as.Date("2022-02-28"))
+  resultat_attendu = data.frame(Mois = c("2022-01","2022-02"), NombreTickets = c(2.0,2))
+  resultat_reel = calcule_nombre(tickets, "all", as.Date("2022-01-01"), as.Date("2022-02-28"))
 
   if (!identical(resultat_reel, resultat_attendu)) {
     cat("Les résultats ne sont pas identiques :\n")
@@ -85,8 +87,8 @@ test_that("Test de la fonction calcule_nombre", {
     cat("Test réussi.")
   }
 
-  resultat_attendu <- data.frame(Mois = c("2022-01"), NombreTickets = c(0))
-  resultat_reel <- calcule_nombre(tickets, "manger une choucroute", as.Date("2022-01-01"), as.Date("2022-01-31"))
+  resultat_attendu = data.frame(Mois = c("2022-01"), NombreTickets = c(0))
+  resultat_reel = calcule_nombre(tickets, "manger une choucroute", as.Date("2022-01-01"), as.Date("2022-01-31"))
 
   if (!identical(resultat_reel, resultat_attendu)) {
     cat("Les résultats ne sont pas identiques :\n")
@@ -95,8 +97,8 @@ test_that("Test de la fonction calcule_nombre", {
     cat("Test réussi.")
   }
 
-  resultat_attendu <- data.frame(Mois = c("2022-01"), NombreTickets = c(1))
-  resultat_reel <- calcule_nombre(tickets, "Problème logiciel", as.Date("2022-01-01"), as.Date("2022-01-31"))
+  resultat_attendu = data.frame(Mois = c("2022-01"), NombreTickets = c(1))
+  resultat_reel = calcule_nombre(tickets, "Problème logiciel", as.Date("2022-01-01"), as.Date("2022-01-31"))
 
   if (!identical(resultat_reel, resultat_attendu)) {
     cat("Les résultats ne sont pas identiques :\n")
@@ -105,8 +107,8 @@ test_that("Test de la fonction calcule_nombre", {
     cat("Test réussi.")
   }
 
-  resultat_attendu <- data.frame(Mois = c("2022-01","2022-02"), NombreTickets = c(1,1))
-  resultat_reel <- calcule_nombre(tickets, "Problème logiciel", as.Date("2022-01-01"), as.Date("2022-02-28"))
+  resultat_attendu = data.frame(Mois = c("2022-01","2022-02"), NombreTickets = c(1,1))
+  resultat_reel = calcule_nombre(tickets, "Problème logiciel", as.Date("2022-01-01"), as.Date("2022-02-28"))
 
   if (!identical(resultat_reel, resultat_attendu)) {
     cat("Les résultats ne sont pas identiques :\n")
@@ -119,7 +121,7 @@ test_that("Test de la fonction calcule_nombre", {
 
 test_that("Test de la fonction calcule_loi_normale", {
   # Créer des tickets de test manuellement
-  tickets <- list(
+  tickets = list(
     Ticket("Problème logiciel", "Utilisateur1", 2, "Ouvert", as.POSIXct("2022-01-01")),
     Ticket("Problème logiciel", "Utilisateur1", 2, "Ouvert", as.POSIXct("2022-01-01")),
     Ticket("Problème matériel", "Utilisateur2", 3, "En cours de traitement", as.POSIXct("2022-01-31")),
@@ -129,24 +131,24 @@ test_that("Test de la fonction calcule_loi_normale", {
     Ticket("Problème logiciel", "Utilisateur4", 4, "Ouvert", as.POSIXct("2022-02-28"))
   )
 
-  resultat_attendu <- c(100,100)
+  resultat_attendu = c(100,100)
   data = calcule_nombre(tickets, "Problème logiciel", as.Date("2022-01-01"), as.Date("2022-01-31"))
   moy = moy1(data$NombreTickets)
   sd = sd1(data$NombreTickets)
-  resultat_reel <- calcule_loi_normale(moy,sd,data$NombreTickets)
+  resultat_reel = calcule_loi_normale(moy,sd,data$NombreTickets)
 
-  resultat_verification <- identical(resultat_reel, resultat_attendu)
+  resultat_verification = identical(resultat_reel, resultat_attendu)
 
   cat("Les vecteurs sont identiques et dans le même ordre :", resultat_verification, "\n")
 
-  resultat_attendu <- c(33.33333,100)
+  resultat_attendu = c(33.33333,100)
   data = calcule_nombre(tickets, "all", as.Date("2022-01-01"), as.Date("2022-03-31"))
   moy = moy1(data$NombreTickets)
   sd = sd1(data$NombreTickets)
-  resultat_reel <- calcule_loi_normale(moy,sd,data$NombreTickets)
+  resultat_reel = calcule_loi_normale(moy,sd,data$NombreTickets)
   print(resultat_reel)
 
-  resultat_verification <- all(sapply(seq_along(resultat_attendu), function(i) all.equal(resultat_reel[i],  resultat_attendu[i], tolerance = 1e-6)))
+  resultat_verification = all(sapply(seq_along(resultat_attendu), function(i) all.equal(resultat_reel[i],  resultat_attendu[i], tolerance = 1e-6)))
 
   cat("Les vecteurs sont identiques et dans le même ordre :", resultat_verification, "\n")
 })
