@@ -6,9 +6,18 @@
   <title>Macrosoft HelpDesk</title>
   <link rel="stylesheet" type="text/css" href="common.css">
 </head>
+
+<style>
+  ticket *,
+  libellé nom {
+    /* don't trigger children */
+    pointer-events: none
+  }
+</style>
+
 <script>
-  function modticket() {
-    let target = event.relatedTarget;
+  function modticket(event) {
+    let target = event.target;
     let dialog = document.getElementById('ticket-dialog');
     let form = document.forms['ticket'];
     form.elements['idT'].value = target.id;
@@ -17,14 +26,16 @@
     form.elements['tech'].value = target.children[7].innerText;
     dialog.showModal();
   }
-  function modlib() {
-    let target = event.relatedTarget;
-    event.cancelBubble = true; // don't trigger parent elements
+  function modlib(event) {
+    let target = event.target;
+    console.log(target);
+    event.cancelBubble = true; // don't trigger parents either
     let dialog = document.getElementById('lib-dialog');
     let form = document.forms['libelle'];
     form.elements['idL'].value = target.id;
     form.elements['titre'].value = target.children[0].innerText;
-    form.elements['sup'].value = target.parentElement.id;
+    console.log("Parent : " + target.parentElement.parentElement.id);
+    form.elements['sup'].value = target.parentElement.parentElement.id;
     form.elements['archive'].checked = false;
     dialog.showModal();
   }
@@ -60,30 +71,30 @@
     <div>
       <h1>Libellés</h1>
       <div class="ticket-container">
-        <libellé class="clickable" onclick="modlib()" id="1">
-          <nom>Nom Libellé</nom>
+        <libellé class="clickable" onclick="modlib(event)" id="1">
+          <nom>Libellé 1</nom>
           <div class="ticket-container">
-            <libellé class="inf clickable" onclick="modlib()" id="2">
-              <nom>Nom Libellé</nom>
+            <libellé class="inf clickable" onclick="modlib(event)" id="2">
+              <nom>Libellé 2</nom>
             </libellé>
-            <libellé class="inf clickable" onclick="modlib()" id="3">
-              <nom>Nom Libellé</nom>
+            <libellé class="inf clickable" onclick="modlib(event)" id="3">
+              <nom>Libellé 3</nom>
             </libellé>
           </div>
         </libellé>
-        <libellé class="clickable" onclick="modlib()" id="4">
-          <nom>Nom Libellé</nom>
+        <libellé class="clickable" onclick="modlib(event)" id="4">
+          <nom>Libellé 4</nom>
           <div class="ticket-container">
-            <libellé class="inf clickable" onclick="modlib()" id="5">
-              <nom>Nom Libellé</nom>
+            <libellé class="inf clickable" onclick="modlib(event)" id="5">
+              <nom>Libellé 5</nom>
               <div class="ticket-container">
-                <libellé class="inf clickable" onclick="modlib()" id="6">
-                  <nom>Nom libellé</nom>
-                  </libell>
+                <libellé class="inf clickable" onclick="modlib(event)" id="6">
+                  <nom>Libellé 6</nom>
+                </libellé>
               </div>
-            </libellé class="clickable" onclick="modlib()" id="7">
-            <libellé class="inf clickable" onclick="modlib()" id="8">
-              <nom>Nom Libellé</nom>
+            </libellé>
+            <libellé class="inf clickable" onclick="modlib(event)" id="7">
+              <nom>Libellé 7</nom>
             </libellé>
           </div>
         </libellé>
@@ -92,7 +103,7 @@
     <div>
       <h1>Tickets</h1>
       <div class="ticket-container">
-        <ticket onclick="modticket()" class="clickable" tid="1">
+        <ticket onclick="modticket(event)" class="clickable" tid="1">
           <lib id="1">Libellé</lib>
           <niv id="4">Urgent</niv>
           <p class="center-text">Description</p>
@@ -102,7 +113,7 @@
           <demandeur>william</demandeur>
           <technicien></technicien>
         </ticket>
-        <ticket onclick="modticket()" class="clickable" tid="2">
+        <ticket onclick="modticket(event)" class="clickable" tid="2">
           <lib id="2">Libellé</lib>
           <niv id="3">Très important</niv>
           <p class="center-text">Description</p>
@@ -161,6 +172,10 @@
           <option value="1">Libellé 1</option>
           <option value="2">&emsp;Libellé 2</option>
           <option value="3">Libellé 3</option>
+          <option value="4">Libellé 4</option>
+          <option value="5">Libellé 5</option>
+          <option value="6">Libellé 6</option>
+          <option value="7">Libellé 7</option>
         </select>
         <br><br>
         <label for="archive">Archivé </label>
