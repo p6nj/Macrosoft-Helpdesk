@@ -49,14 +49,15 @@
         <h1>HelpDesk</h1>
       </div>
       <div class="far-right">
-        <button>
-          ajout Libellé
+        <button onclick="document.querySelector('dialog#new-lib').showModal()">
+          Créer&nbsp;un&nbsp;libellé&nbsp;+
         </button>
-        <button>
-          ajout Technicien
+        <button onclick="document.querySelector('dialog#new-tech').showModal()">
+          Créer&nbsp;un&nbsp;technicien&nbsp;+
         </button>
-        <button
-          onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+        <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">
+          Deconnexion
+        </button>
         <button title="login">
           Profil
         </button>
@@ -125,11 +126,10 @@
         </ticket>
       </div>
     </div>
+
     <dialog id="ticket-dialog">
       <h2>Modifier le ticket</h2>
-      <p>Modifiez les informations ci-dessous puis enregistrez pour modifier le ticket dans la base.</p>
-      <br><br>
-      <form method="form" id="ticket">
+      <form method="post" id="ticket">
         <input type="hidden" name="idT">
         <label for="niveau">Niveau d'urgence :</label>
         <br>
@@ -153,14 +153,13 @@
         <input type="text" name="tech" id="tech">
         <br><br>
         <button type="submit">Enregistrer</button>
-        <input type="button" onclick="document.getElementById('ticket-dialog').close()" value="Annuler">
+        <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
       </form>
     </dialog>
+
     <dialog id="lib-dialog">
       <h2>Modifier le libellé</h2>
-      <p>Modifiez les informations ci-dessous puis enregistrez pour modifier le libellé dans la base.</p>
-      <br><br>
-      <form method="form" id="libelle">
+      <form method="post" id="libelle">
         <input type="hidden" name="idL">
         <label for="titre">Titre :</label>
         <br>
@@ -182,9 +181,55 @@
         <input type="checkbox" name="archive" id="archive">
         <br><br>
         <button type="submit">Enregistrer</button>
-        <input type="button" onclick="document.getElementById('lib-dialog').close()" value="Annuler">
+        <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
       </form>
     </dialog>
+
+    <dialog id="new-lib">
+      <h2>Créer un nouveau libellé</h2>
+      <p>Merci de renseigner les informations ci-desssous.</p>
+      <form method="post">
+        <label for="titre">Titre :</label>
+        <br>
+        <input type="text" name="titre" id="titre">
+        <br><br>
+        <label for="sup">Libellé supérieur :</label>
+        <br>
+        <select name="sup" id="sup">
+          <option value="1">Libellé 1</option>
+          <option value="2">&emsp;Libellé 2</option>
+          <option value="3">Libellé 3</option>
+          <option value="4">Libellé 4</option>
+          <option value="5">Libellé 5</option>
+          <option value="6">Libellé 6</option>
+          <option value="7">Libellé 7</option>
+        </select>
+        <br><br>
+        <label for="archive">Archivé </label>
+        <input type="checkbox" name="archive" id="archive">
+        <br><br>
+        <button type="submit">Enregistrer</button>
+        <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
+      </form>
+    </dialog>
+
+    <dialog id="new-tech">
+      <h2>Créer un nouveau technicien</h2>
+      <p>Renseignez les informations ci-dessous pour créer un compte technicien.</p>
+      <form method="post">
+        <label for="id">Identifiant :</label>
+        <br>
+        <input type="text" name="id" id="id">
+        <br><br>
+        <label for="mdp">Mot de passe :</label>
+        <br>
+        <input type="password" name="mdp" id="mdp">
+        <br><br>
+        <button type="submit">Enregistrer</button>
+        <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
+      </form>
+    </dialog>
+
   </main>
   <footer>
     <p>&copy; 2023 Macrosoft Helpdesk</p>

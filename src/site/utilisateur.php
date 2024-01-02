@@ -38,12 +38,9 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
-                <button
-                    onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
-                <button
-                    onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
-                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>"
-                    onclick="document.querySelector(' dialog#profil').showModal()">
+                <button onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
+                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
                 <dialog id="profil">
@@ -54,8 +51,7 @@ try {
                     <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de
                         passe</button>
                     <br>
-                    <button
-                        onclick="document.querySelector(' dialog#profil').close(); document.getElementById('mdp').style.display='none'">Fermer</button>
+                    <button onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'">Fermer</button>
                 </dialog>
             </div>
         </nav>
@@ -81,9 +77,9 @@ try {
             <h1>Derniers tickets</h1>
             <div id="ticket-container">
                 <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
-                <ticket>
-                    <p><?= $ticket['description'] ?></p>
-                </ticket>
+                    <ticket>
+                        <p><?= $ticket['description'] ?></p>
+                    </ticket>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -96,7 +92,8 @@ try {
                 <br>
                 <select name="libellé" id="libellé">
                     <?php
-                    function affiche_lib(array $lib, int $niveau = 0) {
+                    function affiche_lib(array $lib, int $niveau = 0)
+                    {
                         echo '<option value=' . $lib['idL'] . '>' . str_repeat('&emsp;', $niveau) . $lib['intitule'] . '</option>';
                         foreach ($lib['inf'] as $inf) {
                             affiche_lib($inf, $niveau + 1);
@@ -132,7 +129,7 @@ try {
                 <br>
                 <br>
                 <button autofocus type="submit">Enregistrer</button>
-                <input type="button" onclick="document.getElementById('add-ticket').close()" value="Annuler">
+                <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
             </form>
         </dialog>
     </main>
