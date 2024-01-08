@@ -31,7 +31,7 @@ try {
             </div>
             <div class="far-right">
                 <button onclick="window.location.href='accueil.php';">Accueil</button>
-                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button onclick="window.location.href='connexion.php';">Connexion</button>
             </div>
         </nav>
     </header>
