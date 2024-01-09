@@ -48,10 +48,10 @@ try {
                     <?php $profil = $_SESSION['client']->getProfil(); ?>
                     Login : <?= $profil['login'] ?><br>
                     Mot de passe : <hidden id='mdp'><?= $profil['mdp'] ?></hidden>
-                    <button onclick="document.getElementById('mdp').style.display='block'">Afficher le mot de
+                    <button onclick="document.getElementById('mdp').style.display='block'; document.getElementById('affiche-mdp').style.display='none'" id='affiche-mdp'>Afficher le mot de
                         passe</button>
                     <br>
-                    <button onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'">Fermer</button>
+                    <button onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'; document.getElementById('affiche-mdp').style.display='block';">Fermer</button>
                 </dialog>
             </div>
         </nav>

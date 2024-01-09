@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Macrosoft HelpDesk</title>
     <link rel="stylesheet" type="text/css" href="common.css">
 </head>
+
 <body>
     <header>
         <nav>
@@ -14,10 +16,26 @@
             </div>
             <div class="far-right">
                 <button
-                        onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
-                <button title="login">
+                    onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button title="<?= $_SESSION['client']->getProfil()['login']; ?>"
+                    onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
+                <dialog id="profil">
+                    <h2>Profil</h2>
+                    <?php $profil = $_SESSION['client']->getProfil(); ?>
+                    Login :
+                    <?= $profil['login'] ?><br>
+                    Mot de passe : <hidden id='mdp'>
+                        <?= $profil['mdp'] ?>
+                    </hidden>
+                    <button
+                        onclick="document.getElementById('mdp').style.display='block'; document.getElementById('affiche-mdp').style.display='none'"
+                        id="affiche-mdp">Afficher le mot de passe</button>
+                    <br>
+                    <button
+                        onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'; document.getElementById('affiche-mdp').style.display='block';">Fermer</button>
+                </dialog>
             </div>
         </nav>
     </header>
@@ -57,26 +75,26 @@
             <h1>Ticket ouvert</h1>
             <table>
                 <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>IP</th>
-                    <th>Login</th>
-                    <th>Urgence</th>
-                </tr>
+                    <tr>
+                        <th>Date</th>
+                        <th>IP</th>
+                        <th>Login</th>
+                        <th>Urgence</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>26 December 2023</td>
-                    <td>191.145.125.5</td>
-                    <td>alice</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>25 December 2023</td>
-                    <td>191.145.125.5</td>
-                    <td>tommy</td>
-                    <td>4</td>
-                </tr>
+                    <tr>
+                        <td>26 December 2023</td>
+                        <td>191.145.125.5</td>
+                        <td>alice</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>25 December 2023</td>
+                        <td>191.145.125.5</td>
+                        <td>tommy</td>
+                        <td>4</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -86,4 +104,5 @@
         <p>&copy; 2023 Macrosoft Helpdesk</p>
     </footer>
 </body>
+
 </html>
