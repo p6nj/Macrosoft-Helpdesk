@@ -15,7 +15,7 @@ try {
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
         $_SESSION['client'] = new Visiteur();
     else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
-        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : ($_SESSION['client'] instanceof Technicien ? 'technicien.php' : 'accueil.php'));
+        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : ($_SESSION['client'] instanceof Technicien ? 'technicien.php' : ($_SESSION['client'] instanceof AdminSys ? 'adminsys.php' : 'accueil.php')));
 } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
     redirect('connexion.php?erreur=' . $e->getMessage());
 }

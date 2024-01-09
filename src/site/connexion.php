@@ -11,6 +11,7 @@
 // GET vars : 'erreur', 'message', 'déco'
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
+debug();
 ?>
 
 <body>
