@@ -95,18 +95,14 @@ try {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>26 December 2023</td>
-                        <td>191.145.125.5</td>
-                        <td>alice</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>25 December 2023</td>
-                        <td>191.145.125.5</td>
-                        <td>tommy</td>
-                        <td>4</td>
-                    </tr>
+                    <?php foreach ($_SESSION['client']->getTicketValidés() as $ligne) : ?>
+                        <tr>
+                            <td><?= $ligne['date'] ?></td>
+                            <td><?= $ligne['IP'] ?></td>
+                            <td><?= $ligne['login'] ?></td>
+                            <td><?= $ligne['niv_urgence'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
