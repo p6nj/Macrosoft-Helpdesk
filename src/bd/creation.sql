@@ -120,7 +120,7 @@ GRANT SELECT ON VueLibellesNonArchives to UTILISATEUR;
 GRANT SELECT,
     UPDATE (etat) ON VueTicketsTechnicien TO TECHNICIEN;
 GRANT SELECT,
-    UPDATE (technicien) ON VueTicketsNonTraites TO TECHNICIEN;
+    UPDATE (technicien, etat) ON VueTicketsNonTraites TO TECHNICIEN;
 -- Attribution des permissions au rôle Admin système
 GRANT SELECT ON VueLogTicketsValides TO ADMIN_SYS;
 GRANT SELECT ON Log_connexion_echec TO ADMIN_SYS;
