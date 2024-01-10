@@ -110,7 +110,7 @@ try {
                 <input type="text" name="description" id="">
                 <br>
                 <br>
-                <label for="cible">Login de l'utilisateur cible :</label>
+                <label for="cible">Login de l'utilisateur cible (facultatif) :</label>
                 <br>
                 <input type="text" name="cible" id="">
                 <br>
