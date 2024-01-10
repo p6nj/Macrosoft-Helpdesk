@@ -3,7 +3,6 @@ require_once 'includes/header.php';
 // GET vars : 'erreur', 'message'
 $confirmation = false;
 ?>
-
 <body>
     <header>
         <nav>
@@ -21,8 +20,8 @@ $confirmation = false;
         <div class="shadow-form">
             <h1 class="center-text">Inscription</h1>
             <div class="form-division">
-                <div class="left">
-                    <form method="post">
+                <form method="post">
+                    <div>
                         <label for="username">Nom d'utilisateur :</label><br>
                         <input name="username" id="username" type="text">
                         <br>
@@ -35,12 +34,10 @@ $confirmation = false;
                         <input name="cpassword" id="cpassword" type="password">
                         <br>
                         <br>
+                        <div class="g-recaptcha" data-sitekey="6LceiUwpAAAAADshf3SC_ouidMqHYZf7BfQgwtMW"></div>
                         <button>S'inscrire</button>
-                    </form>
-                </div>
-                <div class="right-captcha">
-                    <p>Captcha</p>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="error">
                 <?php
@@ -52,12 +49,23 @@ $confirmation = false;
                         redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
                     if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword'])) {  // résultat du formulaire
                         if ($_POST['username'] != '') {
-                            if ($_POST['password'] == $_POST['cpassword']) {
-                                $_SESSION['client']->inscription(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
-                                $confirmation = true;
+                            // reCaptcha Verification
+                            $recaptchaSecretKey = file_get_contents('includes/recaptcha.txt');
+                            $recaptchaResponse = $_POST['g-recaptcha-response'];
+
+                            $recaptchaVerification = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptchaSecretKey&response=$recaptchaResponse");
+                            $recaptchaVerification = json_decode($recaptchaVerification);
+
+                            if ($recaptchaVerification->success) {
+                                if ($_POST['password'] == $_POST['cpassword']) {
+                                    $_SESSION['client']->inscription(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
+                                    $confirmation = true;
+                                } else
+                                    echo 'Le mot de passe et la confirmation du mot de passe sont différents.';
                             } else
-                                echo 'Le mot de passe et la confirmation du mot de passe sont différents.';
-                        } else echo 'Le champ `identifiant` ne peut pas être vide.';
+                                echo 'Veuillez compléter le reCAPTCHA.';
+                        }
+                        else echo 'Le champ `identifiant` ne peut pas être vide.';
                     }
                 } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
                     echo $e->getMessage();
@@ -74,6 +82,7 @@ $confirmation = false;
         </div>
     </main>
     <?php include_once('includes/footer.html'); ?>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>

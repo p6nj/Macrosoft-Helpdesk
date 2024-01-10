@@ -198,7 +198,7 @@ tr:nth-child(even) {
 .form-division {
     align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 1vw 2vh
 }
 

@@ -21,8 +21,8 @@ debug();
         <div class="shadow-form">
             <h1 class="center-text">Connexion</h1>
             <div class="form-division">
-                <div class="left">
-                    <form method="post">
+                <form method="post">
+                    <div>
                         <label for="username">Nom d'utilisateur :</label><br>
                         <input name="username" id="username" type="text">
                         <br>
@@ -34,12 +34,10 @@ debug();
                             de passe oublié</a>
                         <br>
                         <br>
+                        <div class="g-recaptcha" data-sitekey="6LceiUwpAAAAADshf3SC_ouidMqHYZf7BfQgwtMW"></div>
                         <input type="submit" value="Se connecter">
-                    </form>
-                </div>
-                <div class="right-captcha">
-                    <p>Captcha</p>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="error">
                 <?php
@@ -50,10 +48,20 @@ debug();
                     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
                         $_SESSION['client'] = new Visiteur();
                     else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
-                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
+                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');                    
                     if (isset($_POST['username']) && isset($_POST['password'])) {  // résultat du formulaire
-                        $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
-                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
+                        // reCaptcha Verification
+                        $recaptchaSecretKey = file_get_contents('includes/recaptcha.txt');
+                        $recaptchaResponse = $_POST['g-recaptcha-response'];
+
+                        $recaptchaVerification = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptchaSecretKey&response=$recaptchaResponse");
+                        $recaptchaVerification = json_decode($recaptchaVerification);
+
+                        if ($recaptchaVerification->success) {
+                            $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
+                            redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
+                        } else
+                            echo 'Veuillez compléter le reCAPTCHA.';
                     }
                 } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
                     echo $e->getMessage();
@@ -73,6 +81,7 @@ debug();
     <footer class="special-footer">
         <p>&copy; 2023 Macrosoft Helpdesk</p>
     </footer>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>
