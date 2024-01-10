@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Macrosoft HelpDesk</title>
-  <link rel="stylesheet" type="text/css" href="common.css">
-</head>
-
 <?php
-require_once 'includes/profils.php';
-require_once 'includes/misc.php';
+require_once 'includes/header.php';
 debug();
 foreach ($_POST as $k => $v) $_POST[$k] = htmlspecialchars($_POST[$k]);
 try {
@@ -281,9 +271,7 @@ try {
     </dialog>
 
   </main>
-  <footer>
-    <p>&copy; 2023 Macrosoft Helpdesk</p>
-  </footer>
+  <?php include_once('includes/footer.html'); ?>
 </body>
 
 </html>

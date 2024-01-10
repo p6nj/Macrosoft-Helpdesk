@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-    <link rel="stylesheet" type="text/css" href="common.css">
-</head>
-
 <?php
+require_once 'includes/header.php';
 // GET vars : 'erreur', 'message', 'déco'
-require_once 'includes/profils.php';
-require_once 'includes/misc.php';
 debug();
 ?>
 

@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Macrosoft HelpDesk</title>
-    <link rel="stylesheet" type="text/css" href="common.css">
-</head>
+<?php require_once 'includes/header.html'; ?>
 
 <script>
     function confirm(at, tid) {
@@ -136,9 +129,7 @@ try {
             </form>
         </dialog>
     </main>
-    <footer>
-        <p>&copy; 2023 Macrosoft Helpdesk</p>
-    </footer>
+    <?php include_once('includes/footer.html'); ?>
 </body>
 
 </html>
