@@ -29,8 +29,8 @@ try {
     }
   }
 } catch (ErreurBD $e) {
-  // $_SESSION['erreur'] = $e->getMessage();
-  $_SESSION['erreur'] = $e;
+  $_SESSION['erreur'] = $e->getMessage();
+  // $_SESSION['erreur'] = $e->getPrevious()->getCode();
   redirect('adminweb.php');
 }
 ?>

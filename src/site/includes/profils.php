@@ -312,7 +312,7 @@ final class AdminWeb extends AccesseurLibellé
             $this->insert("into Utilisateur(login, mdp, role) values ('$id','$mdp','Technicien')");
             (new Système())->créeTechnicien($id, $mdp);
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("impossible de créer le technicien '$id'", 8, $e);
+            throw new RequêteIllégale($e->getCode() == 1062 ? "le technicien '$id' existe déjà" : "impossible de créer le technicien '$id'", 8, $e);
         }
     }
 
