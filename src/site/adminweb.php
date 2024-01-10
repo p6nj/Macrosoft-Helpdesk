@@ -138,11 +138,13 @@ try {
       { ?>
         <libellé class="<?= $inf ? 'inf ' : '' ?>clickable" onclick="modlib(event)" id="<?= $lib['idL'] ?>">
           <nom><?= $lib['intitule'] ?></nom>
-          <div class="ticket-container">
-            <?php foreach ($lib['inf'] as $inf) {
-              affiche_lib($inf, true);
-            } ?>
-          </div>
+          <?php if (sizeof($libellés = $lib['inf'])) : ?>
+            <div class="ticket-container">
+              <?php foreach ($libellés as $inf) {
+                affiche_lib($inf, true);
+              } ?>
+            </div>
+          <?php endif; ?>
         </libellé>
       <?php } ?>
       <h1>Libellés</h1>
