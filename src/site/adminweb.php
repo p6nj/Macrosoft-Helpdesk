@@ -179,10 +179,9 @@ try {
         <label for="niveau">Niveau d'urgence :</label>
         <br>
         <select name="niveau" id="niveau">
-          <option value="1">Moindre</option>
-          <option value="2">Important</option>
-          <option value="3">Très important</option>
-          <option value="4">Urgent</option>
+          <?php for ($i = 1; $i < 5; $i++) : ?>
+            <option value="<?= $i ?>"><?= niv_urgence_str($i) ?></option>
+          <?php endfor; ?>
         </select>
         <br><br>
         <label for="libelle">Libellé :</label>
