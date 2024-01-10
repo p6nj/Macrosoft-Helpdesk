@@ -275,7 +275,9 @@ final class AdminWeb extends AccesseurLibellé
     public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien)
     {
         try {
-            $this->update("Ticket SET etat='En cours de traitement', niv_urgence=$niveau, lib=$libellé, technicien='$technicien' WHERE idT=$id");
+            if ($technicien)
+                $this->update("Ticket SET etat='En cours de traitement', niv_urgence=$niveau, lib=$libellé, technicien='$technicien' WHERE idT=$id");
+            else $this->update("Ticket SET etat='Ouvert', niv_urgence=$niveau, lib=$libellé, technicien=null WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("impossible de modifier le ticket $id", 5, $e);
         }
@@ -312,5 +314,10 @@ final class AdminWeb extends AccesseurLibellé
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("impossible de créer le technicien '$id'", 8, $e);
         }
+    }
+
+    public function getTechniciens(): array
+    {
+        return $this->select('login from VueTechniciens');
     }
 }

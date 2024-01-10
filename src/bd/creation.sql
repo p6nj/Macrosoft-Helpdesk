@@ -101,6 +101,11 @@ SELECT idt,
     og_niv_urgence AS niv_urgence
 FROM Ticket t
     JOIN Utilisateur u ON t.demandeur = u.login;
+-- Création de la vue des techniciens de la base pour l'admin web --
+create view VueTechniciens as
+select login
+from Utilisateur
+where role = 'Technicien';
 -- Création des rôles
 CREATE ROLE UTILISATEUR;
 CREATE ROLE TECHNICIEN;
@@ -131,6 +136,7 @@ GRANT SELECT,
     INSERT,
     UPDATE (intitule, lib_sup, archive) ON VueLibellesNonArchives TO ADMIN_WEB;
 GRANT INSERT ON Utilisateur TO ADMIN_WEB;
+grant select on VueTechniciens to ADMIN_WEB;
 -- Attribution des permissions au rôle Visiteur
 GRANT SELECT ON VueDerniersTicketsOuverts TO VISITEUR;
 -- Attribution des permissions au visiteur (lors de la création de compte et de l'échec de connexion uniquement)

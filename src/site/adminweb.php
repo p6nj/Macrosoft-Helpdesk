@@ -194,7 +194,12 @@ try {
         <br><br>
         <label for="tech">Technicien assigné :</label>
         <br>
-        <input type="text" name="tech" id="tech">
+        <select name="tech" id="tech">
+          <option value="">Aucun</option>
+          <?php foreach ($_SESSION['client']->getTechniciens() as $tech) : ?>
+            <option value="<?= $tech['login'] ?>"><?= $tech['login'] ?></option>
+          <?php endforeach; ?>
+        </select>
         <br><br>
         <button type="submit">Enregistrer</button>
         <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
