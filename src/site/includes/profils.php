@@ -217,6 +217,13 @@ final class Système extends Client
         $this->grant("UTILISATEUR to `$id`");
         $this->set("default role UTILISATEUR for `$id`");
     }
+
+    public function créeTechnicien(string $id, string $mdp)
+    {
+        $this->create("user `$id` identified by '$mdp'");
+        $this->grant("TECHNICIEN to `$id`");
+        $this->set("default role TECHNICIEN for `$id`");
+    }
 }
 
 final class Technicien extends Compte
@@ -291,7 +298,7 @@ final class AdminWeb extends AccesseurLibellé
     public function ajoutLibellé(string $titre, ?int $groupe)
     {
         try {
-            $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre',$groupe)");
+            $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre'," . ($groupe ?: 'NULL') . ")");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("impossible d'ajouter le libellé '$titre'", 7, $e);
         }
@@ -300,7 +307,8 @@ final class AdminWeb extends AccesseurLibellé
     public function ajoutTechnicien(string $id, string $mdp)
     {
         try {
-            $this->insert("into Utilisateur(login, mdp, role) values ($id,$mdp,'Technicien')");
+            $this->insert("into Utilisateur(login, mdp, role) values ('$id','$mdp','Technicien')");
+            (new Système())->créeTechnicien($id, $mdp);
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("impossible de créer le technicien '$id'", 8, $e);
         }

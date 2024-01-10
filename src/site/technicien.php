@@ -101,7 +101,7 @@ try {
                 <?php foreach ($_SESSION['client']->getTicketsAttribués() as $ticket) : ?>
                     <ticket onclick="confirm(true, <?= $ticket['idT'] ?>)" class="clickable">
                         <lib><?= $ticket['libelle'] ?></lib>
-                        <niv><?= $ticket['niv_urgence'] ?></niv> <!-- TODO: vrais noms -->
+                        <niv><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
                         <p><?= $ticket['description'] ?></p>
                         <cible><?= $ticket['cible'] ?></cible>
                         <demandeur><?= $ticket['demandeur'] ?></demandeur>
@@ -115,7 +115,7 @@ try {
                 <?php foreach ($_SESSION['client']->getTicketsNonAttribués() as $ticket) : ?>
                     <ticket onclick="confirm(false, <?= $ticket['idT'] ?>)" class="clickable">
                         <lib><?= $ticket['libelle'] ?></lib>
-                        <niv><?= $ticket['niv_urgence'] ?></niv> <!-- TODO: vrais noms -->
+                        <niv><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
                         <p><?= $ticket['description'] ?></p>
                         <cible><?= $ticket['cible'] ?></cible>
                         <demandeur><?= $ticket['demandeur'] ?></demandeur>

@@ -85,6 +85,7 @@ grant VISITEUR to visiteur @localhost;
 set default role VISITEUR for visiteur @localhost;
 create user sys @localhost identified by "4H7nvbyx8g6tfrMwWUNHUtvAeGsvngs9fjZmmf6n5FFCtLrDq6";
 grant UTILISATEUR to sys @localhost with ADMIN OPTION;
+grant TECHNICIEN to sys @localhost with ADMIN OPTION;
 set default role UTILISATEUR for sys @localhost;
 grant create user on *.* to sys @localhost;
 grant ALL PRIVILEGES on mysql.* to sys @localhost;

@@ -7,6 +7,35 @@
   <link rel="stylesheet" type="text/css" href="common.css">
 </head>
 
+<?php
+require_once 'includes/profils.php';
+require_once 'includes/misc.php';
+try {
+  session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
+  if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof AdminWeb) {
+    // l'utilisateur n'est pas connecté
+    redirect('accueil.php');
+  } else {
+    if (isset($_POST['id']) && isset($_POST['mdp']) && isset($_POST['confmdp'])) {
+      $_POST['id'] = htmlspecialchars($_POST['id']);
+      $_POST['mdp'] = htmlspecialchars($_POST['mdp']);
+      $_POST['confmdp'] = htmlspecialchars($_POST['confmdp']);
+      if ($_POST['mdp'] == $_POST['confmdp']) {
+        $_SESSION['client']->ajoutTechnicien($_POST['id'], $_POST['mdp']);
+        $_SESSION['message'] = 'Technicien ajouté avec succès.';
+      } else throw new RequêteIllégale('Le mot de passe et la confirmation ne correspondent pas.');
+    } else if (isset($_POST['titre']) && isset($_POST['sup'])) {
+      $_SESSION['client']->ajoutLibellé(htmlspecialchars($_POST['titre']), $_POST['sup'] ? htmlspecialchars($_POST['sup']) : null);
+      $_SESSION['message'] = 'Libellé ajouté avec succès.';
+    }
+  }
+} catch (ErreurBD $e) {
+  $_SESSION['erreur'] = $e->getMessage();
+  // $_SESSION['erreur'] = $e;
+  redirect('adminweb.php');
+}
+?>
+
 <style>
   ticket *,
   libellé nom {
@@ -26,6 +55,7 @@
     form.elements['tech'].value = target.children[7].innerText;
     dialog.showModal();
   }
+
   function modlib(event) {
     let target = event.target;
     console.log(target);
@@ -58,8 +88,7 @@
         <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">
           Deconnexion
         </button>
-        <button title="<?= $_SESSION['client']->getProfil()['login']; ?>"
-          onclick="document.querySelector(' dialog#profil').showModal()">
+        <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
           Profil
         </button>
         <dialog id="profil">
@@ -70,76 +99,65 @@
           Mot de passe : <hidden id='mdp'>
             <?= $profil['mdp'] ?>
           </hidden>
-          <button
-            onclick="document.getElementById('mdp').style.display='block'; document.getElementById('affiche-mdp').style.display='none'"
-            id="affiche-mdp">Afficher le mot de passe</button>
+          <button onclick="document.getElementById('mdp').style.display='block'; document.getElementById('affiche-mdp').style.display='none'" id="affiche-mdp">Afficher le mot de passe</button>
           <br>
-          <button
-            onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'; document.getElementById('affiche-mdp').style.display='block';">Fermer</button>
+          <button onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'; document.getElementById('affiche-mdp').style.display='block';">Fermer</button>
         </dialog>
       </div>
     </nav>
   </header>
   <main id="header-top-margin">
     <div class="message">
+      <?php
+      if (isset($_SESSION['message'])) {
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
+      }
+      ?>
     </div>
     <div class="error">
+      <?php
+      if (isset($_SESSION['erreur'])) {
+        echo $_SESSION['erreur'];
+        unset($_SESSION['erreur']);
+      }
+      ?>
     </div>
     <div>
+      <?php
+      function affiche_lib(array $lib, bool $inf = false)
+      { ?>
+        <libellé class="<?= $inf ? 'inf ' : '' ?>clickable" onclick="modlib(event)" id="<?= $lib['idL'] ?>">
+          <nom><?= $lib['intitule'] ?></nom>
+          <div class="ticket-container">
+            <?php foreach ($lib['inf'] as $inf) {
+              affiche_lib($inf, true);
+            } ?>
+          </div>
+        </libellé>
+      <?php } ?>
       <h1>Libellés</h1>
       <div class="ticket-container">
-        <libellé class="clickable" onclick="modlib(event)" id="1">
-          <nom>Libellé 1</nom>
-          <div class="ticket-container">
-            <libellé class="inf clickable" onclick="modlib(event)" id="2">
-              <nom>Libellé 2</nom>
-            </libellé>
-            <libellé class="inf clickable" onclick="modlib(event)" id="3">
-              <nom>Libellé 3</nom>
-            </libellé>
-          </div>
-        </libellé>
-        <libellé class="clickable" onclick="modlib(event)" id="4">
-          <nom>Libellé 4</nom>
-          <div class="ticket-container">
-            <libellé class="inf clickable" onclick="modlib(event)" id="5">
-              <nom>Libellé 5</nom>
-              <div class="ticket-container">
-                <libellé class="inf clickable" onclick="modlib(event)" id="6">
-                  <nom>Libellé 6</nom>
-                </libellé>
-              </div>
-            </libellé>
-            <libellé class="inf clickable" onclick="modlib(event)" id="7">
-              <nom>Libellé 7</nom>
-            </libellé>
-          </div>
-        </libellé>
+        <?php foreach ($_SESSION['client']->getLibellés() as $v) {
+          affiche_lib($v);
+        } ?>
       </div>
     </div>
     <div>
       <h1>Tickets</h1>
-      <div class="ticket-container">
-        <ticket onclick="modticket(event)" class="clickable" tid="1">
-          <lib id="1">Libellé</lib>
-          <niv id="4">Urgent</niv>
-          <p class="center-text">Description</p>
-          <cible>breval</cible>
-          <etat>Ouvert</etat>
-          <br>
-          <demandeur>william</demandeur>
-          <technicien></technicien>
-        </ticket>
-        <ticket onclick="modticket(event)" class="clickable" tid="2">
-          <lib id="2">Libellé</lib>
-          <niv id="3">Très important</niv>
-          <p class="center-text">Description</p>
-          <cible>breval</cible>
-          <etat>Ouvert</etat>
-          <br>
-          <demandeur>william</demandeur>
-          <technicien>tec1</technicien>
-        </ticket>
+      <div id="ticket-container">
+        <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
+          <ticket onclick="modticket(event)" class="clickable" tid="<?= $ticket['idT'] ?>">
+            <lib id="<?= $ticket['idL'] ?>"><?= $ticket['libelle'] ?></lib>
+            <niv id="<?= $ticket['niv_urgence'] ?>"><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
+            <p class="center-text"><?= $ticket['description'] ?></p>
+            <cible><?= $ticket['cible'] ?></cible>
+            <etat><?= $ticket['etat'] ?></etat>
+            <br>
+            <demandeur><?= $ticket['demandeur'] ?></demandeur>
+            <technicien><?= $ticket['technicien'] ?></technicien>
+          </ticket>
+        <?php endforeach; ?>
       </div>
     </div>
 
@@ -184,13 +202,19 @@
         <label for="sup">Libellé supérieur :</label>
         <br>
         <select name="sup" id="sup">
-          <option value="1">Libellé 1</option>
-          <option value="2">&emsp;Libellé 2</option>
-          <option value="3">Libellé 3</option>
-          <option value="4">Libellé 4</option>
-          <option value="5">Libellé 5</option>
-          <option value="6">Libellé 6</option>
-          <option value="7">Libellé 7</option>
+          <option value="">Aucun</option>
+          <?php function affiche_lib2(array $lib, int $niveau = 0)
+          { ?>
+            <option value=<?= $lib['idL'] ?>>
+              <?= str_repeat('&emsp;', $niveau) . $lib['intitule'] ?>
+            </option>
+          <?php foreach ($lib['inf'] as $inf) {
+              affiche_lib2($inf, $niveau + 1);
+            }
+          }
+          foreach ($_SESSION['client']->getLibellés() as $v) {
+            affiche_lib2($v);
+          } ?>
         </select>
         <br><br>
         <label for="archive">Archivé </label>
@@ -212,17 +236,11 @@
         <label for="sup">Libellé supérieur :</label>
         <br>
         <select name="sup" id="sup">
-          <option value="1">Libellé 1</option>
-          <option value="2">&emsp;Libellé 2</option>
-          <option value="3">Libellé 3</option>
-          <option value="4">Libellé 4</option>
-          <option value="5">Libellé 5</option>
-          <option value="6">Libellé 6</option>
-          <option value="7">Libellé 7</option>
+          <option value="">Aucun</option>
+          <?php foreach ($_SESSION['client']->getLibellés() as $v) {
+            affiche_lib2($v);
+          } ?>
         </select>
-        <br><br>
-        <label for="archive">Archivé </label>
-        <input type="checkbox" name="archive" id="archive">
         <br><br>
         <button type="submit">Enregistrer</button>
         <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
@@ -240,6 +258,10 @@
         <label for="mdp">Mot de passe :</label>
         <br>
         <input type="password" name="mdp" id="mdp">
+        <br><br>
+        <label for="confmdp">Confirmation du mot de passe :</label>
+        <br>
+        <input type="password" name="confmdp" id="confmdp">
         <br><br>
         <button type="submit">Enregistrer</button>
         <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">

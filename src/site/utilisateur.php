@@ -91,30 +91,27 @@ try {
                 <label for="libellé">Libellé :</label>
                 <br>
                 <select name="libellé" id="libellé">
-                    <?php
-                    function affiche_lib(array $lib, int $niveau = 0)
-                    {
-                        echo '<option value=' . $lib['idL'] . '>' . str_repeat('&emsp;', $niveau) . $lib['intitule'] . '</option>';
-                        foreach ($lib['inf'] as $inf) {
+                    <?php function affiche_lib(array $lib, int $niveau = 0)
+                    { ?>
+                        <option value=<?= $lib['idL'] ?>>
+                            <?= str_repeat('&emsp;', $niveau) . $lib['intitule'] ?>
+                        </option>
+                    <?php foreach ($lib['inf'] as $inf) {
                             affiche_lib($inf, $niveau + 1);
                         }
                     }
-
                     foreach ($_SESSION['client']->getLibellés() as $v) {
                         affiche_lib($v);
-                    }
-
-                    ?>
+                    } ?>
                 </select>
                 <br>
                 <br>
                 <label for="niveau">Niveau d'urgence :</label>
                 <br>
                 <select name="niveau" id="niveau">
-                    <option value="1">Moindre</option>
-                    <option value="2">Important</option>
-                    <option value="3">Très important</option>
-                    <option value="4">Urgent</option>
+                    <?php for ($i = 1; $i < 5; $i++) : ?>
+                        <option value="<?= $i ?>"><?= niv_urgence_str($i) ?></option>
+                    <?php endfor; ?>
                 </select>
                 <br>
                 <br>
