@@ -275,7 +275,7 @@ final class AdminWeb extends AccesseurLibellé
     public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien)
     {
         try {
-            $this->update("VueTicketsTechnicien SET etat='En cours de traitement', niv_urgence=$niveau, libelle=$libellé, technicien='$technicien' WHERE idT=$id");
+            $this->update("Ticket SET etat='En cours de traitement', niv_urgence=$niveau, lib=$libellé, technicien='$technicien' WHERE idT=$id");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("impossible de modifier le ticket $id", 5, $e);
         }
@@ -289,7 +289,7 @@ final class AdminWeb extends AccesseurLibellé
     public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive)
     {
         try {
-            $this->update("VueLibellesNonArchives SET intitule='$titre', lib_sup=$groupe, archive=$archive WHERE idL=$id");
+            $this->update("VueLibellesNonArchives SET intitule='$titre', lib_sup=" . ($groupe ?: 'null') . ", archive=" . ($archive ? 'true' : 'false') . " WHERE idL=$id");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("impossible de modifier le libellé $id", 6, $e);
         }
@@ -298,7 +298,7 @@ final class AdminWeb extends AccesseurLibellé
     public function ajoutLibellé(string $titre, ?int $groupe)
     {
         try {
-            $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre'," . ($groupe ?: 'NULL') . ")");
+            $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre'," . ($groupe ?: 'null') . ")");
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("impossible d'ajouter le libellé '$titre'", 7, $e);
         }

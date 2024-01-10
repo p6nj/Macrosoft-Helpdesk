@@ -125,8 +125,8 @@ GRANT SELECT,
 GRANT SELECT ON VueLogTicketsValides TO ADMIN_SYS;
 GRANT SELECT ON Log_connexion_echec TO ADMIN_SYS;
 -- Attribution des permissions au rôle Admin web
-GRANT SELECT,
-    UPDATE (etat, niv_urgence, libelle, technicien) ON VueTicketsOuverts TO ADMIN_WEB;
+GRANT SELECT ON VueTicketsOuverts TO ADMIN_WEB;
+GRANT SELECT(idT), UPDATE (etat, niv_urgence, lib, technicien) ON Ticket TO ADMIN_WEB;
 GRANT SELECT,
     INSERT,
     UPDATE (intitule, lib_sup, archive) ON VueLibellesNonArchives TO ADMIN_WEB;

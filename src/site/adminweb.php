@@ -10,6 +10,8 @@
 <?php
 require_once 'includes/profils.php';
 require_once 'includes/misc.php';
+debug();
+foreach ($_POST as $k => $v) $_POST[$k] = htmlspecialchars($_POST[$k]);
 try {
   session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
   if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof AdminWeb) {
@@ -17,21 +19,28 @@ try {
     redirect('accueil.php');
   } else {
     if (isset($_POST['id']) && isset($_POST['mdp']) && isset($_POST['confmdp'])) {
-      $_POST['id'] = htmlspecialchars($_POST['id']);
-      $_POST['mdp'] = htmlspecialchars($_POST['mdp']);
-      $_POST['confmdp'] = htmlspecialchars($_POST['confmdp']);
+      // ajout d'un technicien
       if ($_POST['mdp'] == $_POST['confmdp']) {
         $_SESSION['client']->ajoutTechnicien($_POST['id'], $_POST['mdp']);
         $_SESSION['message'] = 'Technicien ajouté avec succès.';
       } else throw new RequêteIllégale('Le mot de passe et la confirmation ne correspondent pas.');
+    } else if (isset($_POST['idT']) && isset($_POST['niveau']) && isset($_POST['libelle']) && isset($_POST['tech'])) {
+      // modification d'un ticket
+      $_SESSION['client']->modifieTicket($_POST['idT'], $_POST['niveau'], $_POST['libelle'], $_POST['tech']);
+      $_SESSION['message'] = 'Ticket modifié avec succès.';
+    } else if (isset($_POST['idL']) && isset($_POST['titre']) && isset($_POST['sup'])) {
+      // modification d'un libellé
+      $_SESSION['client']->modifieLibellé((int) $_POST['idL'], $_POST['titre'], $_POST['sup'] ?: null, isset($_POST['archive']));
+      $_SESSION['message'] = 'Libellé modifié avec succès.';
     } else if (isset($_POST['titre']) && isset($_POST['sup'])) {
-      $_SESSION['client']->ajoutLibellé(htmlspecialchars($_POST['titre']), $_POST['sup'] ? htmlspecialchars($_POST['sup']) : null);
+      // ajout d'un libellé
+      $_SESSION['client']->ajoutLibellé($_POST['titre'], $_POST['sup'] ? $_POST['sup'] : null);
       $_SESSION['message'] = 'Libellé ajouté avec succès.';
     }
   }
 } catch (ErreurBD $e) {
-  $_SESSION['erreur'] = $e->getMessage();
-  // $_SESSION['erreur'] = $e;
+  // $_SESSION['erreur'] = $e->getMessage();
+  $_SESSION['erreur'] = $e;
   redirect('adminweb.php');
 }
 ?>
@@ -147,7 +156,7 @@ try {
       <h1>Tickets</h1>
       <div id="ticket-container">
         <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
-          <ticket onclick="modticket(event)" class="clickable" tid="<?= $ticket['idT'] ?>">
+          <ticket onclick="modticket(event)" class="clickable" id="<?= $ticket['idT'] ?>">
             <lib id="<?= $ticket['idL'] ?>"><?= $ticket['libelle'] ?></lib>
             <niv id="<?= $ticket['niv_urgence'] ?>"><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
             <p class="center-text"><?= $ticket['description'] ?></p>
@@ -160,6 +169,16 @@ try {
         <?php endforeach; ?>
       </div>
     </div>
+
+    <?php function affiche_lib2(array $lib, int $niveau = 0)
+    { ?>
+      <option value=<?= $lib['idL'] ?>>
+        <?= str_repeat('&emsp;', $niveau) . $lib['intitule'] ?>
+      </option>
+    <?php foreach ($lib['inf'] as $inf) {
+        affiche_lib2($inf, $niveau + 1);
+      }
+    } ?>
 
     <dialog id="ticket-dialog">
       <h2>Modifier le ticket</h2>
@@ -177,9 +196,9 @@ try {
         <label for="libelle">Libellé :</label>
         <br>
         <select name="libelle" id="libelle">
-          <option value="1">Libellé 1</option>
-          <option value="2">&emsp;Libellé 2</option>
-          <option value="3">Libellé 3</option>
+          <?php foreach ($_SESSION['client']->getLibellés() as $v) {
+            affiche_lib2($v);
+          } ?>
         </select>
         <br><br>
         <label for="tech">Technicien assigné :</label>
@@ -203,16 +222,7 @@ try {
         <br>
         <select name="sup" id="sup">
           <option value="">Aucun</option>
-          <?php function affiche_lib2(array $lib, int $niveau = 0)
-          { ?>
-            <option value=<?= $lib['idL'] ?>>
-              <?= str_repeat('&emsp;', $niveau) . $lib['intitule'] ?>
-            </option>
-          <?php foreach ($lib['inf'] as $inf) {
-              affiche_lib2($inf, $niveau + 1);
-            }
-          }
-          foreach ($_SESSION['client']->getLibellés() as $v) {
+          <?php foreach ($_SESSION['client']->getLibellés() as $v) {
             affiche_lib2($v);
           } ?>
         </select>
