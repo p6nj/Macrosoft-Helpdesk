@@ -3,6 +3,8 @@ require_once 'includes/header.php';
 // GET vars : 'erreur', 'message'
 $confirmation = false;
 ?>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <body>
     <header>
         <nav>
@@ -34,8 +36,10 @@ $confirmation = false;
                         <input name="cpassword" id="cpassword" type="password">
                         <br>
                         <br>
-                        <div class="g-recaptcha" data-sitekey="6LceiUwpAAAAADshf3SC_ouidMqHYZf7BfQgwtMW"></div>
-                        <button>S'inscrire</button>
+                        <div class="g-recaptcha" data-sitekey="6LcGp00pAAAAAH2POS1k28hIIrzgPe78QgBGVsEn"></div>
+                        <br>
+                        <br>
+                        <input type="submit" value="S'inscrire">
                     </div>
                 </form>
             </div>
@@ -64,8 +68,7 @@ $confirmation = false;
                                     echo 'Le mot de passe et la confirmation du mot de passe sont différents.';
                             } else
                                 echo 'Veuillez compléter le reCAPTCHA.';
-                        }
-                        else echo 'Le champ `identifiant` ne peut pas être vide.';
+                        } else echo 'Le champ `identifiant` ne peut pas être vide.';
                     }
                 } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
                     echo $e->getMessage();
@@ -82,7 +85,6 @@ $confirmation = false;
         </div>
     </main>
     <?php include_once('includes/footer.html'); ?>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>
