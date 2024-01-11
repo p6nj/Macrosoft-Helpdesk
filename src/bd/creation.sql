@@ -1,4 +1,6 @@
 CREATE DATABASE MacrosoftDB;
+set session max_sp_recursion_depth = 10;
+set global max_sp_recursion_depth = 10;
 USE MacrosoftDB;
 DROP TRIGGER IF EXISTS VerifierRoleTechnicienInsert;
 DROP TRIGGER IF EXISTS VerifierRoleTechnicienUpdate;
@@ -163,5 +165,92 @@ WHERE login = NEW.technicien;
 IF role_utilisateur != 'Technicien' THEN SIGNAL SQLSTATE '45000'
 SET MESSAGE_TEXT = 'Seuls les utilisateurs avec le rôle Technicien peuvent être assignés comme technicien pour un ticket.';
 END IF;
+END $$
+CREATE TRIGGER VerifierLibelleInsert
+BEFORE INSERT ON Libelle
+FOR EACH ROW
+BEGIN
+    DECLARE lib_sup_exist INT;
+    
+    IF NEW.lib_sup IS NOT NULL THEN
+        SELECT COUNT(*) INTO lib_sup_exist
+        FROM Libelle
+        WHERE idL = NEW.lib_sup;
+        
+        IF lib_sup_exist = 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Le libellé supérieur spécifié nexiste pas.';
+        ELSEIF NEW.intitule = (SELECT intitule FROM Libelle WHERE idL = NEW.lib_sup) THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Le libellé ne peut pas avoir la même valeur que son libellé supérieur.';
+        END IF;
+    END IF;
+    
+END $$
+CREATE TRIGGER VerifierLibelleUpdate
+BEFORE UPDATE ON Libelle
+FOR EACH ROW
+BEGIN
+    DECLARE lib_sup_exist INT;
+    
+    IF NEW.lib_sup IS NOT NULL THEN
+        SELECT COUNT(*) INTO lib_sup_exist
+        FROM Libelle
+        WHERE idL = NEW.lib_sup;
+        
+        IF lib_sup_exist = 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Le libellé supérieur spécifié nexiste pas.';
+        ELSEIF NEW.intitule = (SELECT intitule FROM Libelle WHERE idL = NEW.lib_sup) THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Le libellé ne peut pas avoir la même valeur que son libellé supérieur.';
+        END IF;
+    END IF;
+    
+END $$
+CREATE PROCEDURE VerifierLibelleSup(IN libelle_id INT, IN parent_id INT)
+BEGIN
+    DECLARE parent_libelle VARCHAR(255);
+    
+    -- Récupérer le libellé supérieur actuel
+    SELECT intitule INTO parent_libelle FROM Libelle WHERE idL = parent_id;
+    
+    -- Vérifier si le libellé actuel est égal au libellé supérieur
+    IF parent_libelle IS NOT NULL AND EXISTS (SELECT 1 FROM Libelle WHERE idL = libelle_id AND intitule = parent_libelle) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Le libellé ne peut pas avoir la même valeur que son libellé supérieur.';
+    END IF;
+    
+    -- Récupérer le libellé supérieur du libellé supérieur actuel (récursivement)
+    SELECT lib_sup INTO parent_id FROM Libelle WHERE idL = parent_id;
+    
+    -- Appeler récursivement la procédure si un libellé supérieur existe
+    IF parent_id IS NOT NULL THEN
+        CALL VerifierLibelleSup(libelle_id, parent_id);
+    END IF;
+END $$
+CREATE TRIGGER VerifierLibelleSupInsert
+BEFORE INSERT ON Libelle
+FOR EACH ROW
+BEGIN
+    DECLARE parent_id INT;
+    
+    -- Récupérer l'ID du libellé supérieur
+    SET parent_id = NEW.lib_sup;
+    
+    -- Appeler la procédure récursive pour vérifier les libellés supérieurs
+    CALL VerifierLibelleSup(NEW.idL, parent_id);
+END $$
+CREATE TRIGGER VerifierLibelleSupUpdate
+BEFORE UPDATE ON Libelle
+FOR EACH ROW
+BEGIN
+    DECLARE parent_id INT;
+    
+    -- Récupérer l'ID du libellé supérieur
+    SET parent_id = NEW.lib_sup;
+    
+    -- Appeler la procédure récursive pour vérifier les libellés supérieurs
+    CALL VerifierLibelleSup(NEW.idL, parent_id);
 END $$
 DELIMITER ;
