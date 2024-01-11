@@ -48,10 +48,11 @@ try {
     let target = event.target;
     let dialog = document.getElementById('ticket-dialog');
     let form = document.forms['ticket'];
+    console.log(target.getElementsByTagName('technicien')[0]);
     form.elements['idT'].value = target.id;
-    form.elements['libelle'].value = target.children[0].id;
-    form.elements['niveau'].value = target.children[1].id;
-    form.elements['tech'].value = target.children[7].innerText;
+    form.elements['libelle'].value = target.getElementsByTagName('lib')[0].id;
+    form.elements['niveau'].value = target.getElementsByTagName('niv')[0].id;
+    form.elements['tech'].value = target.getElementsByTagName('technicien')[0].id;
     dialog.showModal();
   }
 
@@ -152,11 +153,11 @@ try {
             <lib id="<?= $ticket['idL'] ?>"><?= $ticket['libelle'] ?></lib>
             <niv id="<?= $ticket['niv_urgence'] ?>"><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
             <p class="center-text"><?= $ticket['description'] ?></p>
-            <cible><?= $ticket['cible'] ?></cible>
+            <cible><b>⌖</b> <?= $ticket['cible'] ?></cible>
             <etat><?= $ticket['etat'] ?></etat>
             <br>
-            <demandeur><?= $ticket['demandeur'] ?></demandeur>
-            <technicien><?= $ticket['technicien'] ?></technicien>
+            <demandeur><?= $ticket['demandeur'] ?> 🗪</demandeur>
+            <technicien id="<?= $ticket['technicien'] ?>"><b>🅯</b> <?= $ticket['technicien'] ?></technicien>
           </ticket>
         <?php endforeach; ?>
       </div>

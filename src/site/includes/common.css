@@ -237,7 +237,12 @@ tr:nth-child(even) {
 #ticket-container {
     height: 20%;
     margin: 20px;
-    padding: 20px
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(auto-fill, 120px);
+    grid-row-gap: .5em;
+    grid-column-gap: 1em;
 }
 
 .ticket-container {
@@ -254,7 +259,6 @@ ticket {
     display: inline-block;
     margin: 5px;
     padding: 5px;
-    width: 200px
 }
 
 libellé {
@@ -314,9 +318,24 @@ img#logo {
 
 dialog {
     border: none;
-    border-radius: var(--radius)
+    border-radius: var(--radius);
 }
 
 hidden {
     display: none
+}
+
+niv,
+etat {
+    font-variant: all-petite-caps;
+    font-size: 15px;
+}
+
+lib {
+    font-weight: bold;
+    font-size: small;
+}
+
+ticket>p {
+    font-style: italic;
 }

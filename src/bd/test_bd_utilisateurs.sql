@@ -1,4 +1,25 @@
-
+drop user `admin` @localhost,
+`alice` @localhost,
+`charlie` @localhost,
+`diana` @localhost,
+`eric` @localhost,
+`frank` @localhost,
+`gestion` @localhost,
+`grace` @localhost,
+`isabel` @localhost,
+`jack` @localhost,
+`karen` @localhost,
+`louis` @localhost,
+`marie` @localhost,
+`queen` @localhost,
+`tec1` @localhost,
+`tec2` @localhost,
+`tec3` @localhost,
+`tec4` @localhost,
+`tec5` @localhost,
+`tec6` @localhost,
+visiteur @localhost,
+sys @localhost;
 create user `admin` @localhost identified by 'de5d59d6517cb6d5a8629a7f4e0bafb3';
 grant ADMIN_WEB to `admin` @localhost;
 set default role ADMIN_WEB for `admin` @localhost;
