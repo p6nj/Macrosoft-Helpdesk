@@ -1,8 +1,8 @@
 <?php
 require_once 'includes/header.php';
 // GET vars : 'erreur', 'message', 'déco'
-debug();
 ?>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <body>
     <header>
@@ -34,7 +34,7 @@ debug();
                             de passe oublié</a>
                         <br>
                         <br>
-                        <div class="g-recaptcha" data-sitekey="6LceiUwpAAAAADshf3SC_ouidMqHYZf7BfQgwtMW"></div>
+                        <div class="g-recaptcha" data-sitekey="6LcGp00pAAAAAH2POS1k28hIIrzgPe78QgBGVsEn"></div>
                         <input type="submit" value="Se connecter">
                     </div>
                 </form>
@@ -48,7 +48,7 @@ debug();
                     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
                         $_SESSION['client'] = new Visiteur();
                     else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
-                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');                    
+                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
                     if (isset($_POST['username']) && isset($_POST['password'])) {  // résultat du formulaire
                         // reCaptcha Verification
                         $recaptchaSecretKey = file_get_contents('includes/recaptcha.txt');
@@ -81,7 +81,6 @@ debug();
     <footer class="special-footer">
         <p>&copy; 2023 Macrosoft Helpdesk</p>
     </footer>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>
