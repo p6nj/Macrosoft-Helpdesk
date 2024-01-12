@@ -146,7 +146,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 1 : Gestion des tickets
 **Nom :** Gérer les tickets.
 **Contexte d'utilisation :** La plateforme doit permettre de gérer et afficher des demandes de dépannage d'utilisateurs.
-**Portée :** 
+**Portée :** Entreprise boîte noire
 **Niveau :** Stratégique 
 **Acteur principal :** Utilisateur
 **Intervenants :** Administrateur Web, Technicien
@@ -181,7 +181,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 2 : Affectation d'un ticket
 **Nom :** Affecter un ticket
 **Contexte d'utilisation :** L'administrateur web affecte un ticket à un technicien afin que sa demande soit traitée.
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Utilisateur
 **Acteur principal :** Administrateur Web
 **Intervenants :** Technicien
@@ -203,7 +203,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 3 : Auto-attribution d'un ticket
 **Nom :** Auto-attribution d'un ticket
 **Contexte d'utilisation :** Un technicien s'attribue un ticket non affecté par l'administrateur web.
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Utilisateur
 **Acteur principal :** Technicien
 **Précondition :** Un ticket n'est pas affecté.
@@ -215,7 +215,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 4 : Modification d'un ticket
 **Nom :** Modifier un ticket
 **Contexte d'utilisation :** Un ticket possède des informations erronnées ou obsolètes et doit être modifié par l'administrateur web.
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Utilisateur
 **Acteur principal :** Administrateur Web
 **Précondition :** Un ticket est ouvert.
@@ -232,7 +232,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 5 : Ouverture d'un ticket
 **Nom :** Créer un ticket
 **Contexte d'utilisation :** Un utilisateur connecté fait une demande de dépannage sous la forme d'un ticket auquel il attribue un libellé pour déterminer la nature de son problème et un niveau d'urgence qu'il estime.
-**Portée :** 
+**Portée :** Organisation boîte blanche
 **Niveau :** Utilisateur
 **Acteur principal :** Utilisateur
 **Intervenants :** Administrateur Web
@@ -250,7 +250,7 @@ La page d'inscription doit contenir :
     1. L'utilisateur choisit l'option 'Autre' et détaille lui-même un libellé.
     2. Aller à **2.** dans le scénario nominal.
    
-    b. Aucun libellé ne corresponds au problème formulé par l'utilisateur.
+    b. Aucun libellé ne correspond au problème formulé par l'utilisateur.
     1. L'utilisateur choisit l'option 'Autre' et détaille lui-même un libellé.
     2. Aller à **2.** dans le scénario nominal.
 
@@ -288,7 +288,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 7 : Fermeture d'un ticket
 **Nom :** Fermer un ticket
 **Contexte d'utilisation :** Un technicien finit de traiter la demande formulée par le ticket et le ferme. 
-**Portée :** 
+**Portée :** Sous-système
 **Niveau :** Utilisateur
 **Acteur principal :** Technicien
 **Intervenants :** Administrateur Web
@@ -329,7 +329,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 9 : Consulter le journal d'activité de tickets ouverts
 **Nom :** Consulter les jounaux d'activité de création de tickets
 **Contexte d'utilisation :**  L'administrateur système consulte le journal d'activité de création de tickets.
-**Portée :**
+**Portée :** Système boîte noire
 **Niveau :** Utilisateur 
 **Acteur principal :** Administrateur système
 **Garantie minimale :** Les journaux d'activités de création de tickets ne sont pas divulgués.
@@ -345,7 +345,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 10 : Consultation des tickets
 **Nom :** Consulter les tickets
 **Contexte d'utilisation :** Un utilisateur souhaite consulter des tickets ouverts.
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Stratégique 
 **Acteur principal :** Utilisateur
 **Intervenants :** Visiteur, Administrateur web, Technicien
@@ -371,7 +371,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 11 : 10 derniers tickets
 **Nom :** Visualiser 10 derniers tickets
 **Contexte d'utilisation :** Le visiteur a besoin de visualiser les 10 derniers tickets formulés encore non résolus.
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Utilisateur 
 **Acteur principal :** Visiteur
 **Précondition :** L'utilisateur ne doit pas être connecté.
@@ -395,7 +395,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 12 : Affichage de tous les tickets ouverts
 **Nom :** Consulter tous les tickets ouverts
 **Contexte d'utilisation :** L'administrateur web et les techniciens doivent pouvoir voir tous les tickets ouverts.
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Utilisateur 
 **Acteur principal :** Administrateur web / Technicien
 **Précondition :** Personne connectée sur un compte d'administrateur web ou de technicien.
@@ -416,7 +416,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 13 : Tableau de Bord
 **Nom :** Consulter son tableau de bord
 **Contexte d'utilisation :** L'utilisateur connecté doit pouvoir visualiser tous les tickets qui le concernent dans un tableau de bord.
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Utilisateur 
 **Acteur principal :** Utilisateur
 **Précondition :** Personne connectée sur un compte inscrit.
@@ -437,7 +437,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 14 : Gestion du profil d'un compte inscrit
 **Nom :** Gérer son profil
 **Contexte d'utilisation :** Un utilisateur possédant un compte inscrit souhaite consulter ses informations, changer et/ou récupérer son mot de passe.
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Stratégique 
 **Acteur principal :** Utilisateur
 **Intervenants :** IUT
@@ -460,10 +460,10 @@ La page d'inscription doit contenir :
 2. a. L'utilisateur n'a pas accès à ses informations :
     1. Un message d'erreur est affiché pour l'utilisateur.
 ***
-### Cas d'utilisation 15 : Récupérer mot de passe
+#### Cas d'utilisation 15 : Récupérer mot de passe
 **Nom :** Récupérer mot de passe\
 **Contexte d'utilisation :** Un utilisateur cherche à faire une demande de récupération de mot de passe.\
-**Portée :**\
+**Portée :** Sous-système\
 **Niveau :** Utilisateur\
 **Acteur principal :** Utilisateur\
 **Intervenants :** IUT\
@@ -499,7 +499,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 17 : Changement du mot de passe
 **Nom :** Changer mot de passe
 **Contexte d'utilisation :** Un utilisateur cherche à changer son mot de passe.
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Utilisateur 
 **Acteur principal :** Utilisateur
 **Intervenants :** IUT
@@ -523,10 +523,10 @@ La page d'inscription doit contenir :
 3. b. Le mot de passe renseigné n'est pas validé :
     1. Envoi d'un message d'échec de changement de mot de passe (ECHEC)
 ***
-#### Cas d'utilisation 19 : Administration
+#### Cas d'utilisation 18 : Administration
 **Nom :** Administration
 **Contexte d'utilisation :** La plateforme doit permettre aux administrateurs de pouvoir gérer les éléments extérieurs aux tickets.
-**Portée :**
+**Portée :** Organisation boîte noire
 **Niveau :** Stratégique
 **Acteur principal :** Administrateur web
 **Intervenants :** IUT, Administrateur système
@@ -542,10 +542,10 @@ La page d'inscription doit contenir :
 2. a. Erreur lors de la modification :
    1. Envoi d'un message d'échec de modification des métadonnées (ECHEC)
 ***
-#### Cas d'utilisation 20 : Gérer les utilisateurs
+#### Cas d'utilisation 19 : Gérer les utilisateurs
 **Nom :** Gerer les utilisateurs
 **Contexte d'utilisation :** La plateforme doit permettre aux administrateurs de gérer les comptes utilisateur.
-**Portée :**
+**Portée :** Organisation boîte blanche
 **Niveau :** Stratégique
 **Acteur principal :** Administrateur web
 **Intervenants :** IUT
@@ -565,10 +565,10 @@ La page d'inscription doit contenir :
 3. a. Erreur lors de la création du compte :
    1. Envoi d'un message d'échec de création du compte utilisateur (ECHEC)
 ***
-#### Cas d'utilisation 21 : Inscription
+#### Cas d'utilisation 20 : Inscription
 **Nom :** S'inscrire
 **Contexte d'utilisation :** On utilise les données renseignées dans un formulaire d'inscription pour créer un nouveau compte sur la plateforme.
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Utilisateur
 **Acteur principal :** Utilisateur
 **Intervenants :** IUT
@@ -596,7 +596,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 21 : Créer un compte technicien
 **Nom :** Créer un compte technicien
 **Contexte d'utilisation :**  L'administrateur web crée un compte technicien
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Utilisateur 
 **Acteur principal :** Administrateur web
 **Intervenants :** IUT, Technicien
@@ -622,11 +622,25 @@ La page d'inscription doit contenir :
     1. Envoi d'un message d'échec de création du compte technicien (ECHEC)
 ***
 #### Cas d'utilisation 22 : Consulter les journaux d'activité de connexion ratée
+**Nom :** Consulter les jounaux d'activité de création de connexion ratée
+**Contexte d'utilisation :** L'administrateur système consulte le journal d'activité de connexion ratée.
+**Portée :** Sous-système
+**Niveau :** Utilisateur
+**Acteur principal :** Administrateur système
+**Garantie minimale :** Les journaux d'activités de connexion ratée ne sont pas divulgués.
+**Garantie en cas succès :** Les journaux d'activités de connexion ratée sont affichés.
+**Déclencheur :** L'administrateur système souhaite consulter un journal d'activité de connexion ratée.
+**Scénario nominal :**
+1. Les journaux d'activité de connexion ratée sont affichés sur la page de l'administrateur système.
+
+**Extensions :**
+1. a. Aucun journal d'activité de connexion ratée n'est enregistré :
+   1. Un tableau contenant un message qui en informe l'administrateur système est affiché.
 ***
 #### Cas d'utilisation 23 : Gérer les libellés
 **Nom :** Gérer les libellés
 **Contexte d'utilisation :**  Manipuler la base de données des libellés
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Stratégique 
 **Acteur principal :** Administrateur web
 **Intervenants :** IUT
@@ -642,10 +656,10 @@ La page d'inscription doit contenir :
 2. a. Impossible d'accéder à la base de données :
     1. Afficher une erreur. (ECHEC)
 ***
-### Cas d'utilisation 24 : Créer un libellé
+#### Cas d'utilisation 24 : Créer un libellé
 **Nom :** Créer un libellé
 **Contexte d'utilisation :**  Ajout d'un nouveau libellé
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Utilisateur
 **Acteur principal :** Administrateur web
 **Intervenants :**  IUT
@@ -670,7 +684,7 @@ La page d'inscription doit contenir :
 ### Cas d'utilisation 25 : Archiver un libéllé
 **Nom :** Archiver un libellé
 **Contexte d'utilisation :**  Mise en archive d'un libellé
-**Portée :** 
+**Portée :** Sous-système
 **Niveau :** Utilisateur
 **Acteur principal :** Administrateur web
 **Intervenants :**  IUT
@@ -700,14 +714,14 @@ La page d'inscription doit contenir :
 ### Cas d'utilisation 26 : Modifier l'intitulé d'un libéllé
 **Nom :** Modifier intitulé d'un libellé
 **Contexte d'utilisation :**  Modification d'un libellé
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Utilisateur
 **Acteur principal :** Administrateur web
 **Intervenants :**  IUT
 **Précondition :** Administrateur web est connecté à la base de données
 **Garantie minimales :** Le libellé n'est pas modifié
 **Garantie en cas succès :** Le libellé est modifié
-**Déclencheur :** Demande de modification  d'un libellé
+**Déclencheur :** Demande de modification d'un libellé
 **Scénario nominal :**
 1. Saisir les informations du libellé modifiés
 2. Modification du libellé dans la base de données
@@ -722,10 +736,10 @@ La page d'inscription doit contenir :
     b. Le libellé n'a pas pu être modifié :
     1. Envoi d’un message d’échec de suppression de libellé (ECHEC)
 ***
-### Cas d'utilisation 27 : Définir un libélé supérieur
+### Cas d'utilisation 27 : Définir un libéllé supérieur
 **Nom :** Définir un libéllé supérieur
 **Contexte d'utilisation :**  Affecter le libellé comme étant un sous-libellé d'un libellé
-**Portée :** 
+**Portée :** Système boîte blanche
 **Niveau :** Utilisateur
 **Acteur principal :** Administrateur web
 **Intervenants :**  IUT
@@ -750,7 +764,7 @@ La page d'inscription doit contenir :
 #### Cas d'utilisation 28 : Page d'accueil
 **Nom :** Consulter page d'accueil
 **Contexte d'utilisation :** Une personne accédant au site doit arriver sur une page d'accueil.
-**Portée :** 
+**Portée :** Système boîte noire
 **Niveau :** Utilisateur 
 **Acteur principal :** Utilisateur
 **Intervenants :** IUT
@@ -835,6 +849,7 @@ La page d'inscription doit contenir :
 **Portée** : Sous-système
 **Niveau** : Sous-fonction
 **Garantie en cas de succès :** Connexion au site web.
+***
 
 ## <a id="part5"></a>Intégration
 
