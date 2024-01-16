@@ -1,4 +1,4 @@
-<?php require_once 'includes/header.html'; ?>
+<?php require_once 'includes/header.php'; ?>
 
 <script>
     function confirm(at, tid) {
@@ -41,7 +41,6 @@ try {
     }
 } catch (ErreurBD $e) {
     $_SESSION['erreur'] = $e->getMessage();
-    redirect('technicien.php');
 }
 ?>
 

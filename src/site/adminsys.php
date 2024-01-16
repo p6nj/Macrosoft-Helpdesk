@@ -8,7 +8,6 @@ try {
     }
 } catch (ErreurBD $e) {
     $_SESSION['erreur'] = $e->getMessage();
-    redirect('adminsys.php');
 }
 ?>
 
