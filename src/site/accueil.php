@@ -37,7 +37,7 @@ try {
             <h1>Vidéo Démonstration</h1>
             <p>La vidéo suivante est un tutoriel d'utilisation du site.</p>
             <video controls>
-                <source src="" type="video/mp4">
+                <source src="img/presentation.mp4" type="video/mp4">
             </video><br>
         </div>
         <div>
