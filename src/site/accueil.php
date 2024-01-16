@@ -35,12 +35,10 @@ try {
     <main id="header-top-margin">
         <div class="video-container">
             <h1>Vidéo Démonstration</h1>
-            <p>La vidéo suivante sera un tutoriel d'utilisation du site. Pour l'instant, il s'agit d'une vidéo avec un
-                lien cassé.</p>
+            <p>La vidéo suivante est un tutoriel d'utilisation du site.</p>
             <video controls>
                 <source src="" type="video/mp4">
             </video><br>
-            <button>Afficher le script de la vidéo</button>
         </div>
         <div>
             <h1>Derniers tickets</h1>
