@@ -1,11 +1,16 @@
 <?php
-// TODO: rajouter du contexte aux erreurs de requête illégale
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+/**
+ * Erreur générique liée à la base de données
+ */
 class ErreurBD extends Exception
 {
 }
 
+/**
+ * Erreurs de connexion
+ */
 final class ConnexionImpossible extends ErreurBD
 {
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
@@ -14,6 +19,9 @@ final class ConnexionImpossible extends ErreurBD
     }
 }
 
+/**
+ * Erreurs liées aux requêtes sur la base de données
+ */
 final class RequêteIllégale extends ErreurBD
 {
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
@@ -22,6 +30,9 @@ final class RequêteIllégale extends ErreurBD
     }
 }
 
+/**
+ * Abstraction de tous les visiteurs du site ; contient ses identifiants, un accès à la base et des méthodes de transaction sur cette base
+ */
 abstract class Client
 {
     private const bd_nom = 'MacrosoftDB', bd_hôte = 'localhost';
@@ -63,58 +74,116 @@ abstract class Client
         ];
     }
 
+    /**
+     * Opération SQL SELECT sur la base
+     * 
+     * @param string $q query (suite de la requête)
+     * @return array résultat de la requête
+     */
     protected function select(string $q): array
     {
         return $this->con->query('select ' . $q)->fetch_all(MYSQLI_ASSOC);
     }
 
-    protected function insert(string $q)
+    /**
+     * Opération SQL INSERT sur la base
+     * 
+     * @param string $q query (suite de la requête)
+     * @return void
+     */
+    protected function insert(string $q): void
     {
         $this->con->query('insert ' . $q);
     }
 
-    protected function update(string $q)
+    /**
+     * Opération SQL UPDATE sur la base
+     * 
+     * @param string $q query (suite de la requête)
+     * @return void
+     */
+    protected function update(string $q): void
     {
         $this->con->query('update ' . $q);
     }
 
-    protected function grant(string $q)
+    /**
+     * Opération SQL GRANT sur la base
+     * 
+     * @param string $q query (suite de la requête)
+     * @return void
+     */
+    protected function grant(string $q): void
     {
         $this->con->query('grant ' . $q);
     }
 
-    protected function set(string $q)
+    /**
+     * Opération SQL SET sur la base
+     * 
+     * @param string $q query (suite de la requête)
+     * @return void
+     */
+    protected function set(string $q): void
     {
         $this->con->query('set ' . $q);
     }
 
-    protected function create(string $q)
+    /**
+     * Opération SQL CREATE sur la base
+     * 
+     * @param string $q query (suite de la requête)
+     * @return void
+     */
+    protected function create(string $q): void
     {
         $this->con->query('create ' . $q);
     }
 
-    private function close()
+    /**
+     * Ferme la connexion
+     * @return void
+     */
+    private function close(): void
     {
         $this->con->close();
     }
 
+    /**
+     * Permet l'accès au login de l'utilisateur
+     * @return string login
+     */
     protected function getLogin(): string
     {
         return $this->id;
     }
 }
 
+/**
+ * Abstraction d'un client connecté
+ */
 abstract class Compte extends Client
 {
+    /**
+     * Permet l'accès à toutes les informations du profil
+     * @return array dictionnaire
+     */
     public function getProfil(): array
     {
         return $this->select('* from VueProfilUtilisateur')[0];
     }
 }
 
+/**
+ * Classe regroupant les fonctions d'accès aux libellés
+ */
 abstract class AccesseurLibellé extends Compte
 {
-    public function getLibellés()
+    /**
+     * Permet l'accès aux libellés disponibles de manière récursive
+     * @returns array arbre de libellés
+     */
+    public function getLibellés(): array
     {
         return
             array_map(function (array $i): array {
@@ -123,7 +192,12 @@ abstract class AccesseurLibellé extends Compte
             }, $this->select('idL, intitule from VueLibellesNonArchives where lib_sup is null or lib_sup not in (select idL from VueLibellesNonArchives)'));
     }
 
-    private function getLibellésInf(int $idL)
+    /**
+     * Récupère les libellés inférieurs au libellé d'ID idL
+     * @param int idL ID du libellé
+     * @returns array arbre de libellés
+     */
+    private function getLibellésInf(int $idL): array
     {
         return array_map(function (array $i): array {
             $i['inf'] = $this->getLibellésInf($i['idL']);
@@ -132,14 +206,30 @@ abstract class AccesseurLibellé extends Compte
     }
 }
 
+/**
+ * Client connecté avec un rôle "utilisateur"
+ */
 final class Utilisateur extends AccesseurLibellé
 {
+    /**
+     * Permet l'accès aux tickets créés par l'utilisateur
+     * @return array liste de dictionnaires de champs
+     */
     public function getTickets(): array
     {
         return $this->select('* from VueTicketsUtilisateur');
     }
 
-    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible)
+    /**
+     * Ajoute un ticket dans la base
+     * @param int $lib ID du libellé
+     * @param int $niv_urgence niveau d'urgence
+     * @param string $desc description du problème
+     * @param string $cible personne concernée
+     * 
+     * @return void
+     */
+    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible): void
     {
         try {
             $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . ($cible != '' ? $cible : $this->getLogin()) . "')");
