@@ -2,7 +2,6 @@
 require_once 'includes/header.php';
 // GET vars : 'erreur', 'message', 'déco'
 ?>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <body>
     <header>
@@ -34,7 +33,6 @@ require_once 'includes/header.php';
                             de passe oublié</a>
                         <br>
                         <br>
-                        <div class="g-recaptcha" data-sitekey="6LcGp00pAAAAAH2POS1k28hIIrzgPe78QgBGVsEn"></div>
                         <input type="submit" value="Se connecter">
                     </div>
                 </form>
@@ -50,18 +48,8 @@ require_once 'includes/header.php';
                     else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
                         redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
                     if (isset($_POST['username']) && isset($_POST['password'])) {  // résultat du formulaire
-                        // reCaptcha Verification
-                        $recaptchaSecretKey = file_get_contents('includes/recaptcha.txt');
-                        $recaptchaResponse = $_POST['g-recaptcha-response'];
-
-                        $recaptchaVerification = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptchaSecretKey&response=$recaptchaResponse");
-                        $recaptchaVerification = json_decode($recaptchaVerification);
-
-                        if ($recaptchaVerification->success) {
-                            $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
-                            redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
-                        } else
-                            echo 'Veuillez compléter le reCAPTCHA.';
+                        $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));  // la connexion est demandée depuis le visiteur
+                        redirect($_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : 'accueil.php');
                     }
                 } catch (ErreurBD $e) {  // seules nos erreurs 'maison' sont capturées, les autres représentent des bugs et doivent interrompre le chargement de la page
                     echo $e->getMessage();

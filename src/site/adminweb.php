@@ -78,28 +78,23 @@ try {
       </div>
       <div class="far-right">
         <button onclick="document.querySelector('dialog#new-lib').showModal()">
-          Créer&nbsp;un&nbsp;libellé&nbsp;+
+          Créer&nbsp;un&nbsp;libellé
         </button>
         <button onclick="document.querySelector('dialog#new-tech').showModal()">
-          Créer&nbsp;un&nbsp;technicien&nbsp;+
-        </button>
-        <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">
-          Deconnexion
+          Créer&nbsp;un&nbsp;technicien
         </button>
         <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
           Profil
+        </button>
+        <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">
+          Deconnexion
         </button>
         <dialog id="profil">
           <h2>Profil</h2>
           <?php $profil = $_SESSION['client']->getProfil(); ?>
           Login :
           <?= $profil['login'] ?><br>
-          Mot de passe : <hidden id='mdp'>
-            <?= $profil['mdp'] ?>
-          </hidden>
-          <button onclick="document.getElementById('mdp').style.display='block'; document.getElementById('affiche-mdp').style.display='none'" id="affiche-mdp">Afficher le mot de passe</button>
-          <br>
-          <button onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'; document.getElementById('affiche-mdp').style.display='block';">Fermer</button>
+          <button onclick="event.target.parentElement.close()">Fermer</button>
         </dialog>
       </div>
     </nav>

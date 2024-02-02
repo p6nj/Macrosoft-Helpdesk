@@ -27,20 +27,16 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
-                <button onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket&nbsp;+</button>
-                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button onclick="document.querySelector(' dialog#add-ticket').showModal()">Créer&nbsp;un&nbsp;ticket</button>
                 <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
+                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
                 <dialog id="profil">
                     <h2>Profil</h2>
                     <?php $profil = $_SESSION['client']->getProfil(); ?>
                     Login : <?= $profil['login'] ?><br>
-                    Mot de passe : <hidden id='mdp'><?= $profil['mdp'] ?></hidden>
-                    <button onclick="document.getElementById('mdp').style.display='block'; document.getElementById('affiche-mdp').style.display='none'" id='affiche-mdp'>Afficher le mot de
-                        passe</button>
-                    <br>
-                    <button onclick="event.target.parentElement.close(); document.getElementById('mdp').style.display='none'; document.getElementById('affiche-mdp').style.display='block';">Fermer</button>
+                    <button onclick="event.target.parentElement.close()">Fermer</button>
                 </dialog>
             </div>
         </nav>
@@ -109,7 +105,7 @@ try {
                 <input type="text" name="description" id="">
                 <br>
                 <br>
-                <label for="cible">Login de l'utilisateur cible (facultatif) :</label>
+                <label for="cible">Utilisateur concerné (facultatif ; vous par défaut) :</label>
                 <br>
                 <input type="text" name="cible" id="">
                 <br>
