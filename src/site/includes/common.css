@@ -339,3 +339,17 @@ lib {
 ticket>p {
     font-style: italic;
 }
+
+div.message {
+    font-size: large;
+    font-weight: bold;
+    color: var(--blue);
+    margin: 1%;
+}
+
+div.error {
+    font-size: large;
+    font-weight: bold;
+    color: rgb(180, 0, 0);
+    margin: 1%;
+}
