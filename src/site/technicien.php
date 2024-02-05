@@ -85,7 +85,10 @@ try {
         <div>
             <h1>Tickets Attribués</h1>
             <div id="ticket-container">
-                <?php foreach ($_SESSION['client']->getTicketsAttribués() as $ticket) : ?>
+                <?php if (!sizeof($tickets = $_SESSION['client']->getTicketsAttribués())) : ?>
+                    <div class="message">Aucun ticket à afficher.</div>
+                <?php endif; ?>
+                <?php foreach ($tickets as $ticket) : ?>
                     <ticket onclick="confirm(true, <?= $ticket['idT'] ?>)" class="clickable">
                         <lib><?= $ticket['libelle'] ?></lib>
                         <niv><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
@@ -99,15 +102,19 @@ try {
         <div>
             <h1>Tickets Non Attribués</h1>
             <div id="ticket-container">
-                <?php foreach ($_SESSION['client']->getTicketsNonAttribués() as $ticket) : ?>
-                    <ticket onclick="confirm(false, <?= $ticket['idT'] ?>)" class="clickable">
-                        <lib><?= $ticket['libelle'] ?></lib>
-                        <niv><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
-                        <p><?= $ticket['description'] ?></p>
-                        <cible><?= $ticket['cible'] ?></cible>
-                        <demandeur><?= $ticket['demandeur'] ?></demandeur>
-                    </ticket>
-                <?php endforeach; ?>
+                <?php if (!sizeof($tickets = $_SESSION['client']->getTicketsNonAttribués())) : ?>
+                    <div class="message">Aucun ticket à afficher.</div>
+                <?php else : ?>
+                    <?php foreach ($tickets as $ticket) : ?>
+                        <ticket onclick="confirm(false, <?= $ticket['idT'] ?>)" class="clickable">
+                            <lib><?= $ticket['libelle'] ?></lib>
+                            <niv><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
+                            <p><?= $ticket['description'] ?></p>
+                            <cible><?= $ticket['cible'] ?></cible>
+                            <demandeur><?= $ticket['demandeur'] ?></demandeur>
+                        </ticket>
+                <?php endforeach;
+                endif; ?>
             </div>
         </div>
         <dialog id="confirm">

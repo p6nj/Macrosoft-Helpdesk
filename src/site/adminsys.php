@@ -45,50 +45,58 @@ try {
         </div>
         <div>
             <h1>Connexions Echouées</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>IP</th>
-                        <th>Login</th>
-                        <th>Mot de passe</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($_SESSION['client']->getConnexionsEchouées() as $ligne) : ?>
+            <?php if (!sizeof($connexions = $_SESSION['client']->getConnexionsEchouées())) : ?>
+                <div class="message">Aucune information à afficher.</div>
+            <?php else : ?>
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= $ligne['date'] ?></td>
-                            <td><?= $ligne['IP'] ?></td>
-                            <td><?= $ligne['login_tente'] ?></td>
-                            <td><?= $ligne['mdp_tente'] ?></td>
+                            <th>Date</th>
+                            <th>IP</th>
+                            <th>Login</th>
+                            <th>Mot de passe</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($connexions as $ligne) : ?>
+                            <tr>
+                                <td><?= $ligne['date'] ?></td>
+                                <td><?= $ligne['IP'] ?></td>
+                                <td><?= $ligne['login_tente'] ?></td>
+                                <td><?= $ligne['mdp_tente'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
 
         <div>
             <h1>Tickets Validés</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>IP</th>
-                        <th>Login</th>
-                        <th>Urgence</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($_SESSION['client']->getTicketValidés() as $ligne) : ?>
+            <?php if (!sizeof($tickets = $_SESSION['client']->getTicketValidés())) : ?>
+                <div class="message">Aucune information à afficher.</div>
+            <?php else : ?>
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= $ligne['date'] ?></td>
-                            <td><?= $ligne['IP'] ?></td>
-                            <td><?= $ligne['login'] ?></td>
-                            <td><?= $ligne['niv_urgence'] ?></td>
+                            <th>Date</th>
+                            <th>IP</th>
+                            <th>Login</th>
+                            <th>Urgence</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($tickets as $ligne) : ?>
+                            <tr>
+                                <td><?= $ligne['date'] ?></td>
+                                <td><?= $ligne['IP'] ?></td>
+                                <td><?= $ligne['login'] ?></td>
+                                <td><?= $ligne['niv_urgence'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
 
     </main>

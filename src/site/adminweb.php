@@ -133,26 +133,34 @@ try {
       <?php } ?>
       <h1>Libellés</h1>
       <div class="ticket-container">
-        <?php foreach ($_SESSION['client']->getLibellés() as $v) {
-          affiche_lib($v);
-        } ?>
+        <?php if (!sizeof($libellés = $_SESSION['client']->getLibellés())) : ?>
+          <div class="message">Aucun libellé à afficher.</div>
+        <?php else : ?>
+        <?php foreach ($libellés as $v) {
+            affiche_lib($v);
+          }
+        endif; ?>
       </div>
     </div>
     <div>
       <h1>Tickets</h1>
       <div id="ticket-container">
-        <?php foreach ($_SESSION['client']->getTickets() as $ticket) : ?>
-          <ticket onclick="modticket(event)" class="clickable" id="<?= $ticket['idT'] ?>">
-            <lib id="<?= $ticket['idL'] ?>"><?= $ticket['libelle'] ?></lib>
-            <niv id="<?= $ticket['niv_urgence'] ?>"><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
-            <p class="center-text"><?= $ticket['description'] ?></p>
-            <cible><b>⌖</b> <?= $ticket['cible'] ?></cible>
-            <etat><?= $ticket['etat'] ?></etat>
-            <br>
-            <demandeur><?= $ticket['demandeur'] ?> 🗪</demandeur>
-            <technicien id="<?= $ticket['technicien'] ?>"><b>🅯</b> <?= $ticket['technicien'] ?></technicien>
-          </ticket>
-        <?php endforeach; ?>
+        <?php if (!sizeof($tickets = $_SESSION['client']->getTickets())) : ?>
+          <div class="message">Aucun ticket à afficher.</div>
+        <?php else : ?>
+          <?php foreach ($tickets as $ticket) : ?>
+            <ticket onclick="modticket(event)" class="clickable" id="<?= $ticket['idT'] ?>">
+              <lib id="<?= $ticket['idL'] ?>"><?= $ticket['libelle'] ?></lib>
+              <niv id="<?= $ticket['niv_urgence'] ?>"><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
+              <p class="center-text"><?= $ticket['description'] ?></p>
+              <cible><b>⌖</b> <?= $ticket['cible'] ?></cible>
+              <etat><?= $ticket['etat'] ?></etat>
+              <br>
+              <demandeur><?= $ticket['demandeur'] ?> 🗪</demandeur>
+              <technicien id="<?= $ticket['technicien'] ?>"><b>🅯</b> <?= $ticket['technicien'] ?></technicien>
+            </ticket>
+        <?php endforeach;
+        endif; ?>
       </div>
     </div>
 
