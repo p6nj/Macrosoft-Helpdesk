@@ -48,12 +48,12 @@ abstract class Client
             $code = $e->getCode();
             switch ($code) {
                 case 1044:
-                    throw new ConnexionImpossible('Base inexistante ou connexion refusée.', 1, $e);
+                    throw new ConnexionImpossible('Base inexistante ou connexion refusée.', $code, $e);
                 case 1045:
-                    throw new ConnexionImpossible('Identifiants invalides.', 2, $e);
+                    throw new ConnexionImpossible('Identifiants invalides.', $code, $e);
                     // ...
                 default:
-                    throw $e;
+                    throw new ConnexionImpossible('Raison inconnue.', $code, $e);
             }
         }
         $this->mdp = $mdp;
@@ -305,8 +305,8 @@ final class Visiteur extends Client
     public function inscription(string $id, string $mdp): void
     {
         try {
-            (new Système())->créeUtilisateur($id, $mdp);
             $this->insert("into Utilisateur(login, mdp) values ('$id','$mdp')");
+            (new Système())->créeUtilisateur($id, $mdp);
         } catch (mysqli_sql_exception $e) {
             $code = $e->getCode();
             throw new RequêteIllégale("impossible d'ajouter l'utilisateur '$id' : " . ($code == 1396 ? 'cet identifiant est déjà pris' : 'raison inconnue'), 2, $e);
