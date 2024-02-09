@@ -34,7 +34,6 @@ try {
 ?>
 
 <style>
-  ticket *,
   libellé nom {
     /* don't trigger children */
     pointer-events: none
@@ -43,26 +42,23 @@ try {
 
 <script>
   function modticket(event) {
-    let target = event.target;
+    let target = event.target.parentElement; // le tr
     let dialog = document.getElementById('ticket-dialog');
     let form = document.forms['ticket'];
-    console.log(target.getElementsByTagName('technicien')[0]);
-    form.elements['idT'].value = target.id;
-    form.elements['libelle'].value = target.getElementsByTagName('lib')[0].id;
-    form.elements['niveau'].value = target.getElementsByTagName('niv')[0].id;
-    form.elements['tech'].value = target.getElementsByTagName('technicien')[0].id;
+    form.elements['idT'].value = target.attributes['tik'].value;
+    form.elements['libelle'].value = target.attributes['lib'].value;
+    form.elements['niveau'].value = target.attributes['niv'].value;
+    form.elements['tech'].value = target.children[2].innerText;
     dialog.showModal();
   }
 
   function modlib(event) {
     let target = event.target;
-    console.log(target);
     event.cancelBubble = true; // don't trigger parents either
     let dialog = document.getElementById('lib-dialog');
     let form = document.forms['libelle'];
     form.elements['idL'].value = target.id;
     form.elements['titre'].value = target.children[0].innerText;
-    console.log("Parent : " + target.parentElement.parentElement.id);
     form.elements['sup'].value = target.parentElement.parentElement.id;
     form.elements['archive'].checked = false;
     dialog.showModal();
@@ -144,24 +140,36 @@ try {
     </div>
     <div>
       <h1>Tickets</h1>
-      <div id="ticket-container">
-        <?php if (!sizeof($tickets = $_SESSION['client']->getTickets())) : ?>
-          <div class="message">Aucun ticket à afficher.</div>
-        <?php else : ?>
-          <?php foreach ($tickets as $ticket) : ?>
-            <ticket onclick="modticket(event)" class="clickable" id="<?= $ticket['idT'] ?>">
-              <lib id="<?= $ticket['idL'] ?>"><?= $ticket['libelle'] ?></lib>
-              <niv id="<?= $ticket['niv_urgence'] ?>"><?= niv_urgence_str($ticket['niv_urgence']) ?></niv>
-              <p class="center-text"><?= $ticket['description'] ?></p>
-              <cible><b>⌖</b> <?= $ticket['cible'] ?></cible>
-              <etat><?= $ticket['etat'] ?></etat>
-              <br>
-              <demandeur><?= $ticket['demandeur'] ?> 🗪</demandeur>
-              <technicien id="<?= $ticket['technicien'] ?>"><b>🅯</b> <?= $ticket['technicien'] ?></technicien>
-            </ticket>
-        <?php endforeach;
-        endif; ?>
-      </div>
+      <?php if (!sizeof($tickets = $_SESSION['client']->getTickets())) : ?>
+        <div class="message">Aucun ticket à afficher.</div>
+      <?php else : ?>
+        <table>
+          <thead>
+            <tr>
+              <th>Niveau d'urgence</th>
+              <th>Etat</th>
+              <th>Technicien</th>
+              <th>Libellé</th>
+              <th>Description</th>
+              <th>Demandeur</th>
+              <th>Cible</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($tickets as $ticket) : ?>
+              <tr onclick="modticket(event)" class="clickable" niv="<?= $ticket['niv_urgence'] ?>" lib="<?= $ticket['idL'] ?>" tik="<?= $ticket['idT'] ?>">
+                <td><?= niv_urgence_str($ticket['niv_urgence']) ?></td>
+                <td><?= $ticket['etat'] ?></td>
+                <td><?= $ticket['technicien'] ?></td>
+                <td><?= $ticket['libelle'] ?></td>
+                <td><?= $ticket['description'] ?></td>
+                <td><?= $ticket['demandeur'] ?></td>
+                <td><?= $ticket['cible'] ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
     </div>
 
     <?php function affiche_lib2(array $lib, int $niveau = 0)
