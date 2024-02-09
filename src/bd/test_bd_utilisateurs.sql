@@ -1,4 +1,4 @@
-drop user `admin` @localhost,
+drop user if exists `admin` @localhost,
 `alice` @localhost,
 `charlie` @localhost,
 `diana` @localhost,
