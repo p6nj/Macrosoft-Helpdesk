@@ -19,6 +19,7 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
+            	<button onclick="window.location.href='stats.php';">Stats</button>
                 <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
