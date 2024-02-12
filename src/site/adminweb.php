@@ -2,6 +2,8 @@
 require_once 'includes/header.php';
 debug();
 foreach ($_POST as $k => $v) $_POST[$k] = htmlspecialchars($_POST[$k]);
+$newtechopen = false;
+$popuperror = '';
 try {
   session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
   if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof AdminWeb) {
@@ -13,7 +15,10 @@ try {
       if ($_POST['mdp'] == $_POST['confmdp']) {
         $_SESSION['client']->ajoutTechnicien($_POST['id'], $_POST['mdp']);
         $_SESSION['message'] = 'Technicien ajouté avec succès.';
-      } else throw new RequêteIllégale('Le mot de passe et la confirmation ne correspondent pas.');
+      } else {
+        $popuperror = 'Le mot de passe et la confirmation ne correspondent pas.';
+        $newtechopen = true;
+      }
     } else if (isset($_POST['idT']) && isset($_POST['niveau']) && isset($_POST['libelle']) && isset($_POST['tech'])) {
       // modification d'un ticket
       $_SESSION['client']->modifieTicket($_POST['idT'], $_POST['niveau'], $_POST['libelle'], $_POST['tech']);
@@ -63,6 +68,16 @@ try {
     form.elements['archive'].checked = false;
     dialog.showModal();
   }
+
+  <?php if ($newtechopen) : ?> window.onload = () => {
+      const techdialog = document.getElementById('new-tech');
+      const techform = document.forms['tech'];
+      techform.elements['id'].value = "<?= $_POST['id'] ?>";
+      techform.elements['mdp'].value = "<?= $_POST['mdp'] ?>";
+      techform.elements['confmdp'].value = "<?= $_POST['confmdp'] ?>";
+      techdialog.showModal();
+    }
+  <?php endif; ?>
 </script>
 
 <body>
@@ -266,7 +281,7 @@ try {
     <dialog id="new-tech">
       <h2>Créer un nouveau technicien</h2>
       <p>Renseignez les informations ci-dessous pour créer un compte technicien.</p>
-      <form method="post">
+      <form method="post" id="tech">
         <label for="id">Identifiant :</label>
         <br>
         <input type="text" name="id" id="id">
@@ -282,6 +297,7 @@ try {
         <button type="submit">Enregistrer</button>
         <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
       </form>
+      <div class="error"><?= $popuperror ?></div>
     </dialog>
 
   </main>
