@@ -42,8 +42,34 @@ abstract class Client
 
     public function __construct(string $id, string $mdp)
     {
+        $this->mdp = $mdp;
+        $this->id = $id;
+        $this->connect();
+    }
+
+    public function __destruct()
+    {
+        $this->close();
+    }
+
+    public function __wakeup()
+    {
+        $this->connect();
+    }
+
+    public function __sleep(): array
+    {
+        $this->close();
+        return [
+            'id' => $this->id,
+            'mdp' => $this->mdp
+        ];
+    }
+
+    private function connect()
+    {
         try {
-            $this->con = mysqli_connect(Client::bd_hôte, $id, $mdp, Client::bd_nom);
+            $this->con = mysqli_connect(Client::bd_hôte, $this->id, $this->mdp, Client::bd_nom);
         } catch (mysqli_sql_exception $e) {
             $code = $e->getCode();
             switch ($code) {
@@ -56,22 +82,6 @@ abstract class Client
                     throw new ConnexionImpossible('Raison inconnue.', $code, $e);
             }
         }
-        $this->mdp = $mdp;
-        $this->id = $id;
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->__construct($data['id'], $data['mdp']);
-    }
-
-    public function __serialize(): array
-    {
-        $this->close();
-        return [
-            'id' => $this->id,
-            'mdp' => $this->mdp
-        ];
     }
 
     /**
@@ -91,7 +101,7 @@ abstract class Client
      * @param string $q query (suite de la requête)
      * @return void
      */
-    protected function insert(string $q): void
+    protected function insert(string $q)
     {
         $this->con->query('insert ' . $q);
     }
@@ -102,7 +112,7 @@ abstract class Client
      * @param string $q query (suite de la requête)
      * @return void
      */
-    protected function update(string $q): void
+    protected function update(string $q)
     {
         $this->con->query('update ' . $q);
     }
@@ -113,7 +123,7 @@ abstract class Client
      * @param string $q query (suite de la requête)
      * @return void
      */
-    protected function grant(string $q): void
+    protected function grant(string $q)
     {
         $this->con->query('grant ' . $q);
     }
@@ -124,7 +134,7 @@ abstract class Client
      * @param string $q query (suite de la requête)
      * @return void
      */
-    protected function set(string $q): void
+    protected function set(string $q)
     {
         $this->con->query('set ' . $q);
     }
@@ -135,7 +145,7 @@ abstract class Client
      * @param string $q query (suite de la requête)
      * @return void
      */
-    protected function create(string $q): void
+    protected function create(string $q)
     {
         $this->con->query('create ' . $q);
     }
@@ -144,7 +154,7 @@ abstract class Client
      * Ferme la connexion
      * @return void
      */
-    private function close(): void
+    private function close()
     {
         $this->con->close();
     }
@@ -229,7 +239,7 @@ final class Utilisateur extends AccesseurLibellé
      * 
      * @return void
      */
-    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible): void
+    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible)
     {
         try {
             $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . ($cible != '' ? $cible : $this->getLogin()) . "')");
@@ -302,7 +312,7 @@ final class Visiteur extends Client
      * @return void
      * @throws RequêteIllégale
      */
-    public function inscription(string $id, string $mdp): void
+    public function inscription(string $id, string $mdp)
     {
         try {
             $this->insert("into Utilisateur(login, mdp) values ('$id','$mdp')");
@@ -320,7 +330,7 @@ final class Visiteur extends Client
      * @param string $mdp mot de passe tenté
      * @return void
      */
-    private function echecConnexion(string $id, string $mdp): void
+    private function echecConnexion(string $id, string $mdp)
     {
         $this->insert("into Log_connexion_echec (date, login_tente, mdp_tente, IP) values (CURRENT_DATE,'$id','$mdp','" . $_SERVER['REMOTE_ADDR'] . "')");
     }
@@ -342,7 +352,7 @@ final class Système extends Client
      * @param string $mdp mot de passe de l'utilisateur
      * @return void
      */
-    public function créeUtilisateur(string $id, string $mdp): void
+    public function créeUtilisateur(string $id, string $mdp)
     {
         $this->create("user `$id` identified by '$mdp'");
         $this->grant("UTILISATEUR to `$id`");
@@ -356,7 +366,7 @@ final class Système extends Client
      * @param string $mdp Le mot de passe du technicien
      * @return void
      */
-    public function créeTechnicien(string $id, string $mdp): void
+    public function créeTechnicien(string $id, string $mdp)
     {
         $this->create("user `$id` identified by '$mdp'");
         $this->grant("TECHNICIEN to `$id`");
@@ -393,7 +403,7 @@ final class Technicien extends Compte
      * @return void
      * @throws RequêteIllégale Renvoi d'un objet requête illégale en cas d'échec.
      */
-    public function assigneTicket(int $id): void
+    public function assigneTicket(int $id)
     {
         try {
             $this->update("VueTicketsNonTraites SET technicien='" . $this->getLogin() . "', etat='En cours de traitement' WHERE idT=$id");
@@ -409,7 +419,7 @@ final class Technicien extends Compte
      * @return void
      * @throws RequêteIllégale Renvoi d'un objet requête illégale en cas d'échec.
      */
-    public function fermeTicket(int $id): void
+    public function fermeTicket(int $id)
     {
         try {
             $this->update("VueTicketsTechnicien SET etat='Fermé' WHERE idT=$id");
@@ -461,7 +471,7 @@ final class AdminWeb extends AccesseurLibellé
      * @return void
      * @throws RequêteIllégale Renvoi d'un objet requête illégale en cas d'échec.
      */
-    public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien): void
+    public function modifieTicket(int $id, int $niveau, int $libellé, string $technicien)
     {
         try {
             if ($technicien)
@@ -491,7 +501,7 @@ final class AdminWeb extends AccesseurLibellé
      * @return void
      * @throws RequêteIllégale Renvoi d'un objet requête illégale en cas d'échec.
      */
-    public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive): void
+    public function modifieLibellé(int $id, string $titre, ?int $groupe, bool $archive)
     {
         try {
             $this->update("VueLibellesNonArchives SET intitule='$titre', lib_sup=" . ($groupe ?: 'null') . ", archive=" . ($archive ? 'true' : 'false') . " WHERE idL=$id");
@@ -507,7 +517,7 @@ final class AdminWeb extends AccesseurLibellé
      * @return void
      * @throws RequêteIllégale Renvoi d'un objet requête illégale en cas d'échec.
      */
-    public function ajoutLibellé(string $titre, ?int $groupe): void
+    public function ajoutLibellé(string $titre, ?int $groupe)
     {
         try {
             $this->insert("into VueLibellesNonArchives(intitule, lib_sup) values ('$titre'," . ($groupe ?: 'null') . ")");
@@ -524,7 +534,7 @@ final class AdminWeb extends AccesseurLibellé
      * @return void
      * @throws RequêteIllégale Renvoi d'un objet requête illégale en cas d'échec.
      */
-    public function ajoutTechnicien(string $id, string $mdp): void
+    public function ajoutTechnicien(string $id, string $mdp)
     {
         try {
             $this->insert("into Utilisateur(login, mdp, role) values ('$id','$mdp','Technicien')");
