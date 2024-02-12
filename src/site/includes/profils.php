@@ -42,34 +42,8 @@ abstract class Client
 
     public function __construct(string $id, string $mdp)
     {
-        $this->mdp = $mdp;
-        $this->id = $id;
-        $this->connect();
-    }
-
-    public function __destruct()
-    {
-        $this->close();
-    }
-
-    public function __wakeup()
-    {
-        $this->connect();
-    }
-
-    public function __sleep(): array
-    {
-        $this->close();
-        return [
-            'id' => $this->id,
-            'mdp' => $this->mdp
-        ];
-    }
-
-    private function connect()
-    {
         try {
-            $this->con = mysqli_connect(Client::bd_hôte, $this->id, $this->mdp, Client::bd_nom);
+            $this->con = mysqli_connect(Client::bd_hôte, $id, $mdp, Client::bd_nom);
         } catch (mysqli_sql_exception $e) {
             $code = $e->getCode();
             switch ($code) {
@@ -82,6 +56,22 @@ abstract class Client
                     throw new ConnexionImpossible('Raison inconnue.', $code, $e);
             }
         }
+        $this->mdp = $mdp;
+        $this->id = $id;
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->__construct($data['id'], $data['mdp']);
+    }
+
+    public function __serialize(): array
+    {
+        $this->close();
+        return [
+            'id' => $this->id,
+            'mdp' => $this->mdp
+        ];
     }
 
     /**
@@ -222,12 +212,21 @@ abstract class AccesseurLibellé extends Compte
 final class Utilisateur extends AccesseurLibellé
 {
     /**
-     * Permet l'accès aux tickets créés par l'utilisateur
+     * Permet l'accès aux tickets ouverts créés par l'utilisateur
      * @return array liste tickets
      */
-    public function getTickets(): array
+    public function getTicketsOuverts(): array
     {
-        return $this->select('* from VueTicketsUtilisateur');
+        return $this->select('* from VueTicketsOuvertsUtilisateur');
+    }
+
+    /**
+     * Permet l'accès aux tickets fermés créés par l'utilisateur
+     * @return array liste tickets
+     */
+    public function getTicketsFermés(): array
+    {
+        return $this->select('* from VueTicketsFermésUtilisateur');
     }
 
     /**

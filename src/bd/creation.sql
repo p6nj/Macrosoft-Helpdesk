@@ -52,7 +52,7 @@ SELECT *
 FROM Libelle
 WHERE archive = FALSE;
 -- Création de la vue pour afficher tous les tickets ouverts
-CREATE VIEW VueTicketsOuverts AS
+CREATE VIEW VueTickets AS
 SELECT idT,
     intitule AS libelle,
     niv_urgence,
@@ -65,8 +65,17 @@ SELECT idT,
     technicien,
     idL
 FROM Ticket t
-    JOIN Libelle l ON t.lib = l.idL
-WHERE t.etat IN ('Ouvert', 'En cours de traitement');
+    JOIN Libelle l ON t.lib = l.idL;
+-- Création de la vue pour afficher les tickets ouverts
+create view VueTicketsOuverts as
+select *
+from VueTickets
+WHERE etat IN ('Ouvert', 'En cours de traitement');
+-- Création de la vue pour afficher les tickets fermés
+create view VueTicketsFermés as
+select *
+from VueTickets
+WHERE etat='Fermé';
 -- Création de la vue pour afficher les 10 derniers tickets ouverts
 CREATE VIEW VueDerniersTicketsOuverts AS
 SELECT *
@@ -83,10 +92,16 @@ CREATE VIEW VueProfilUtilisateur AS
 SELECT *
 FROM Utilisateur
 WHERE login = substring_index(user(), '@', 1);
--- Création de la vue des tickets concernant l'utilisateur connecté
-CREATE VIEW VueTicketsUtilisateur AS
+-- Création de la vue des tickets ouverts concernant l'utilisateur connecté
+CREATE VIEW VueTicketsOuvertsUtilisateur AS
 SELECT *
 FROM VueTicketsOuverts
+WHERE demandeur = substring_index(user(), '@', 1)
+    OR cible = substring_index(user(), '@', 1);
+-- Création de la vue des tickets fermés concernant l'utilisateur connecté
+CREATE VIEW VueTicketsFermésUtilisateur AS
+SELECT *
+FROM VueTicketsFermés
 WHERE demandeur = substring_index(user(), '@', 1)
     OR cible = substring_index(user(), '@', 1);
 -- Création de la vue des tickets gérés par le technicien
@@ -120,7 +135,8 @@ GRANT SELECT ON VueProfilUtilisateur TO UTILISATEUR,
     ADMIN_SYS,
     ADMIN_WEB;
 -- Attribution des permissions au rôle Utilisateur
-GRANT SELECT ON VueTicketsUtilisateur TO UTILISATEUR;
+GRANT SELECT ON VueTicketsOuvertsUtilisateur TO UTILISATEUR;
+GRANT SELECT ON VueTicketsFermésUtilisateur TO UTILISATEUR;
 GRANT INSERT ON Ticket TO UTILISATEUR;
 GRANT SELECT ON VueLibellesNonArchives to UTILISATEUR;
 -- Attribution des permissions au rôle Technicien

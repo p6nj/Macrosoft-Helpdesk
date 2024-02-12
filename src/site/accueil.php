@@ -1,10 +1,13 @@
 <?php
 require_once 'includes/header.php';
+debug();
 try {
     session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
+    {
+        echo $_SESSION['client'];
         $_SESSION['client'] = new Visiteur();
-    else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
+    } else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
         redirect(
             $_SESSION['client'] instanceof Utilisateur ? 'utilisateur.php' : (
                 $_SESSION['client'] instanceof Technicien ? 'technicien.php' : (

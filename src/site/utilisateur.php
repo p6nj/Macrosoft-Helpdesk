@@ -59,9 +59,23 @@ try {
             ?>
         </div>
         <div>
-            <h1>Derniers tickets</h1>
+            <h1>Derniers tickets ouverts</h1>
             <div id="ticket-container">
-                <?php if (!sizeof($tickets = $_SESSION['client']->getTickets())) : ?>
+                <?php if (!sizeof($tickets = $_SESSION['client']->getTicketsOuverts())) : ?>
+                    <div class="message">Aucun ticket à afficher.</div>
+                <?php else : ?>
+                    <?php foreach ($tickets as $ticket) : ?>
+                        <ticket>
+                            <p><?= $ticket['description'] ?></p>
+                        </ticket>
+                <?php endforeach;
+                endif; ?>
+            </div>
+        </div>
+        <div>
+            <h1>Derniers tickets fermés</h1>
+            <div id="ticket-container">
+                <?php if (!sizeof($tickets = $_SESSION['client']->getTicketsFermés())) : ?>
                     <div class="message">Aucun ticket à afficher.</div>
                 <?php else : ?>
                     <?php foreach ($tickets as $ticket) : ?>
