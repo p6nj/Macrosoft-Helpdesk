@@ -19,7 +19,7 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
-            	<button onclick="window.location.href='stats.php';">Stats</button>
+                <button onclick="window.location.href='stats.php';">Stats</button>
                 <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
@@ -74,6 +74,34 @@ try {
 
         <div>
             <h1>Tickets Validés</h1>
+            <?php if (!sizeof($tickets = $_SESSION['client']->getTicketValidés())) : ?>
+                <div class="message">Aucune information à afficher.</div>
+            <?php else : ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>IP</th>
+                            <th>Login</th>
+                            <th>Urgence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($tickets as $ligne) : ?>
+                            <tr>
+                                <td><?= $ligne['date'] ?></td>
+                                <td><?= $ligne['IP'] ?></td>
+                                <td><?= $ligne['login'] ?></td>
+                                <td><?= $ligne['niv_urgence'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+
+        <div>
+            <h1>Tickets avec leurs état</h1>
             <?php if (!sizeof($tickets = $_SESSION['client']->getTicketValidés())) : ?>
                 <div class="message">Aucune information à afficher.</div>
             <?php else : ?>

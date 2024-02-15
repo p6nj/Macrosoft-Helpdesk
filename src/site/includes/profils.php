@@ -1,4 +1,5 @@
 <?php
+include "includes/crypto.php";
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 /**
@@ -43,7 +44,8 @@ abstract class Client
     public function __construct(string $id, string $mdp)
     {
         try {
-            $this->con = mysqli_connect(Client::bd_hôte, $id, $mdp, Client::bd_nom);
+            $mdpencr = encrypt(file_get_contents("includes/key"), $mdp);
+            $this->con = mysqli_connect(Client::bd_hôte, $id, $mdpencr, Client::bd_nom);
         } catch (mysqli_sql_exception $e) {
             $code = $e->getCode();
             switch ($code) {
@@ -353,7 +355,8 @@ final class Système extends Client
      */
     public function créeUtilisateur(string $id, string $mdp)
     {
-        $this->create("user `$id` identified by '$mdp'");
+        $mdpencr = encrypt(file_get_contents("includes/key"), $mdp);
+        $this->create("user `$id` identified by '$mdpencr'");
         $this->grant("UTILISATEUR to `$id`");
         $this->set("default role UTILISATEUR for `$id`");
     }
@@ -367,7 +370,8 @@ final class Système extends Client
      */
     public function créeTechnicien(string $id, string $mdp)
     {
-        $this->create("user `$id` identified by '$mdp'");
+        $mdpencr = encrypt(file_get_contents("includes/key"), $mdp);
+        $this->create("user `$id` identified by '$mdpencr'");
         $this->grant("TECHNICIEN to `$id`");
         $this->set("default role TECHNICIEN for `$id`");
     }
@@ -451,6 +455,11 @@ final class AdminSys extends Compte
     public function getConnexionsEchouées(): array
     {
         return $this->select('* from Log_connexion_echec');
+    }
+
+    public function getTicketsEtat(): array
+    {
+        return $this->select('description, etat, libelle, niv_urgence, date, technicien from VueTickets');
     }
 }
 
