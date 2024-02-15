@@ -91,6 +91,16 @@ VALUES (
         'tec6',
         'a152e841783914146e4bcd4f39100686',
         'Technicien'
+    ),
+    (
+        'adminsys',
+        'fHPZWIRfklk=',
+        'Admin sys'
+    ),
+    (
+        'adminweb',
+        'fHPZWIRbjkg=',
+        'Admin web'
     );
 INSERT INTO Libelle (intitule, archive, lib_sup)
 VALUES ('Problème réseau', FALSE, NULL),

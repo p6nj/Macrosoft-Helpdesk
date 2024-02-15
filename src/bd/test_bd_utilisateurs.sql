@@ -19,7 +19,15 @@ drop user if exists `admin` @localhost,
 `tec5` @localhost,
 `tec6` @localhost,
 visiteur @localhost,
-sys @localhost;
+sys @localhost,
+adminsys @localhost,
+adminweb @localhost;
+create user adminsys @localhost identified by 'fHPZWIRfklk=';
+grant ADMIN_SYS to adminsys @localhost;
+set default role ADMIN_SYS for adminsys @localhost;
+create user adminweb @localhost identified by 'fHPZWIRbjkg=';
+grant ADMIN_WEB to adminweb @localhost;
+set default role ADMIN_WEB for adminweb @localhost;
 create user visiteur @localhost identified by 'UEXMVroemmLTU10kyBbSvnY1PjusE+2VmdJapjAsUzyFU/VgiD1KbS1og78+qg==';
 grant VISITEUR to visiteur @localhost;
 set default role VISITEUR for visiteur @localhost;

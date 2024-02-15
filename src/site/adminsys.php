@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/header.php';
+debug();
 try {
     session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof AdminSys) {
@@ -101,26 +102,30 @@ try {
         </div>
 
         <div>
-            <h1>Tickets avec leurs état</h1>
-            <?php if (!sizeof($tickets = $_SESSION['client']->getTicketValidés())) : ?>
+            <h1>Etat des tickets</h1>
+            <?php if (!sizeof($tickets = $_SESSION['client']->getTicketsEtat())) : ?>
                 <div class="message">Aucune information à afficher.</div>
             <?php else : ?>
                 <table>
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>IP</th>
-                            <th>Login</th>
+                            <th>Description</th>
+                            <th>Etat</th>
+                            <th>Libellé</th>
                             <th>Urgence</th>
+                            <th>Date</th>
+                            <th>Technicien</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($tickets as $ligne) : ?>
                             <tr>
-                                <td><?= $ligne['date'] ?></td>
-                                <td><?= $ligne['IP'] ?></td>
-                                <td><?= $ligne['login'] ?></td>
+                                <td><?= $ligne['description'] ?></td>
+                                <td><?= $ligne['etat'] ?></td>
+                                <td><?= $ligne['libelle'] ?></td>
                                 <td><?= $ligne['niv_urgence'] ?></td>
+                                <td><?= $ligne['date'] ?></td>
+                                <td><?= $ligne['technicien'] ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
