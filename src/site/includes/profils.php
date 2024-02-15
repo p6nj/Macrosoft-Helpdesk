@@ -315,8 +315,9 @@ final class Visiteur extends Client
      */
     public function inscription(string $id, string $mdp)
     {
+        $mdpencr = encrypt(file_get_contents('includes/key'), $mdp);
         try {
-            $this->insert("into Utilisateur(login, mdp) values ('$id','$mdp')");
+            $this->insert("into Utilisateur(login, mdp) values ('$id','$mdpencr')");
             (new Système())->créeUtilisateur($id, $mdp);
         } catch (mysqli_sql_exception $e) {
             $code = $e->getCode();
