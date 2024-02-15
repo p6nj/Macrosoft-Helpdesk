@@ -6,6 +6,16 @@ try {
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof AdminSys) {
         // l'utilisateur n'est pas connecté
         redirect('accueil.php');
+    } else if (isset($_SESSION['dl'])) {
+        switch ($_SESSION['dl']) {
+            case 'connexions':
+                redirect('logs/connexions.php');
+            case 'validations':
+                redirect('logs/validations.php');
+            case 'etats':
+                redirect('logs/etats.php');
+            default:
+        }
     }
 } catch (ErreurBD $e) {
     $_SESSION['erreur'] = $e->getMessage();

@@ -27,3 +27,17 @@ function niv_urgence_str(int $niv)
             'Non spécifié';
     }
 }
+
+function log_prepare()
+{
+    require_once 'includes/header.php';
+    try {
+        session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
+        if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof AdminSys) {
+            // l'utilisateur n'est pas connecté
+            redirect('accueil.php');
+        }
+    } catch (ErreurBD $e) {
+        $_SESSION['erreur'] = $e->getMessage();
+    }
+}
