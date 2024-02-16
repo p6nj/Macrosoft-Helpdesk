@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 debug();
 try {
     session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base

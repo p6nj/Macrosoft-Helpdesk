@@ -8,6 +8,6 @@
 </head>
 
 <?php
-require_once 'includes/profils.php';
-require_once 'includes/misc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/profils.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/misc.php';
 ?>

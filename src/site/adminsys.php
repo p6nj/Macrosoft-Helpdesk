@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 debug();
 try {
     session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
@@ -112,7 +112,7 @@ try {
         </div>
 
         <div>
-            <h1>Etat des tickets</h1>
+            <h1>État des tickets</h1>
             <?php if (!sizeof($tickets = $_SESSION['client']->getTicketsEtat())) : ?>
                 <div class="message">Aucune information à afficher.</div>
             <?php else : ?>

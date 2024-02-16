@@ -1,4 +1,4 @@
-<?php require_once 'includes/header.php'; ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php'; ?>
 
 <script>
     function confirm(at, tid) {
@@ -25,8 +25,8 @@
 </script>
 
 <?php
-require_once 'includes/profils.php';
-require_once 'includes/misc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/profils.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/misc.php';
 try {
     session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Technicien) {

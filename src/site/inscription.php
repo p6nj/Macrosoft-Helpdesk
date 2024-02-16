@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 // GET vars : 'erreur', 'message'
 $confirmation = false;
 ?>
@@ -54,7 +54,7 @@ $confirmation = false;
                     if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword'])) {  // résultat du formulaire
                         if ($_POST['username'] != '') {
                             // reCaptcha Verification
-                            $recaptchaSecretKey = file_get_contents('includes/recaptcha.txt');
+                            $recaptchaSecretKey = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/includes/recaptcha.txt');
                             $recaptchaResponse = $_POST['g-recaptcha-response'];
 
                             $recaptchaVerification = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptchaSecretKey&response=$recaptchaResponse");

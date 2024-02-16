@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 // GET vars : 'erreur', 'message', 'déco'
 ?>
 

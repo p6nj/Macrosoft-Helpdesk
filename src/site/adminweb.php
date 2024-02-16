@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 debug();
 foreach ($_POST as $k => $v) $_POST[$k] = htmlspecialchars($_POST[$k]);
 $newtechopen = false;

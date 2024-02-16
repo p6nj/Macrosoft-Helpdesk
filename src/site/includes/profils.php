@@ -1,5 +1,5 @@
 <?php
-include "includes/crypto.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/includes/crypto.php";
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 /**
@@ -44,7 +44,7 @@ abstract class Client
     public function __construct(string $id, string $mdp)
     {
         try {
-            $mdpencr = encrypt(file_get_contents("includes/key"), $mdp);
+            $mdpencr = encrypt(file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/includes/key"), $mdp);
             $this->con = mysqli_connect(Client::bd_hôte, $id, $mdpencr, Client::bd_nom);
         } catch (mysqli_sql_exception $e) {
             $code = $e->getCode();
@@ -258,7 +258,7 @@ final class Visiteur extends Client
 {
     public function __construct()
     {
-        parent::__construct('visiteur', file_get_contents('includes/mdp_visiteur'));
+        parent::__construct('visiteur', file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/includes/mdp_visiteur'));
     }
 
     /**
@@ -315,7 +315,7 @@ final class Visiteur extends Client
      */
     public function inscription(string $id, string $mdp)
     {
-        $mdpencr = encrypt(file_get_contents('includes/key'), $mdp);
+        $mdpencr = encrypt(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/includes/key'), $mdp);
         try {
             $this->insert("into Utilisateur(login, mdp) values ('$id','$mdpencr')");
             (new Système())->créeUtilisateur($id, $mdp);
@@ -345,7 +345,7 @@ final class Système extends Client
 {
     public function __construct()
     {
-        parent::__construct('sys', file_get_contents('includes/mdp_sys'));
+        parent::__construct('sys', file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/includes/mdp_sys'));
     }
 
     /**
