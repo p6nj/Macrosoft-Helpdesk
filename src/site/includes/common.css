@@ -26,6 +26,10 @@ select,
     color: #fff
 }
 
+button:active>svg>path {
+    stroke: #fff;
+}
+
 /* ELEMENTs */
 
 /** debug **/
@@ -206,6 +210,23 @@ tr:nth-child(even) {
     flex: 1;
     justify-content: center;
     margin-right: 10px
+}
+
+div.logtitle {
+    display: block;
+}
+
+div.logtitle>* {
+    display: inline-block;
+}
+
+div.logtitle>:first-child {
+    float: left;
+}
+
+div.logtitle>:last-child {
+    float: right;
+    margin-top: 1%;
 }
 
 .video-container {

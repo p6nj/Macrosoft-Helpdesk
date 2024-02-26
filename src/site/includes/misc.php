@@ -30,7 +30,7 @@ function niv_urgence_str(int $niv)
 
 function log_prepare()
 {
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/profils.php';
     try {
         session_start(); // la déserialisation du client est sujet à une erreur de reconnexion à la base
         if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof AdminSys) {
@@ -41,3 +41,39 @@ function log_prepare()
         $_SESSION['erreur'] = $e->getMessage();
     }
 }
+
+function printlog(array $array, string $name)
+{
+    header('Content-Type: text/csv');
+    header("Content-Disposition: attachment; filename=\"$name.csv\"");
+    $keys = array_keys($array[0]);
+    print $keys[0];
+    foreach (array_slice($keys, 1) as $field) print ',' . $field;
+    print '
+';
+    foreach ($array as $line) {
+        print array_shift($line);
+        foreach ($line as $field) print ',' . $field;
+        print '
+';
+    }
+}
+
+function log_table(string $name, string $linkname)
+{
+?><div class="logtitle">
+        <h1><?= $name ?></h1>
+        <button onclick="window.location.href='logs/<?= $linkname ?>.php'">
+            <svg xmlns="http://www.w3.org/2000/svg" xmln │ s:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 10 10" width="24px" height="24px">
+                <style type="text/css">
+                    path {
+                        fill: none;
+                        stroke: #000000;
+                        stroke-width: 2;
+                    }
+                </style>
+                <path d="M 5 0 L 5 8 L 2 5 M 5 8 L 8 5 M 0 8 L 0 10 L 10 10 L 10 8" />
+            </svg>
+        </button>
+    </div><?php
+        }

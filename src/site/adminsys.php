@@ -30,11 +30,11 @@ try {
                 <h1>HelpDesk</h1>
             </div>
             <div class="far-right">
-                <button onclick="window.location.href='stats.php';">Stats</button>
+                <button onclick="window.location.href='stats.php'">Stats</button>
                 <button title="<?= $_SESSION['client']->getProfil()['login']; ?>" onclick="document.querySelector(' dialog#profil').showModal()">
                     Profil
                 </button>
-                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.';">Deconnexion</button>
+                <button onclick="window.location.href='connexion.php?déco=1&message=Vous avez été déconnecté.'">Deconnexion</button>
                 <dialog id="profil">
                     <h2>Profil</h2>
                     <?php $profil = $_SESSION['client']->getProfil(); ?>
@@ -56,9 +56,10 @@ try {
             ?>
         </div>
         <div>
-            <h1>Connexions Echouées</h1>
-            <?php if (!sizeof($connexions = $_SESSION['client']->getConnexionsEchouées())) : ?>
-                <div class="message">Aucune information à afficher.</div>
+            <?php
+            log_table('Connexions Echouées', 'connexions');
+            if (!sizeof($connexions = $_SESSION['client']->getConnexionsEchouées())) : ?>
+                <div class=" message">Aucune information à afficher.</div>
             <?php else : ?>
                 <table>
                     <thead>
@@ -84,8 +85,9 @@ try {
         </div>
 
         <div>
-            <h1>Tickets Validés</h1>
-            <?php if (!sizeof($tickets = $_SESSION['client']->getTicketValidés())) : ?>
+            <?php
+            log_table('Tickets Validés', 'validations');
+            if (!sizeof($tickets = $_SESSION['client']->getTicketValidés())) : ?>
                 <div class="message">Aucune information à afficher.</div>
             <?php else : ?>
                 <table>
@@ -112,8 +114,9 @@ try {
         </div>
 
         <div>
-            <h1>État des tickets</h1>
-            <?php if (!sizeof($tickets = $_SESSION['client']->getTicketsEtat())) : ?>
+            <?php
+            log_table('État des tickets', 'etats');
+            if (!sizeof($tickets = $_SESSION['client']->getTicketsEtat())) : ?>
                 <div class="message">Aucune information à afficher.</div>
             <?php else : ?>
                 <table>
