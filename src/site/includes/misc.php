@@ -65,13 +65,6 @@ function log_table(string $name, string $linkname)
         <h1><?= $name ?></h1>
         <button onclick="window.location.href='logs/<?= $linkname ?>.php'">
             <svg xmlns="http://www.w3.org/2000/svg" xmln │ s:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 10 10" width="24px" height="24px">
-                <style type="text/css">
-                    path {
-                        fill: none;
-                        stroke: #000000;
-                        stroke-width: 2;
-                    }
-                </style>
                 <path d="M 5 0 L 5 8 L 2 5 M 5 8 L 8 5 M 0 8 L 0 10 L 10 10 L 10 8" />
             </svg>
         </button>

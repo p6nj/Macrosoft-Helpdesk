@@ -50,7 +50,7 @@ try {
                     <div class="message">Aucun ticket à afficher.</div>
                 <?php else : ?>
                     <?php foreach ($tickets as $ticket) : ?>
-                        <ticket>
+                        <ticket class="disabled">
                             <p><?= $ticket['description'] ?></p>
                         </ticket>
                 <?php endforeach;

@@ -2,6 +2,7 @@
 
 :root {
     --blue: #0077c2;
+    --light-blue: #4b96c5;
     --gradient: 0 0 20px 0 #0003;
     --gray: #ebebeb;
     --grey: #ddd;
@@ -14,7 +15,7 @@ button:hover,
 input[type='submit']:hover,
 input[type='button']:hover,
 select {
-    background-color: var(--grey)
+    background-color: var(--light-blue)
 }
 
 button:active,
@@ -22,12 +23,18 @@ input[type='submit']:active,
 input[type='button']:active,
 select,
 ::selection {
-    background-color: var(--blue);
-    color: #fff
+    background-color: var(--grey);
+    color: #000
+}
+
+path {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
 }
 
 button:active>svg>path {
-    stroke: #fff;
+    stroke: #000;
 }
 
 /* ELEMENTs */
@@ -47,18 +54,23 @@ button,
 input[type='submit'],
 input[type='button'],
 select {
-    background-color: var(--gray);
+    background-color: var(--blue);
     border: none;
     border-radius: var(--radius);
-    color: #000;
+    color: #fff;
     cursor: pointer;
     padding: 15px;
-    transition: .1s
+    transition: .1s;
+    font-weight: bold;
+    -moz-box-shadow: var(--ticket-shadow);
+    -webkit-box-shadow: var(--ticket-shadow);
+    border-radius: var(--radius);
+    box-shadow: var(--ticket-shadow);
 }
 
 option:hover,
 option:active {
-    color: var(--blue)
+    color: white
 }
 
 body {
@@ -280,6 +292,14 @@ ticket {
     display: inline-block;
     margin: 5px;
     padding: 5px;
+}
+
+.disabled {
+    background: repeating-linear-gradient(45deg,
+            #fff,
+            #fff 10px,
+            var(--grey) 10px,
+            var(--grey) 11px);
 }
 
 libellé {
