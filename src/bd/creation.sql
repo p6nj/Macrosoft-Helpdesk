@@ -150,6 +150,11 @@ GRANT SELECT ON Log_connexion_echec TO ADMIN_SYS;
 GRANT SELECT(description, etat, libelle, niv_urgence, date, technicien) ON VueTickets TO ADMIN_SYS;
 -- Attribution des permissions au rôle Admin web
 GRANT SELECT ON VueTicketsOuverts TO ADMIN_WEB;
+GRANT SELECT(intitule,idL) ON MacrosoftDB.Libelle TO UTILISATEUR;
+GRANT SELECT ON MacrosoftDB.Utilisateur TO VISITEUR;
+GRANT SELECT ON MacrosoftDB.Utilisateur TO TECHNICIEN;
+GRANT SELECT ON MacrosoftDB.Ticket TO TECHNICIEN;
+GRANT UPDATE ON MacrosoftDB.Ticket TO TECHNICIEN;
 GRANT SELECT(idT), UPDATE (etat, niv_urgence, lib, technicien) ON Ticket TO ADMIN_WEB;
 GRANT SELECT,
     INSERT,
