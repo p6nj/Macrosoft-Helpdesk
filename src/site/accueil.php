@@ -5,7 +5,7 @@ try {
     session_start();  // la déserialisation du client est sujet à une erreur de reconnexion à la base
     if (!isset($_SESSION['client']) || !$_SESSION['client'] instanceof Client)  // une instance de visiteur est nécessaire
     {
-        echo $_SESSION['client'];
+        // echo $_SESSION['client'];
         $_SESSION['client'] = new Visiteur();
     } else if ($_SESSION['client'] instanceof Compte)  // l'utilisateur est déjà connecté
         redirect(
