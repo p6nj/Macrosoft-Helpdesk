@@ -159,6 +159,16 @@ abstract class Client
     {
         return $this->id;
     }
+    /**
+     * Cette méthode permet de verifier si un utilisateur existe déjà'
+     * 
+     * @param string $lib Id de l'utilisateur
+     * @return bool
+     */
+    public function utilisateurExiste(string $id): bool {
+        $result = $this->select("COUNT(*) as count from Utilisateur where login = '$id'");
+        return $result[0]['count'] > 0;
+    }
 }
 
 /**
@@ -249,6 +259,16 @@ final class Utilisateur extends AccesseurLibellé
             throw new RequêteIllégale("impossible de créer ce ticket : " . ($code == 1452 ? 'cible introuvable' : 'erreur inconnue'), 1, $e);
         }
     }
+    /**
+     * Cette méthode permet de verifier si l'id du libellé correspondant existe'
+     * 
+     * @param int $lib Id du Libellé
+     * @return bool
+     */
+    private function libelleExiste(int $lib): bool {
+        $result = $this->select("COUNT(*) as count from Libelle where idL = $lib");
+        return $result[0]['count'] > 0;
+    }
 }
 
 /**
@@ -335,6 +355,45 @@ final class Visiteur extends Client
     private function echecConnexion(string $id, string $mdp)
     {
         $this->insert("into Log_connexion_echec (date, login_tente, mdp_tente, IP) values (CURRENT_DATE,'$id','$mdp','" . $_SERVER['REMOTE_ADDR'] . "')");
+    }
+    /**
+     * Cette méthode permet de verifier si l'utilisateur a entrer un mot de passe valide.
+     * 
+     * @param string $id Id de l'utilisateur
+     * @param string $mdp Mdp de l'utilisateur
+     * @return bool
+     */
+    private function motDePasseValide($id, $mdp): bool {
+        $mdpencr = encrypt(file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/includes/key"), $mdp);
+        $result = $this->select("COUNT(*) as count from Utilisateur where login = '$id' and mdp = '$mdpencr'");
+        return $result[0]['count'] > 0;
+    }
+    /**
+     * Cette méthode permet de verifier si l'utilisateur a un role ou un role null.
+     * 
+     * @param string $id Id de l'utilisateur
+     * @return bool
+     */
+    private function UtilisateurArole($id): bool {
+        $result = $this->select("role from Utilisateur where login = '$id'");
+        if (count($result) === 0) {
+            return false;
+        }
+
+        $role = $result[0]['role'];
+        // Un utilisateur est considéré comme ayant un "rôle" si celui-ci est non NULL ou explicitement NULL
+        // Cela dépend de la logique spécifique de votre application
+        return true; // Si le fait d'avoir un rôle NULL est considéré comme valide, retournez true
+    }
+    /**
+     * Cette méthode permet de verifier si le role est reconnu.
+     * 
+     * @param string $role Role du client actuel
+     * @return bool
+     */
+    private function roleReconnu($role): bool {
+        $rolesReconnus = ['UTILISATEUR', 'TECHNICIEN', 'ADMIN_SYS', 'ADMIN_WEB'];
+        return in_array($role, $rolesReconnus);
     }
 }
 /**
@@ -430,6 +489,28 @@ final class Technicien extends Compte
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale("Impossible de fermer le ticket $id", 4, $e);
         }
+    }
+    /**
+     * Cette méthode permet de verifier si l'utilisateur est un Technicien.
+     * 
+     * @return bool
+     */
+    private function estTechnicien(): bool {
+        $login = $this->getLogin();
+        $result = $this->select("role from Utilisateur where login = '$login'");
+        return !empty($result) && $result[0]['role'] === 'Technicien';
+    }
+
+
+    /**
+     * Cette méthode permet de verifier l'existence d'un ticket.
+     * 
+     * @param int $id L'identifiant du Ticket
+     * @return bool
+     */
+    private function ticketExiste(int $id): bool {
+        $result = $this->select("COUNT(*) as count from Ticket where idT = '$id' AND etat = 'Ouvert'");
+        return !empty($result) && $result[0]['count'] > 0;
     }
 }
 /**
