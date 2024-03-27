@@ -249,15 +249,20 @@ final class Utilisateur extends AccesseurLibellé
      * @param string $cible personne concernée
      * 
      * @return void
+     * @throws RequêteIllégale
      */
-    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible)
+    public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible = '')
     {
-        try {
-            $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib,$niv_urgence,'Ouvert','$desc',CURRENT_DATE,'" . $_SERVER['REMOTE_ADDR'] . "',$niv_urgence,'" . $this->getLogin() . "','" . ($cible != '' ? $cible : $this->getLogin()) . "')");
-        } catch (mysqli_sql_exception $e) {
-            $code = $e->getCode();
-            throw new RequêteIllégale("impossible de créer ce ticket : " . ($code == 1452 ? 'cible introuvable' : 'erreur inconnue'), 1, $e);
+        if(empty($lib)) {
+            throw new RequêteIllégale("Le champ d'intitulé du libellé est vide.", 1);
+        } elseif (!($this->libelleExiste($lib))) {
+            throw new RequêteIllégale("Le libellé n'existe pas.", 2);
+        } elseif ($niv_urgence < 1 || $niv_urgence > 4 || !is_int($niv_urgence)) {
+            throw new RequêteIllégale("Le niveau d'urgence est incorrect.", 3);
+        } elseif (!empty($cible) && !$this->utilisateurExiste($cible)) {
+            throw new RequêteIllégale("Cible introuvable.", 4);
         }
+        $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib, $niv_urgence, 'Ouvert', '$desc', CURRENT_DATE, '" . $_SERVER['REMOTE_ADDR'] . "', $niv_urgence, '" . $this->getLogin() . "', '" . ($cible != '' ? $cible : $this->getLogin()) . "')");
     }
     /**
      * Cette méthode permet de verifier si l'id du libellé correspondant existe'
@@ -291,16 +296,23 @@ final class Visiteur extends Client
      * @throws ConnexionImpossible
      * @throws Exception role inexistant
      */
-    public function connecte($id, $mdp): Client
-    {
-        try {
-            $temp = new Utilisateur($id, $mdp);
-        } catch (ConnexionImpossible $e) {
-            if ($e->getCode() == 2)
-                $this->echecConnexion($id, $mdp);
-            throw $e;
+    public function connecte($id, $mdp): Client {
+        if (!$this->utilisateurExiste($id)) {
+            throw new ConnexionImpossible("Échec de connexion - utilisateur non trouvé.");
+        }
+        if (!$this->motDePasseValide($id, $mdp)) {
+            throw new ConnexionImpossible("Mot de passe invalide.");
+        }
+        // À ce stade, l'utilisateur existe et le mot de passe est valide
+        $temp = new Utilisateur($id, $mdp);
+        if (!$this->UtilisateurArole($id)) {
+            throw new ConnexionImpossible("Rôle non existant.");
         }
         $role = $temp->select('CURRENT_ROLE() as role')[0]['role'];
+        if (!$this->roleReconnu($role)) {
+            throw new ConnexionImpossible("Rôle non reconnu.");
+        }
+        // Retour d'un objet Client selon le rôle
         switch ($role) {
             case 'UTILISATEUR':
                 return $temp;
@@ -333,15 +345,15 @@ final class Visiteur extends Client
      * @return void
      * @throws RequêteIllégale
      */
-    public function inscription(string $id, string $mdp)
-    {
-        $mdpencr = encrypt(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/includes/key'), $mdp);
-        try {
+    public function inscription(string $id, string $mdp) {
+        if (empty($id)) {
+            throw new RequêteIllégale("Le champ d'identifiant est vide.", 1);
+        } elseif ($this->utilisateurExiste($id)) {
+            throw new RequêteIllégale("L'utilisateur '$id' existe déjà.", 2);
+        } else {
+            $mdpencr = encrypt(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/includes/key'), $mdp);
             $this->insert("into Utilisateur(login, mdp) values ('$id','$mdpencr')");
             (new Système())->créeUtilisateur($id, $mdp);
-        } catch (mysqli_sql_exception $e) {
-            $code = $e->getCode();
-            throw new RequêteIllégale("impossible d'ajouter l'utilisateur '$id' : " . ($code == 1396 ? 'cet identifiant est déjà pris' : 'raison inconnue'), 2, $e);
         }
     }
 
@@ -468,10 +480,27 @@ final class Technicien extends Compte
      */
     public function assigneTicket(int $id)
     {
+        // Vérifie si l'utilisateur existe
+        if (!$this->utilisateurExiste($this->getLogin())) {
+            throw new RequêteIllégale("L'utilisateur n'existe pas.");
+        }
+
+        // Vérifie le rôle de l'utilisateur
+        // Supposons que vous ayez une méthode vérifiant le rôle du technicien. Ajoutez cette méthode selon votre implémentation.
+        if (!$this->estTechnicien()) {
+            throw new RequêteIllégale("Rôle invalide. Seuls les techniciens peuvent assigner des tickets.");
+        }
+
+        // Vérifie si le ticket existe
+        if (!$this->ticketExiste($id)) {
+            throw new RequêteIllégale("Le ticket n'existe pas.");
+        }
+
+        // Assignation du ticket au technicien
         try {
-            $this->update("VueTicketsNonTraites SET technicien='" . $this->getLogin() . "', etat='En cours de traitement' WHERE idT=$id");
+            $this->update("Ticket SET technicien='" . $this->getLogin() . "', etat='En cours de traitement' WHERE idT=$id AND etat='Ouvert'");
         } catch (mysqli_sql_exception $e) {
-            throw new RequêteIllégale("Impossible de s'assigner le ticket $id", 3, $e);
+            throw new RequêteIllégale("Impossible d'assigner le ticket: " . $e->getMessage());
         }
     }
 
