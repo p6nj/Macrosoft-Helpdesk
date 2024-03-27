@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Dossier de test</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="dossier-de-test">Dossier de test</h1>
+<p>Version : 0.2</p>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Dossier de test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Date</td>
+<td>21/10/2023</td>
+</tr>
+<tr>
+<td>Responsable de la rédaction</td>
+<td>Baptiste Fournié</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dossier-de-tests">Dossier de tests</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Ce document est un dossier de tests pour le projet de plateforme de ticketing interne. Les objectifs de chaque livrables sont:</p>
+<ul>
+<li>Les objectifs du premier livrable sont de faire une maquette des pages de l'application web et de vérifier si les pages HTML ressemblent aux maquettes graphiques.</li>
+<li>Les objectifs du second livrable sont de créer la base de données pour l'application web et de vérifier si la base de données est opérationnelle (Les tests sont dans le dossier src/bd).</li>
+<li>Les objectifs du troisiéme livrable sont de faire les pages dynamiques de l'application web grâce aux maquettes du premier livrable, de faire une étude analytique sur les données de l'application web et de vérifier si les outils pour réaliser l'étude sont opérationnels .</li>
+</ul>
+<h3 id="description-de-la-procédure-de-test">Description de la procédure de test</h3>
+<p>Pour le premier livrable, les tests seront des tests d'intégration visuels. Ils consisteront à comparer le visuel de la page web à la maquette graphique et de voir si elles sont identiques. Donc il n'y aura de partition.
+Pour le second livrable, les tests de la base de données font partie intégrantes des différents fichiers SQL dans la section bd.
+Pour le troisiéme  livrable, les tests seront des tests unitaires en utilisant la méthode des boites noires pour tout ce qui est du backend . Pour le fronted, le test sera un test d'intégration visuels.</p>
+<h3 id="description-des-informations-à-enregistrer-pour-les-tests">Description des informations à enregistrer pour les tests</h3>
+<h2 id="1-campagne-de-test"><strong>1. Campagne de test</strong></h2>
+<h3 id="11-livrable-1"><strong>1.1 Livrable 1</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Produit testé</td>
+<td>Site web</td>
+</tr>
+<tr>
+<td>Configuration logicielle</td>
+<td>Webstorm, Windows 10</td>
+</tr>
+<tr>
+<td>Configuration matérielle</td>
+<td></td>
+</tr>
+<tr>
+<td>Date de début</td>
+<td>18/09/2023</td>
+</tr>
+<tr>
+<td>Date de finalisation</td>
+<td>27/10/2023</td>
+</tr>
+<tr>
+<td>Tests à appliquer</td>
+<td>Test d'intégration visuel sur la page d'accueil.</td>
+</tr>
+<tr>
+<td></td>
+<td>Test d'intégration visuel sur la page d'inscription.</td>
+</tr>
+<tr>
+<td>Responsable de la campagne de test</td>
+<td>Baptiste Fournié</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-livrable-3"><strong>1.2 Livrable 3</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Produit testé</td>
+<td>etude analytique</td>
+</tr>
+<tr>
+<td>Configuration logicielle</td>
+<td>Rstudio, Windows 10</td>
+</tr>
+<tr>
+<td>Configuration matérielle</td>
+<td></td>
+</tr>
+<tr>
+<td>Date de début</td>
+<td>7/11/2023</td>
+</tr>
+<tr>
+<td>Date de finalisation</td>
+<td>27/11/2023</td>
+</tr>
+<tr>
+<td>Tests à appliquer</td>
+<td>Test d'intégration R</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Responsable de la campagne de test</td>
+<td>Baptiste Fournié, Lucas Da silva Ferreira</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-livrable-4"><strong>1.3 Livrable 4</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Produit testé</td>
+<td>APIv2</td>
+</tr>
+<tr>
+<td>Configuration logicielle</td>
+<td>Visual Studio Code, Windows 10, WSL</td>
+</tr>
+<tr>
+<td>Configuration matérielle</td>
+<td></td>
+</tr>
+<tr>
+<td>Date de début</td>
+<td>24/03/2024</td>
+</tr>
+<tr>
+<td>Date de finalisation</td>
+<td>26/03/2024</td>
+</tr>
+<tr>
+<td>Tests à appliquer</td>
+<td>Test d'intégration de la nouvelle API</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Responsable de la campagne de test</td>
+<td>Lucas Da silva Ferreira</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-tests"><strong>2. Tests</strong></h2>
+<h3 id="21-livrable-1"><strong>2.1 Livrable 1</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test</td>
+<td>Page d'accueil</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test d'intégration visuel sur la page d'accueil.</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td></td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Baptiste Fournié</td>
+</tr>
+</tbody>
+</table>
+<p>On compare l'image de la maquette web de la page d'accueil à la page d'accueil statique du site web.
+La maquette web est la suivante :</p>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/maqAccueilVisiteur.png" alt=""></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test</td>
+<td>page accueil</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test d'intégration visuel sur la page d'inscription.</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td></td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Baptiste Fournié</td>
+</tr>
+</tbody>
+</table>
+<p>On compare l'image de la maquette web de la page d'inscription à la page d'inscription statique du site web.
+La maquette web est la suivante :</p>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/maqInscription.png" alt=""></p>
+<hr>
+<h3 id="22-livrable-3"><strong>2.2 Livrable 3</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test : calcul_proba</td>
+<td>version 0.5</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test Unitaire sur la fonction &quot;calcul_proba&quot; en utilisant la méthode des boites noires.</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td>Rstudio</td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Baptiste Fournié</td>
+</tr>
+</tbody>
+</table>
+<p>Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix, le libéllé peut etre divisé en 3 sous ensembles : all qui veut dire tous les tickets, un libéllé inexistant, un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classe</th>
+<th style="text-align:center">Libéllé</th>
+<th style="text-align:center">Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">P0</td>
+<td style="text-align:center">all</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">P1</td>
+<td style="text-align:center">libélle inexistant</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">P2</td>
+<td style="text-align:center">libélle existant</td>
+<td style="text-align:center">nb tickets possédant le libéllé dans la plage de date / nb tickets dans la plage de date</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classe</th>
+<th style="text-align:center">libéllé</th>
+<th style="text-align:center">Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">P0</td>
+<td style="text-align:center">all</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">P1</td>
+<td style="text-align:center">manger une choucroutte</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">P2</td>
+<td style="text-align:center">Problème logiciel</td>
+<td style="text-align:center">2/10 = 0,2</td>
+</tr>
+</tbody>
+</table>
+<p>on considére qu'il y a 10 tickets et que la plage des dates prend toute l'année</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test : calcul_nombre</td>
+<td>version 0.5</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test Unitaire sur la fonction &quot;calcul_nombre&quot; en utilisant la méthode des boites noires.</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td>Rstudio</td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Baptiste Fournié</td>
+</tr>
+</tbody>
+</table>
+<p>Choix de partition: On considére que la plage de date est correcte car elle est sera vérifié quand l'utilisateur fera le choix, la plage des dates peut etre divisé en 2 sous ensembles : soit la plage date fait un mois donc une seul ligne dans le data frame soit la plage datez comporte plusieurs mois donc il y aura plusieurs lignes dans le data frame. Le libéllé peut etre divisé en 3 sous ensembles: all qui veut dire tous les tickets, un libéllé inexistant, un libéllé qui n'est pas dans le vecteur libélle valide et un libéllé existant qui est dans le vecteur libélle valide</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classe</th>
+<th style="text-align:center">Libéllé</th>
+<th style="text-align:center">Plage date</th>
+<th style="text-align:center">Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">P0</td>
+<td style="text-align:center">all</td>
+<td style="text-align:center">1 mois</td>
+<td style="text-align:center">nombre de tickets dans ce mois</td>
+</tr>
+<tr>
+<td style="text-align:center">P1</td>
+<td style="text-align:center">all</td>
+<td style="text-align:center">plusieurs mois</td>
+<td style="text-align:center">nombre de tickets pour chaque  mois present dans la plage date</td>
+</tr>
+<tr>
+<td style="text-align:center">P2</td>
+<td style="text-align:center">libélle inexistant</td>
+<td style="text-align:center">Quelque soit la plage date</td>
+<td style="text-align:center">0 pour chaque mois présent dans la plage date</td>
+</tr>
+<tr>
+<td style="text-align:center">P3</td>
+<td style="text-align:center">libélle existant</td>
+<td style="text-align:center">1 mois</td>
+<td style="text-align:center">nombre de tickets possédant ce libéllé dans ce mois</td>
+</tr>
+<tr>
+<td style="text-align:center">P4</td>
+<td style="text-align:center">libélle existant</td>
+<td style="text-align:center">plusieurs mois</td>
+<td style="text-align:center">nombre de tickets possédant ce libéllé pour chaque  mois present dans la plage date</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classe</th>
+<th style="text-align:center">Libéllé</th>
+<th style="text-align:center">Plage date</th>
+<th style="text-align:center">Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">P0</td>
+<td style="text-align:center">all</td>
+<td style="text-align:center">janvier</td>
+<td style="text-align:center">janvier : 2</td>
+</tr>
+<tr>
+<td style="text-align:center">P1</td>
+<td style="text-align:center">all</td>
+<td style="text-align:center">janvier à fevrier</td>
+<td style="text-align:center">janvier : 2, fevrier 2</td>
+</tr>
+<tr>
+<td style="text-align:center">P2</td>
+<td style="text-align:center">manger une choucroutte</td>
+<td style="text-align:center">janvier</td>
+<td style="text-align:center">janvier : 0</td>
+</tr>
+<tr>
+<td style="text-align:center">P3</td>
+<td style="text-align:center">Problème logiciel</td>
+<td style="text-align:center">janvier</td>
+<td style="text-align:center">janvier : 1</td>
+</tr>
+<tr>
+<td style="text-align:center">P4</td>
+<td style="text-align:center">Problème logiciel</td>
+<td style="text-align:center">janvier à fevrier</td>
+<td style="text-align:center">janvier : 1, fevrier 1</td>
+</tr>
+</tbody>
+</table>
+<p>On considére qu'il y a 12 tickets et que chaque mois posséde 1 ticket problème logiciel et un autre.</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test : calcul_loi_Normale</td>
+<td>version 0.5</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test Unitaire sur la fonction &quot;calcul_loi_Normale&quot; en utilisant la méthode des boites noires.</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td>Rstudio</td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Baptiste Fournié</td>
+</tr>
+</tbody>
+</table>
+<p>Choix de partition: On considére que la moyenne et l'ecart type  est égale ou supérieur à 0. Le data frame contenant le nombre de tickets par mois peut etre divisé en 2 sous ensembles : soit il n'y a qu'une seul valeur dans le data frame soit il y en a plusieurs . Dans résultat attend loi1N signifie les valeurs comprise entre moyenne - écart type et moyenne + écart  type. et loi2N signifie les valeurs comprise entre moyenne - écart type et moyenne + écart  type</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classe</th>
+<th style="text-align:center">dataFrame</th>
+<th style="text-align:center">Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">P0</td>
+<td style="text-align:center">une seule valeur</td>
+<td style="text-align:center">Loi1N = 10 loi2N = 1</td>
+</tr>
+<tr>
+<td style="text-align:center">P1</td>
+<td style="text-align:center">pluesieurs valeurs</td>
+<td style="text-align:center">loi1N = [moy-sd, moy+sd] loi2N = [moy-2sd, moy+2sd]</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Classe</th>
+<th style="text-align:center">dataFrame</th>
+<th style="text-align:center">Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">P0</td>
+<td style="text-align:center">janvier : 2</td>
+<td style="text-align:center">Loi1N = 100 loi2N = 100</td>
+</tr>
+<tr>
+<td style="text-align:center">P1</td>
+<td style="text-align:center">janvier : 3, fevrier 2, mars : 0</td>
+<td style="text-align:center">loi1N = 100/3  loi2N =100</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test</td>
+<td>Interface graphique</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test d'intégration visuel sur l'interface graphique sur l'analyse des tickets.</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td></td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Lucas Da Silva Ferreira</td>
+</tr>
+</tbody>
+</table>
+<p>Pour l'interface nous allons refaire les tests faits précedemment et voir s'ils retournent bien les mêmes résultats (seuls les classes avec libéllé inexistant ne seront pas faites car dans l'interface graphique, l'utilisateur ne peut que choisir des libéllés existants).</p>
+<p>Prévision :</p>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/Maquette_R.png" alt=""></p>
+<p>Résultat :</p>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/ResultatTestGraphiqueR.PNG" alt=""></p>
+<hr>
+<h3 id="23-livrable-4"><strong>2.3 Livrable 4</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test : inscription</td>
+<td>version 1.0</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test unitaire sur la méthode inscription de la classe Visiteur, méthode boite blanche</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td>Visual Studio Code, WSL</td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Lucas DA SILVA FERREIRA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chemins :</strong></p>
+<ul>
+<li>C1 : 1-2</li>
+<li>C2 : 1-3-4</li>
+<li>C3 : 1-3-5</li>
+</ul>
+<p>Admettons que l'utilisateur &quot;MDufaud&quot; est déjà présent sur la base de données.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Chemin</th>
+<th style="text-align:center">id : string</th>
+<th style="text-align:center">mdp : string</th>
+<th style="text-align:center">Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">C1</td>
+<td style="text-align:center">MDufaud</td>
+<td style="text-align:center">dgtsgfs</td>
+<td style="text-align:center">RequeteIllégale(&quot;Le Login MDufaud est déjà utilisé&quot;,2)</td>
+</tr>
+<tr>
+<td style="text-align:center">C1</td>
+<td style="text-align:center">&quot;&quot;</td>
+<td style="text-align:center">dgtsgfs</td>
+<td style="text-align:center">RequeteIllégale(&quot;Login vide&quot;,2)</td>
+</tr>
+<tr>
+<td style="text-align:center">C2</td>
+<td style="text-align:center">MHoffer</td>
+<td style="text-align:center">fsdfsdf</td>
+<td style="text-align:center">Creation du Compte MHoffer</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test : ajoutTicket</td>
+<td>version 1.0</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test unitaire sur la méthode ajoutTicket de la classe Utilisateur, méthode boite blanche</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td>Visual Studio Code, WSL</td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Lucas DA SILVA FERREIRA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chemins :</strong></p>
+<ul>
+<li>C1 : 1-2</li>
+<li>C2 : 1-3-4</li>
+<li>C3 : 1-3-5-6</li>
+<li>C4 : 1-3-5-7-8</li>
+<li>C5 : 1-3-5-7-9</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Chemin</th>
+<th>lib</th>
+<th>niv_urgence</th>
+<th>desc</th>
+<th>cible</th>
+<th>Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>&quot;&quot;</td>
+<td>1</td>
+<td>&quot;Problème X&quot;</td>
+<td>&quot;user1&quot;</td>
+<td>RequêteIllégale(&quot;Le champ d'intitulé du libellé est vide.&quot;, 1)</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>999</td>
+<td>2</td>
+<td>&quot;Problème Y&quot;</td>
+<td>&quot;user2&quot;</td>
+<td>RequêteIllégale(&quot;Le libellé n'existe pas.&quot;, 2)</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>1</td>
+<td>5</td>
+<td>&quot;Problème Z&quot;</td>
+<td>&quot;user3&quot;</td>
+<td>RequêteIllégale(&quot;Le niveau d'urgence est incorrect.&quot;, 3)</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>2</td>
+<td>1</td>
+<td>&quot;Autre problème&quot;</td>
+<td>&quot;user999&quot;</td>
+<td>RequêteIllégale(&quot;Cible introuvable.&quot;, 4)</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>1</td>
+<td>2</td>
+<td>&quot;Problème résolu&quot;</td>
+<td>&quot;user1&quot;</td>
+<td>Succès, ticket ajouté</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test : connecte</td>
+<td>version 1.0</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test unitaire sur la méthode connecte de la classe Visiteur, méthode boite blanche</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td>Visual Studio Code, WSL</td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Lucas DA SILVA FERREIRA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chemins :</strong></p>
+<ul>
+<li>C1 : 1-2</li>
+<li>C2 : 1-3-4</li>
+<li>C3 : 1-3-5-6</li>
+<li>C4 : 1-3-5-7-8</li>
+<li>C5 : 1-3-5-7-9</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Chemin</th>
+<th>id : string</th>
+<th>mdp : string</th>
+<th>Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>&quot;user999&quot;</td>
+<td>&quot;mdp&quot;</td>
+<td>ConnexionImpossible(&quot;Échec de connexion - utilisateur non trouvé.&quot;)</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>&quot;user1&quot;</td>
+<td>&quot;wrong_mdp&quot;</td>
+<td>ConnexionImpossible(&quot;Mot de passe invalide.&quot;)</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>&quot;user2&quot;</td>
+<td>&quot;mdp&quot;</td>
+<td>ConnexionImpossible(&quot;Rôle non existant.&quot;)</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>&quot;user3&quot;</td>
+<td>&quot;mdp&quot;</td>
+<td>ConnexionImpossible(&quot;Rôle non reconnu.&quot;)</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>&quot;user1&quot;</td>
+<td>&quot;mdp_correct&quot;</td>
+<td>Connexion réussie, retour d'objet Client correspondant</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identification du test : assigneTicket</td>
+<td>version 1.0</td>
+</tr>
+<tr>
+<td>Description du test</td>
+<td>Test unitaire sur la méthode assigneTicket de la classe Technicien, méthode boite blanche</td>
+</tr>
+<tr>
+<td>Ressources Requises</td>
+<td>Visual Studio Code, WSL</td>
+</tr>
+<tr>
+<td>Responsable</td>
+<td>Lucas DA SILVA FERREIRA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chemins :</strong></p>
+<ul>
+<li>C1 : 1-2</li>
+<li>C2 : 1-3-4</li>
+<li>C3 : 1-3-5-6</li>
+<li>C4 : 1-3-5-7</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Chemin</th>
+<th>id : string</th>
+<th>Résultat attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>999</td>
+<td>RequêteIllégale(&quot;L'utilisateur n'existe pas.&quot;)</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>&quot;user2&quot;</td>
+<td>RequêteIllégale(&quot;Rôle invalide. Seuls les techniciens peuvent assigner des tickets.&quot;)</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>998</td>
+<td>RequêteIllégale(&quot;Le ticket n'existe</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-résultats-de-test"><strong>3. Résultats de test</strong></h2>
+<h3 id="31-livrable-1"><strong>3.1 Livrable 1</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Référence du test appliqué</th>
+<th>Responsable</th>
+<th>Date de l'application du test</th>
+<th>Résultat du test</th>
+<th>Occurrences des résultats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Page d'accueil</td>
+<td>Baptiste Fournié</td>
+<td>22/10/2023</td>
+<td>OK</td>
+<td>Systématique</td>
+</tr>
+<tr>
+<td>Page d'inscription</td>
+<td>Baptiste Fournié</td>
+<td>22/10/2023</td>
+<td>OK</td>
+<td>Systématique</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-livrable-3"><strong>3.2 Livrable 3</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Référence du test appliqué</th>
+<th>Responsable</th>
+<th>Date de l'application du test</th>
+<th>Résultat du test</th>
+<th>Occurrences des résultats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>calcul proba</td>
+<td>Baptiste Fournié</td>
+<td>27/12/2023</td>
+<td>OK</td>
+<td>Systématique</td>
+</tr>
+<tr>
+<td>calcul nombre</td>
+<td>Baptiste Fournié</td>
+<td>27/12/2023</td>
+<td>OK</td>
+<td>Systématique</td>
+</tr>
+<tr>
+<td>calcul_loi_normale</td>
+<td>Baptiste Fournié</td>
+<td>27/12/2023</td>
+<td>OK</td>
+<td>Systématique</td>
+</tr>
+<tr>
+<td>Interface graphique proba</td>
+<td>Baptiste Fournié</td>
+<td>27/12/2023</td>
+<td>OK</td>
+<td>Systématique</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-livrable-4"><strong>3.3 Livrable 4</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Référence du test appliqué</th>
+<th>Responsable</th>
+<th>Date de l'application du test</th>
+<th>Résultat du test</th>
+<th>Occurrences des résultats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inscription</td>
+<td>Lucas DA SILVA FERREIRA</td>
+<td>à completer</td>
+<td>NON FAIT</td>
+<td>à completer</td>
+</tr>
+<tr>
+<td>ajoutTicket</td>
+<td>Lucas DA SILVA FERREIRA</td>
+<td>à completer</td>
+<td>NON FAIT</td>
+<td>à completer</td>
+</tr>
+<tr>
+<td>connecte</td>
+<td>Lucas DA SILVA FERREIRA</td>
+<td>à completer</td>
+<td>NON FAIT</td>
+<td>à completer</td>
+</tr>
+<tr>
+<td>assigneTicket</td>
+<td>Lucas DA SILVA FERREIRA</td>
+<td>à completer</td>
+<td>NON FAIT</td>
+<td>à completer</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-conclusion"><strong>4. Conclusion</strong></h2>
+<p>Les pages du site web ressemblent à leur maquette graphique et les outils de l'étude analytique sont opérationels. Le dossier tests sera mis à jour lors du livrable 4.</p>
+
+            
+            
+        </body>
+        </html>

@@ -1,16 +1,18 @@
 # Notice d'utilisation du site
 
-## Sommaire
+## Sommaire<!-- omit from toc -->
 
-1. Utilisation du site
-    1. Générale
-    2. Utilisateur lambda
-    3. Technicien
-    4. Administrateur web
-    5. Administrateur système
-2. Installation du site
-    1. Matériel nécessaire
-    2. Installation du Raspberry
+- [Notice d'utilisation du site](#notice-dutilisation-du-site)
+  - [Site principal](#site-principal)
+    - [Utilisation du site](#utilisation-du-site)
+      - [I - Utilisation générale](#i---utilisation-générale)
+      - [Utilisateur lambda](#utilisateur-lambda)
+      - [Technicien](#technicien)
+      - [Administrateur web](#administrateur-web)
+      - [Administrateur système](#administrateur-système)
+  - [Installation du site](#installation-du-site)
+    - [Matériel nécessaire :](#matériel-nécessaire-)
+    - [Installation du Raspberry :](#installation-du-raspberry-)
 
 
 ## Site principal
@@ -194,6 +196,28 @@ Cet ajout prend effet immédiatement et permet au nouveau technicien de se conne
 
 #### Administrateur système
 
+L'administrateur système est aussi un type de compte dont la création se fait directement en base de données. Un utilisateur vous est fourni avec la plateforme :
+- adminsys (mot de passe "adminsys")
+
+En se connectant, on arrive sur cette page :
+![](img/manuel_util/adminsys.png)
+
+Vous pouvez voir trois sections dans cette page correspondant aux trois types de log. Le log des connexions échouées recense toutes les connexions échouées dont le login ou le mot de passe est incorrect :
+![](img/manuel_util/adminsys_logcon.png)
+
+Le log des tickets validés recense les informations de tous les tickets ayant été validés (clos par un technicien) :
+![](img/manuel_util/adminsys_logval.png)
+
+Le log des états des tickets donne l'état actuel de chaque ticket en plus d'informations sur le ticket.
+![](img/manuel_util/adminsys_logeta.png)
+
+Le menu en haut de la page vous permet de vous déconnecter, consulter votre profil et accéder à une page de statistiques de la plateforme :
+![](img/manuel_util/adminsys_header.png)
+
+Enfin, il vous est possible de télécharger tous les logs un à un en utilisant les boutons avec une flèche vers le bas :
+![](img/manuel_util/adminsys_logdl.png)
+
+Vous aurez ainsi un fichier CSV avec toutes les valeurs des logs que vous pourrez utiliser tel quel ou parser avec votre langage de scripting favori.
 
 ## Installation du site
 

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>SAE 3&period;01 - Conception</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="sae-301---conception">SAE 3.01 - Conception</h1>
+<h2 id="sommaire">Sommaire</h2>
+<ul>
+<li><a href="#intro"><strong>Chapitre 1</strong></a> <strong>:</strong> <em>Introduction</em></li>
+<li><a href="#part1"><strong>Chapitre 2</strong></a> <strong>:</strong> <em>Approche</em></li>
+<li><a href="#part2"><strong>Chapitre 3</strong></a> <strong>:</strong> <em>Conception architecturale</em></li>
+<li><a href="#part3"><strong>Chapitre 4</strong></a> <strong>:</strong> <em>Conception de la base de données</em></li>
+<li><a href="#part4"><strong>Chapitre 5</strong></a> <strong>:</strong> <em>Conception des pages dynamiques</em></li>
+</ul>
+<h2 id="introduction"><a id="intro"></a>Introduction</h2>
+<p>Ce document détaille comment le projet a été implémenté et conçu. Il détaillera les différentes vues de la structure du projet,
+ainsi que les comportements de ce dernier vis à vis des utilisateurs. Pour voir les spécifications à suivre, consultez le</p>
+<p><strong>Dossier de Spécifications</strong> <em>(Annexe 3)</em>.</p>
+<h2 id="approche"><a id="part1"></a>Approche</h2>
+<h3 id="introduction-1">Introduction</h3>
+<p>Dans le cadre de notre projet, nous adoptons une approche orientée objet. Nous verrons tout d'abord en quoi elle
+consiste puis pourquoi nous l'avons choisi et enfin comment nous l'avons implementé dans notre projet.</p>
+<h3 id="définition">Définition</h3>
+<p>L'approche orienté objet se divise en quatre étapes :</p>
+<ul>
+<li><strong>Abstraction</strong></li>
+<li><strong>Encapsulation</strong></li>
+<li><strong>Classification</strong></li>
+<li><strong>Polymorphisme</strong></li>
+</ul>
+<p><strong>Abstraction :</strong> L'abstraction est le processus de simplification d'un objet ou d'un concept en identifiant uniquement les
+caractéristiques et les comportements essentiels, tout en ignorant les détails non pertinents. Elle permet de se
+concentrer sur l'essentiel pour mieux comprendre et représenter un objet. Par exemple, lors de la modélisation d'un
+système de ticketing, on pourrait abstraire un &quot;événement&quot; pour inclure uniquement les propriétés essentielles, telles
+que le nom, la date et le lieu, en ignorant les détails complexes.</p>
+<p><strong>Encapsulation :</strong> L'encapsulation consiste à regrouper les données (attributs) et les méthodes (fonctions) qui opèrent sur
+ces données en une seule unité, appelée classe. Cette unité limite l'accès direct aux attributs.</p>
+<p><strong>Classification :</strong> La classification, permet de créer de nouvelles classes en se basant sur des classes existantes.
+Par exemple, si l'abstraction le suggère, les classes &quot;Romans&quot; et &quot;BD&quot; peuvent être fusionnées en une classe nommée
+&quot;Ouvrages&quot;.</p>
+<p><strong>Polymorphisme :</strong> Le polymorphisme signifie que différentes classes peuvent répondre de manière différente aux mêmes
+messages ou aux mêmes méthodes. Il permet de traiter des objets de classes différentes de manière uniforme. Par exemple,
+dans un système de ticketing, vous pourriez avoir une méthode &quot;acheterTicket&quot; qui peut être invoquée sur différentes
+classes de tickets, mais qui se comportera de manière spécifique en fonction du type de ticket.</p>
+<h3 id="motivation">Motivation</h3>
+<p>En utilisant cette méthodologie, nous pouvons représenter les différents composants de notre service de ticketing sous
+forme d'objets, ce qui facilite la gestion des données, des interactions et des opérations.
+Cela nous permet de modéliser notre système de manière plus organique et efficace. Cette approche nous offre une plus
+grande modularité, une réutilisation du code plus efficace et une maintenance simplifiée, tout en rendant notre
+architecture plus flexible pour les futures évolutions du projet. En intégrant les principes de l'approche orientée
+objet, nous sommes convaincus que notre système de ticketing sera plus cohérent, plus extensible et plus facile à gérer.</p>
+<h3 id="implémentation">Implémentation</h3>
+<p>Chaque composant, tel que les utilisateurs, les événements, les billets et les transactions, sera représenté comme une
+classe d'objet distincte, avec des attributs et des méthodes spécifiques.</p>
+<h2 id="conception-architecturale"><a id="part2"></a>Conception architecturale</h2>
+<h3 id="diagramme-de-composant-livrable-2">Diagramme de composant livrable 2</h3>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/diagramme_composant.png" alt=""></p>
+<h2 id="conception-de-la-base-de-données"><a id="part3"></a>Conception de la base de données</h2>
+<h3 id="modèle-conceptuel-des-données-mcd-">Modèle conceptuel des données (MCD) :</h3>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/MCD.png" alt=""></p>
+<h3 id="modèle-logique-des-données-mld-">Modèle logique des données (MLD) :</h3>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/MLD.png" alt=""></p>
+<p>Comme montré sur ce modèle, nous avons regroupé les objets du problème à stocker en cinq tables :</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Explication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Utilisateur</strong></td>
+<td>La table Utilisateur est l'abstraction des comptes utilisateurs. Elle contient le login et le mot de passe nécessaires pour se connecter à son compte utilisateur, ainsi qu'un champ &quot;role&quot; permettant de définir si le compte est celui d'un Utilisateur, d'un Administrateur Système, d'un Technicien ou d'un Administrateur Web. Le login sert de clé primaire pour cette table, ce qui veut dire qu'un utilisateur souhaitant créer un compte ne peut pas choisir un login déjà existant. Le champ mdp ne peut pas être nul, et un champ role nul indique un compte utilisateur. (pas technicien ou admin)</td>
+</tr>
+<tr>
+<td><strong>Ticket</strong></td>
+<td>La table Ticket est l'abstraction des tickets et des journaux d'activité de tickets créés. Elle contient un identifiant de ticket, un niveau d'urgence (pouvant aller de 1 à 4), un état (pouvant être Ouvert, En cours de traitement ou Fermé), et une description. Pour la partie log, elle possède un champ date, correspondant à sa date de création, un champ IP, correspondant à l'adresse IP qui a généré le ticket, et le niveau d'urgence original tel qu'il a été renseigné par l'utilisateur. Elle possède également une clé étrangère correspondant à un identifiant de libellé, dont le champ est &quot;lib&quot;, et trois clés étrangères, toutes correspondant à un identifiant utilisateur. &quot;demandeur&quot; corresponds à l'identifiant du compte utilisateur ayant ouvert le ticket et ne peut pas être nul. &quot;cible&quot; corresponds à l'identifiant du compte utilisateur renseigné en tant que personne concernée et ne peut pas être nul. Il sera défini comme étant le demandeur si rien n'a été renseigné dans le formulaire. Enfin, &quot;technicien&quot; : Corresponds à l'identifiant du compte utilisateur technicien à qui est affecté le ticket.</td>
+</tr>
+<tr>
+<td><strong>Libelle</strong></td>
+<td>La table Libelle est l'abstraction des libellés et des natures de tickets. Elle contient un identifiant de libellé (utilisé dans la table Ticket pour déterminer le libellé utilisé), un intitulé contenant le texte du libellé, et un booléen archive indiquant si le libellé a été supprimé ou non. En effet on ne peut pas directement supprimer des libellés de la base de données car des tickets encore ouverts pourraient les utiliser. Un tel booléen permets donc de savoir si un libellé est disponible ou non. Enfin, un libellé a une clé étrangère avec lui même, afin d'implémenter le système de sous-libellés. Cette clé étrangère a pour champ &quot;lib_sup&quot; et contient l'identifiant du libellé supérieur à celui-ci.</td>
+</tr>
+<tr>
+<td><strong>Log_connexion_echec</strong></td>
+<td>La table Log_connexion_echec est l'abstraction des journaux de connexions échouées. Lorsqu'une connexion à un compte utilisateur est tentée sur le site et qu'elle est infructueuse, une entrée est faite dans cette table. Elle contient un identifiant d'entrée, la date de la tentative de connexion, le login et le mot de passe tentés, ainsi que l'adresse IP ayant tenté de se connecter à un compte. Il est à noter que le login et le mot de passe ne correspondent pas nécessairement à un login ou un mot de passe existants dans la base de données.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="explications-supplémentaires-">Explications supplémentaires :</h3>
+<p>Nous aimerions expliquer quelques points supplémentaires sur le modèle de base de données utilisé. En particulier, la raison pour laquelle nous stockons les journaux d'activités dans cette base plutôt que sur un fichier système. Tout d'abord, centraliser le stockage des données sur une même base évite d'éparpiller les données et permets d'avoir un accès plus facile à ces dernières. Mais surtout, cela permets des comparaisons faciles entre les données des journaux et les données du modèle. C'est notamment pour cela que, bien que la table <strong>Log_connexion_echec</strong> n'ait aucune relation avec d'autres tables, elle n'en reste pas moins légitime.</p>
+<p>Par exemple, il est possible en mettant ces journaux sous la forme de tables de regarder si le login tenté dans le journal d'activité de connexions échouées corresponds bien à un login existant dans la table <strong>Utilisateur</strong>. Si c'est le cas, il pourrait s'agir d'un simple oubli de mot de passe. Ou encore, si on voit beaucoup de lignes correspondant à cette requête, on peut suspecter une tentative d'attaque.</p>
+<p>Il nous semble également important d'expliquer l'absence d'une table <strong>Log_tickets_valides</strong>. Le fait est qu'un journal d'activité de ticket est intrinsèquement lié à son ticket. Ces deux entités sont créées simultanément, partagent des informations similaires telles que la date ou le niveau d'urgence, et peuvent être récupérées sous forme de journal assez aisément à travers une vue. Du point de vue de la conception et de la cohérence des données, la décision a été prise de fusionner les tables <strong>Ticket</strong> et <strong>Log_Tickets_Valides</strong> en une unique table <strong>Ticket</strong>.</p>
+<h2 id="conception-des-pages-dynamiques"><a id="part4"></a>Conception des pages dynamiques</h2>
+<h3 id="introduction-2">Introduction</h3>
+<p>Pour les pages dynamiques, nous avons décidé d'utiliser du PHP objet afin de rendre le code plus modulaire, lisible et efficace. Les différentes classes que nous allons utiliser permettront d'éviter l'usage de fonctions éparpillées dans des modules, et plutôt utiliser des méthodes d'objets, plus claires et plus pratiques d'utilisation. Un autre avantage à utiliser l'objet est que les objets peuvent être sérialisés, assurant ainsi la protection des données stockées dans ces derniers. Enfin, utiliser des méthodes pour accéder à la base de données limite les possibilités d'abus d'accès à la base.<br>
+La conception a été précédée d'un prototype preuve du concept et est donc sensible et intimement liée à son implémentation.<br>
+Vous verrez ci-dessous un diagramme de classe commenté.</p>
+<h3 id="diagramme-de-classe">Diagramme de classe</h3>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/PHPobjet.png" alt=""></p>
+<h3 id="explications">Explications</h3>
+<h4 id="client">Client</h4>
+<p>Tout est centré autour de la classe <code>Client</code>, qui est une généralisation des utilisateurs physiques ou virtuels de la plateforme. Chaque <code>Client</code> possède un identifiant et un mot de passe permettant de se connecter à un compte de la base de données. Cette connexion est également stockée dans la classe <code>Client</code>, et elle possède des champs statiques contenant l'hôte et le nom de la base de données afin de pouvoir s'y connecter ou reconnecter. Cette classe surcharge les méthodes dites &quot;magiques&quot; de sérialisation pour qu'une instance soit transmise d'une page à l'autre dans la session PHP. Interfaçant avec la base, elle met à disposition des méthodes de requête.<br>
+C'est une classe abstraite, ce qui veut dire que d'autres types d'utilisateurs plus précis et avec des méthodes supplémentaires hériteront de ses caractéristiques.</p>
+<h4 id="client-virtuel-et-visiteur">Client virtuel et visiteur</h4>
+<p>Chaque utilisateur non connecté se verra attribué un objet <code>Visiteur</code> hérité de <code>Client</code> avec des méthodes restreintes pour afficher la page d'accueil. Une escalade de privilèges liée à la connexion d'un utilisateur est représentée par la méthode <code>connecte</code> renvoyant un <code>Client</code> de la classe fille correspondante à son role dans la base ; c'est l'équivalent d'un objet <code>Factory</code> en <em>Factory Design Pattern</em>.<br>
+La classe Système représente un visiteur virtuel et permet simplement d'ajouter des utilisateurs, ayant les droits nécessaires dans la base de donnée.</p>
+<p>Ces deux classes surchargent le constructeur de <code>Client</code> pour utiliser des identifiants statiques puisqu'elles sont reliées à un seul utilisateur MySQL chacune.</p>
+<h4 id="compte-et-accesseurlibellé">Compte et AccesseurLibellé</h4>
+<p>La classe <code>Compte</code> est l'abstraction d'un utilisateur connecté. Non-instanciable, elle généralise les différents rôles d'utilisateurs : <code>Utilisateur</code>, <code>Technicien</code>, <code>AdminSys</code>, <code>AdminWeb</code>. Chaque rôle, comme <code>Visiteur</code>, est équippé de méthodes pour afficher sa page respective et effectuer ses opérations permises dans la base de données et dérivées du dossier de spécifications. Bien que n'ayant qu'une méthode, elle s'avère utile pour différencier un utilisateur connecté d'un utilisateur non-connecté.<br>
+<code>AccesseurLibellé</code> héritant de cette classe contient une méthode publique de récupération de libellés partagée entre deux rôles.</p>
+<h4 id="erreurs">Erreurs</h4>
+<p>Notre conception permet d'identifier les deux sujets d'erreur rencontrés dans le fonctionnement de cette structure : la connexion à la base de données et le résultat des requêtes. Nous avons représenté ces deux sujets par les classes <code>ConnexionImpossible</code> et <code>RequêteIllégale</code>, surchargeant le constructeur pour indiquer la nature de l'erreur et héritant d'une classe réservée à toutes nos erreurs &quot;maison&quot; (relatives à notre système), <code>ErreurBD</code>. Ainsi, il est possible de prendre en charge les erreurs intentionnelles du système tout en laissant les erreurs inattendues interrompre le chargement des pages pour nous être directement visibles.</p>
+
+            
+            
+        </body>
+        </html>

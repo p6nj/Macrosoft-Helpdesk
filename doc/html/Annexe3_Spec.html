@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>SAE 3&period;01 - Sp&eacute;cifications</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="sae-301---spécifications">SAE 3.01 - Spécifications</h1>
+<h2 id="sommaire">Sommaire</h2>
+<ul>
+<li><a href="#part1"><strong>Chapitre 1</strong></a> <strong>:</strong> <em>Introduction</em></li>
+<li><a href="#part2"><strong>Chapitre 2</strong></a> <strong>:</strong> <em>Charte graphique</em></li>
+<li><a href="#part3"><strong>Chapitre 3</strong></a> <strong>:</strong> <em>Maquettes Web</em></li>
+<li><a href="#part4"><strong>Chapitre 4</strong></a> <strong>:</strong> <em>Cas d'utilisations</em></li>
+<li><a href="#part5"><strong>Chapitre 5</strong></a> <strong>:</strong> <em>Intégration</em></li>
+</ul>
+<hr>
+<h2 id="introduction"><a id="part1"></a>Introduction</h2>
+<p>Ce dossier de spécifications est un document détaillant le comportement que devra avoir le système. Cela comporte l'affichage
+que doivent avoir les pages web du projet, ainsi que les différents cas d'utilisations du système. Il ne détaillera pas l'implémentation
+réelle des contraintes listées ici, pour cela, référez-vous au <strong>Dossier de Conception</strong> <em>(Annexe 4)</em>.</p>
+<hr>
+<h2 id="charte-graphique"><a id="part2"></a>Charte graphique</h2>
+<p>Notre projet est une plateforme de ticketing destiné à aider des techniciens à résoudre des problèmes techniques rencontrés
+par des utilisateurs via une interface unique, mais polymorphe. Cette charte tente donc de proposer une solution pour relier
+à la fois les valeurs et intentions en lien avec les utilisateurs et les techniciens, les deux principaux types d’usagers.
+Vous verrez que pour la première version du logo, une charte plus ancienne a été utilisée (qui sera résumée dans la section
+correspondante) ; elle est maintenant obsolète.</p>
+<p>Plusieurs hypothèses peuvent être posées sur les caractéristiques de l’utilisateur. Comme il utilise notre produit comme une
+solution d’aide technique, ses connaissances dans le domaine de son problème peuvent être peu ou pas développées. Le but du code
+graphique est donc de le rassurer par le choix des couleurs, des formes et de la typographie.</p>
+<p>Les couleurs sont toutes froides en rapport avec la couleur du logo (#0077c2) sauf quand : il s’agit de faire contraste sur une
+couleur froide sans autre solution ; une urgence ou un élément important nécessite l’attention immédiate de l’utilisateur
+(destruction de données, erreurs…). Dans ce dernier cas, la couleur utilisée doit être de préférence un rouge intense (plus ou
+moins clair pour faciliter la lecture).</p>
+<p>Ensuite, les bords arrondis sont moins hostiles et ainsi le site comme le logo doit éviter les bords raides. Tous les angles
+extérieurs indépendants (sans angles adjacents) du site doivent être arrondis à part si cette transformation nuit à l’accessibilité
+ou l’ergonomie. Pour ces deux derniers principes, la couleur des éléments sera appliquée de préférence sur l’arrière-plan que
+sur le texte ou l’avant-plan, et les éléments interactifs seront toujours suffisamment gros.</p>
+<p>La police de caractère utilisée est Calibri. Cette police de Microsoft a été une de leurs préférées dans l’histoire de leurs
+produits, souvent police par défaut dans leurs outils de traitement de texte puisqu’elle est très neutre, proche d’Arial. Elle
+est aussi très homogène et facile à lire et a été décrite comme ayant un caractère doux et chaleureux par son créateur Lucas
+de Groot (<a href="https://en.wikipedia.org/wiki/Calibri#cite_note-Lucasfonts-4">https://en.wikipedia.org/wiki/Calibri#cite_note-Lucasfonts-4</a>). Elle est donc parfaite pour une utilisation en logo
+et sur toute la page.</p>
+<p>Mettons-nous maintenant à la place du second principal utilisateur de notre projet : le technicien. Nous avons été tenté de
+privilégier une interface plus simple voir technique puisqu’il s’agit d’un public plus expérimenté, or il y a de bonnes raisons
+de rejeter cette proposition.</p>
+<p>Le technicien est amené à utiliser cette interface quotidiennement. Il faut donc prendre soin de l’ergonomie du site pour
+éviter toute frustration et fatigue au long terme. Ainsi, les animations seront uniquement fonctionnelles (pour souligner une
+latence contrôlée par exemple). Cela permettra également de limiter le temps de chargement du site. Ensuite, un site agréable
+à utiliser est un site élégant, mais aussi neutre, avec peu de couleurs, beaucoup d’espace et une police neutre (Calibri est
+encore parfaite pour cet effet).</p>
+<p>Enfin, entre techniciens et utilisateurs la différence de compétences peut conduire à des conflits : les techniciens régulièrement
+exposés aux mêmes problèmes parfois très simples peuvent être amenés à résumer l’intelligence et l’expérience d’un utilisateur
+à ses compétences informatiques et ainsi stéréotyper les utilisateurs. C’est un problème régulier des domaines informatiques
+auquel nous sommes nous-même constamment confrontés (quand des élèves se moquent de professeurs ayant du mal à utiliser leur matériel
+informatique par exemple).</p>
+<p>Pour palier à ce problème, il est nécessaire de rétablir une égalité entre technicien et utilisateur
+en proposant aux deux profils le même style graphique, même si l’interface diffère fonctionnellement. Ce n’est dans notre cas
+même pas un problème puisque les deux styles sont compatibles.</p>
+<h3 id="version-1">Version 1</h3>
+<p>Voici la première version du logo de Macrosoft™ Helpdesk :</p>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/logo2.png" alt=""></p>
+<p>Il s’agit d’un panneau de danger rectangulaire blanc encadré de rouge contenant un marteau noir à 110° vers la droite. Il a
+été réalisé sur l’outil de diagramme collaboratif Excalidraw. Pour ce logo, une ancienne version de la charte graphique a été
+utilisée. Comme vous le voyez, la couleur dominante de ce logo est le rouge ; l’idée était d’utiliser des couleurs chaudes
+pour à la fois rassurer les utilisateurs et mettre en avant la compétence des techniciens. Le panneau triangulaire faisait
+allusion à la complexité technique et la délégation des incidents des utilisateurs aux techniciens. Le marteau évoquait le
+matériel et les moyens solides dont dispose les techniciens pour résoudre ces problèmes. Un logo sobre, mais frappant.</p>
+<h3 id="version-2">Version 2</h3>
+<p>Voici la nouvelle version :</p>
+<img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/logo.svg" width="400" height="400" alt="Logo Macrosoft" />
+<p>Un cercle bleu englobe un H minuscule blanc dont les deux pieds dépassent du cercle. En dessous est écrit de la même couleur
+le nom de notre entreprise et au-dessus se devine un faible halo bleu. Avec la nouvelle charte, tous les aspects du logo ont
+changé.</p>
+<p>Les couleurs chaudes ont été remplacées par les couleurs froides qui sont plus relaxantes en pratique. La rondeur de
+la charte y passe par la forme extérieure du logo, le texte écrit en Calibri et l’arc du H minuscule. Ce dernier est le H de
+Helpdesk, le produit de Macrosoft™ ciblé par ce logo. Le nom de notre entreprise est posé en dessous pour montrer la relation
+d’appartenance. Le bleu et la sobriété du logo représente bien les valeurs de la charte en soulignant l’honnêteté et la patience
+des techniciens ainsi que l’innocence des clients ayant besoin d’aide.</p>
+<p>Ce logo comporte aussi deux autres éléments importants. L’arche du H avec la hauteur de la partie inférieure de la lettre laisse
+deviner une porte, l’interface de notre site qui relie les deux profils d’utilisateur sans obstacle, préjugé ou égo. Enfin,
+le halo au-dessus du cercle évoque une ampoule ou une chandelle, une lumière : le savoir neutre et efficace proposé par des
+techniciens charitables, mais aussi la lueur qui éclaire des problèmes de solutions fiables, mais imparfaites, ce qui souligne
+l’humilité des techniciens qui sont tout aussi humains que les utilisateurs qu’il assiste.</p>
+<h3 id="verdict">Verdict</h3>
+<p>Après comparaison des deux logos, le second a été choisi. Le premier logo est rouge et blanc, or le rouge a l’effet inverse
+de celui attendu. Ce logo est stressant et non rassurant, et c’est aussi parce qu’il est à l’image d’un panneau de danger du
+code de la route. Dû à cette ressemblance, la forme du logo pose d’ailleurs de potentiels problèmes légaux et pourrait être
+confondue avec un vrai panneau du code de la route. D’autre part, les formes du logo ont en grande partie des bords raides et peu
+confortables pour les yeux, une agressivité qu’on veut absolument éviter dans ce contexte. La couleur n’est pas mise en avant
+et ne sert que de bord. Enfin, rien dans le logo ne donne ou ne suggère le nom de l’entreprise ou du produit.</p>
+<p>Le second logo est donc largement plus travaillé et conforme aux valeurs du produit et de l’entreprise. Il règle les principaux
+problèmes du premier logo et est ainsi parfait pour notre utilisation.</p>
+<hr>
+<h2 id="maquettes-web"><a id="part3"></a>Maquettes web</h2>
+<p>Les deux pages statiques de ce livrable sont celles de la page d'accueil (vue Visiteur) et celle de l'inscription à la plateforme.</p>
+<h3 id="maquette-de-la-page-daccueil-vue-visiteur">Maquette de la page d'accueil (vue Visiteur)</h3>
+<p>La page d'accueil en vue Visiteur doit contenir :</p>
+<ul>
+<li>Le logo du site web et son nom</li>
+<li>Un bouton d'inscription</li>
+<li>Un bouton de connexion</li>
+<li>Un texte explicatif qui décrit le but de la plateforme</li>
+<li>Une vidéo explicative qui montre comment utiliser la plateforme</li>
+<li>Un affichage des 10 derniers tickets formulés (uniquement leurs libellés)</li>
+</ul>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/maqAccueilVisiteur.png" alt=""></p>
+<h3 id="maquette-de-la-page-dinscription">Maquette de la page d'inscription</h3>
+<p>La page d'inscription doit contenir :</p>
+<ul>
+<li>Le logo du site web et son nom</li>
+<li>Un bouton de retour à l'accueil</li>
+<li>Un bouton de connexion</li>
+<li>Un formulaire d'inscription avec nom d'utilisateur, mot de passe et confirmation du mot de passe</li>
+<li>Un captcha à valider afin de pouvoir s'inscrire</li>
+</ul>
+<p><img src="file:////srv/http/Macrosoft-Helpdesk/doc/img/maqInscription.png" alt=""></p>
+<hr>
+<h2 id="cas-dutilisations"><a id="part4"></a>Cas d'utilisations</h2>
+<h4 id="cas-dutilisation-1--gestion-des-tickets">Cas d'utilisation 1 : Gestion des tickets</h4>
+<p><strong>Nom :</strong> Gérer les tickets.
+<strong>Contexte d'utilisation :</strong> La plateforme doit permettre de gérer et afficher des demandes de dépannage d'utilisateurs.
+<strong>Portée :</strong> Entreprise boîte noire
+<strong>Niveau :</strong> Stratégique
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> Administrateur Web, Technicien
+<strong>Garantie en cas de succès :</strong> Un ticket sera ouvert puis fermé.
+<strong>Déclencheur :</strong> Évènement extérieur poussant à visiter la plateforme. (signaler un problème, voir les problèmes actuels, gérer la plateforme...)
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>L'utilisateur créé un ticket.</li>
+<li>L'administrateur web attribue le ticket à un technicien.</li>
+<li>Le technicien traite la demande formulée par le ticket.</li>
+<li>Le ticket est clôturé.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>
+<p>a. Ticket bidant :</p>
+<ol>
+<li>L'administrateur web clos le ticket directement.</li>
+</ol>
+<p>b. Les informations du ticket sont incorrectes :</p>
+<ol>
+<li>L'administrateur web modifie les informations erronnées du ticket.</li>
+<li>Aller à <strong>2.</strong> dans le scénario nominal.</li>
+</ol>
+<p>c. Le niveau d'urgence attribué au ticket n'est pas pertinent :</p>
+<ol>
+<li>L'administrateur web définit un niveau d'urgence au ticket.</li>
+<li>Aller à <strong>2.</strong> dans le scénario nominal.</li>
+</ol>
+</li>
+<li>
+<p>a. L'administrateur web n'affecte pas le ticket :</p>
+<ol>
+<li>Un technicien s'auto-attribue le ticket.</li>
+<li>Aller à <strong>3.</strong> dans le scénario nominal.</li>
+</ol>
+</li>
+<li>
+<p>a. Impossible de traiter la demande :</p>
+<ol>
+<li>Le ticket est clôturé sans résolution de problème.</li>
+<li>L'administrateur web consulte les journaux d'activités de tickets fermés pour comprendre l'impossibilité de traiter la demande.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-2--affectation-dun-ticket">Cas d'utilisation 2 : Affectation d'un ticket</h4>
+<p><strong>Nom :</strong> Affecter un ticket
+<strong>Contexte d'utilisation :</strong> L'administrateur web affecte un ticket à un technicien afin que sa demande soit traitée.
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur Web
+<strong>Intervenants :</strong> Technicien
+<strong>Précondition :</strong> Un ticket n'est pas affecté.
+<strong>Garanties de succès :</strong> Le ticket sera affecté à un technicien.
+<strong>Déclencheur :</strong> Un ticket doit être attribué à un technicien pour être pris en charge.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>L'administrateur web choisit un technicien</li>
+<li>Il lui affecte le ticket</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>
+<p>a. Aucun technicien n'est enregistré :</p>
+<ol>
+<li>L'administrateur web crée un compte technicien.</li>
+<li>Aller à <strong>2.</strong> dans le scénario nominal.</li>
+</ol>
+<p>b. L'administrateur web n'est pas connecté :</p>
+<ol>
+<li>Un technicien s'affecte le ticket.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-3--auto-attribution-dun-ticket">Cas d'utilisation 3 : Auto-attribution d'un ticket</h4>
+<p><strong>Nom :</strong> Auto-attribution d'un ticket
+<strong>Contexte d'utilisation :</strong> Un technicien s'attribue un ticket non affecté par l'administrateur web.
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Technicien
+<strong>Précondition :</strong> Un ticket n'est pas affecté.
+<strong>Garanties de succès :</strong> Le ticket sera affecté à un technicien.
+<strong>Déclencheur :</strong> Un ticket doit être attribué à un technicien pour être pris en charge.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Le technicien s'affecte un ticket non attribué.</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-4--modification-dun-ticket">Cas d'utilisation 4 : Modification d'un ticket</h4>
+<p><strong>Nom :</strong> Modifier un ticket
+<strong>Contexte d'utilisation :</strong> Un ticket possède des informations erronnées ou obsolètes et doit être modifié par l'administrateur web.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur Web
+<strong>Précondition :</strong> Un ticket est ouvert.
+<strong>Garantie minimale :</strong> Les informations initiales du ticket ne seront pas perdues en cas d'échec.
+<strong>Garanties de succès :</strong> Le ticket sera modifié.
+<strong>Déclencheur :</strong> Un ticket doit être modifié.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>L'administrateur web corrige les informations erronnées du ticket.</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. Le ticket ne peut pas être modifié :
+<ol>
+<li>Le ticket n'est pas modifié.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-5--ouverture-dun-ticket">Cas d'utilisation 5 : Ouverture d'un ticket</h4>
+<p><strong>Nom :</strong> Créer un ticket
+<strong>Contexte d'utilisation :</strong> Un utilisateur connecté fait une demande de dépannage sous la forme d'un ticket auquel il attribue un libellé pour déterminer la nature de son problème et un niveau d'urgence qu'il estime.
+<strong>Portée :</strong> Organisation boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> Administrateur Web
+<strong>Précondition :</strong> L'utilisateur est connecté.
+<strong>Garanties de succès :</strong> Un ticket sera ouvert.
+<strong>Déclencheur :</strong> L'utilisateur fait une demande de dépannage.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>L'utilisateur choisit un libellé à attribuer au ticket.</li>
+<li>L'utilisateur estime un niveau d'urgence parmi ceux existant.</li>
+<li>Le ticket est créé suivant les informations données.</li>
+<li>Un journal d'activité de création du ticket est enregistré.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>
+<p>a. Aucun libellé n'existe</p>
+<ol>
+<li>L'utilisateur choisit l'option 'Autre' et détaille lui-même un libellé.</li>
+<li>Aller à <strong>2.</strong> dans le scénario nominal.</li>
+</ol>
+<p>b. Aucun libellé ne correspond au problème formulé par l'utilisateur.</p>
+<ol>
+<li>L'utilisateur choisit l'option 'Autre' et détaille lui-même un libellé.</li>
+<li>Aller à <strong>2.</strong> dans le scénario nominal.</li>
+</ol>
+</li>
+<li>
+<p>a. Le journal d'activité n'est pas enregistré :</p>
+<ol>
+<li>Un message en informe l'administrateur système.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Exceptions :</strong>
+3. a. Le ticket n'a pas pu être créé :
+1. Un message d'erreur en informe l'utilisateur.</p>
+<hr>
+<h4 id="cas-dutilisation-6--enregistrement-dun-journal-dactivité-de-ticket-fermé">Cas d'utilisation 6 : Enregistrement d'un journal d'activité de ticket fermé</h4>
+<p><strong>Nom :</strong> Enregistrer journal d'activité de création de ticket
+<strong>Contexte d'utilisation :</strong> L'action d'ouverture d'un ticket est enregistrée dans un journal d'activité.
+<strong>Portée :</strong> Sous-système
+<strong>Niveau :</strong> Sous-fonction
+<strong>Acteur principal :</strong> Système
+<strong>Précondition :</strong> Il n'y a pas eu de problème lors de la création du ticket.
+<strong>Garanties de succès :</strong> Un journal d'activité de création de ticket est enregistré.
+<strong>Déclencheur :</strong> Un ticket a été créé.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Un journal d'activité est créé.</li>
+<li>La date de création, l’adresse IP du créateur, le login d’utilisateur qui a formulé le ticket et son niveau d’urgence attribué sont attribués au journal.</li>
+<li>Le journal d'activité est enregistré.</li>
+</ol>
+<p><strong>Extensions :</strong>
+2. a. Les informations sont incomplètes ou erronnées :
+1. Le journal mets une valeur ERREUR sur les informations erronnées.
+2. Aller à <strong>3.</strong> dans le scénario nominal.</p>
+<p><strong>Exceptions :</strong>
+3. a. Le journal n'est pas enregistré :
+1. Un message en informe l'administrateur système.</p>
+<hr>
+<h4 id="cas-dutilisation-7--fermeture-dun-ticket">Cas d'utilisation 7 : Fermeture d'un ticket</h4>
+<p><strong>Nom :</strong> Fermer un ticket
+<strong>Contexte d'utilisation :</strong> Un technicien finit de traiter la demande formulée par le ticket et le ferme.
+<strong>Portée :</strong> Sous-système
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Technicien
+<strong>Intervenants :</strong> Administrateur Web
+<strong>Précondition :</strong> Un ticket n'a plus de raisons d'être ouvert.
+<strong>Garantie minimale :</strong> Le ticket ne sera plus affiché.
+<strong>Garanties de succès :</strong> Le ticket sera fermé.
+<strong>Déclencheur :</strong> Un ticket est clôturé.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Un technicien ferme le ticket.</li>
+<li>L'état du ticket est passé à 'fermé'.</li>
+<li>Le ticket est enregistré dans un historique.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>
+<p>a. Pour une raison extérieure, l'administrateur web doit fermer le ticket :</p>
+<ol>
+<li>L'administrateur web ferme le ticket.</li>
+<li>Aller à <strong>2.</strong> dans le scénario nominal.</li>
+</ol>
+</li>
+<li>
+<p>a. Le ticket n'est pas enregistré dans l'historique :</p>
+<ol>
+<li>Un message en informe l'administrateur système.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-8--enregistrement-dun-ticket-fermé">Cas d'utilisation 8 : Enregistrement d'un ticket fermé</h4>
+<p><strong>Nom :</strong> Enregistrer le ticket fermé dans l'historique
+<strong>Contexte d'utilisation :</strong> Un ticket fermé doit être enregistré par le système dans un historique à des fins de statistiques.
+<strong>Portée :</strong> Sous-système
+<strong>Niveau :</strong> Sous-fonction
+<strong>Acteur principal :</strong> Système
+<strong>Précondition :</strong> Un ticket a été clôturé.
+<strong>Garanties de succès :</strong> Le ticket sera enregistré dans un historique.
+<strong>Déclencheur :</strong> Un ticket est clôturé.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Il est enregistré dans un historique.</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. Le ticket n'a pas pu être enregistré :
+<ol>
+<li>Un message en informe l'administrateur système.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-9--consulter-le-journal-dactivité-de-tickets-ouverts">Cas d'utilisation 9 : Consulter le journal d'activité de tickets ouverts</h4>
+<p><strong>Nom :</strong> Consulter les jounaux d'activité de création de tickets
+<strong>Contexte d'utilisation :</strong>  L'administrateur système consulte le journal d'activité de création de tickets.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur système
+<strong>Garantie minimale :</strong> Les journaux d'activités de création de tickets ne sont pas divulgués.
+<strong>Garantie en cas succès :</strong> Les journaux d'activités de création de tickets sont affichés.
+<strong>Déclencheur :</strong> L'administrateur système souhaite consulter un journal d'activité de création de tickets.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Les journaux d'activité de création de tickets sont affichés sur la page de l'administrateur système.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>a. Aucun journal d'activité de création de ticket n'est enregistré :
+<ol>
+<li>Un tableau contenant un message qui en informe l'administrateur système est affiché.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-10--consultation-des-tickets">Cas d'utilisation 10 : Consultation des tickets</h4>
+<p><strong>Nom :</strong> Consulter les tickets
+<strong>Contexte d'utilisation :</strong> Un utilisateur souhaite consulter des tickets ouverts.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Stratégique
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> Visiteur, Administrateur web, Technicien
+<strong>Garantie en cas de succès :</strong> Afficher les tickets visibles par l'utilisateur.
+<strong>Déclencheur :</strong> Évènement extérieur poussant à visiter la plateforme.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Un utilisateur souhaite consulter les tickets.</li>
+<li>Un tableau de bord affiche les tickets de l'utilisateur.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>
+<p>a. L'utilisateur n'est pas connecté :</p>
+<ol>
+<li>Les 10 derniers tickets sont affichés.</li>
+</ol>
+<p>b. L'utilisateur est connecté sur un compte technicien ou administrateur web :</p>
+<ol>
+<li>Tous les tickets ouverts sont affichés.</li>
+</ol>
+</li>
+<li>
+<p>a. Aucun ticket disponible pour l'utilisateur n'existe :</p>
+<ol>
+<li>Un tableau contenant un message qui en informe l'utilisateur est affiché.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Exceptions :</strong>
+2. a. Impossible de récupérer les tickets :
+1. Un tableau contenant un message qui en informe l'utilisateur est affiché.</p>
+<hr>
+<h4 id="cas-dutilisation-11--10-derniers-tickets">Cas d'utilisation 11 : 10 derniers tickets</h4>
+<p><strong>Nom :</strong> Visualiser 10 derniers tickets
+<strong>Contexte d'utilisation :</strong> Le visiteur a besoin de visualiser les 10 derniers tickets formulés encore non résolus.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Visiteur
+<strong>Précondition :</strong> L'utilisateur ne doit pas être connecté.
+<strong>Garantie minimale :</strong> Seuls les 10 derniers tickets ouverts peuvent être affichés. Aucun ticket fermé ne sera affiché.
+<strong>Garantie en cas de succès :</strong> Afficher les 10 derniers tickets ouverts.
+<strong>Déclencheur :</strong> On souhaite consultes les tickets sur la page d'accueil.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Les 10 derniers tickets ouverts sont affichés sur un tableau dans la page d'accueil des utilisateurs non connectés.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>
+<p>a. Aucun ticket ouvert ou en cours de traitement n'existe :</p>
+<ol>
+<li>Un tableau contenant un message qui en informe l'utilisateur est affiché.</li>
+</ol>
+<p>b. Il y a moins de 10 tickets ouverts :</p>
+<ol>
+<li>Le tableau affiche des rangées vides là où il manque des tickets.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. Impossible de récupérer les tickets :
+<ol>
+<li>Un tableau contenant un message qui en informe l'utilisateur est affiché.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-12--affichage-de-tous-les-tickets-ouverts">Cas d'utilisation 12 : Affichage de tous les tickets ouverts</h4>
+<p><strong>Nom :</strong> Consulter tous les tickets ouverts
+<strong>Contexte d'utilisation :</strong> L'administrateur web et les techniciens doivent pouvoir voir tous les tickets ouverts.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur web / Technicien
+<strong>Précondition :</strong> Personne connectée sur un compte d'administrateur web ou de technicien.
+<strong>Garantie minimale :</strong> Aucun ticket fermé ne sera affiché.
+<strong>Garantie en cas de succès :</strong> Afficher tous les tickets ouverts et en cours de traitement.
+<strong>Déclencheur :</strong> Connexion en tant que technicien ou administrateur web.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Tous les tickets ouverts et en cours de traitement sont affichés dans un grand tableau de bord.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>a. Aucun ticket ouvert ou en cours de traitement n'existe :
+<ol>
+<li>Un tableau contenant un message qui en informe l'utilisateur est affiché.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. Impossible de récupérer les tickets :
+<ol>
+<li>Un tableau contenant un message qui en informe l'utilisateur est affiché.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-13--tableau-de-bord">Cas d'utilisation 13 : Tableau de Bord</h4>
+<p><strong>Nom :</strong> Consulter son tableau de bord
+<strong>Contexte d'utilisation :</strong> L'utilisateur connecté doit pouvoir visualiser tous les tickets qui le concernent dans un tableau de bord.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Précondition :</strong> Personne connectée sur un compte inscrit.
+<strong>Garantie minimale :</strong> Seuls les tickets ouverts concernant la personne connectée seront visibles.
+<strong>Garantie en cas de succès :</strong> Afficher les tickets ouverts qui concernent l'utilisateur connecté.
+<strong>Déclencheur :</strong> Connexion à un compte inscrit sur la plateforme.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Tous les tickets ouverts ou en cours de traitement qui concernent l'utilisateur (soit ayant été formulés par lui ou ceux qui l'ont en personne concernée) sont affichés dans un tableau de bord.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>a. L'utilisateur ne possède aucun ticket le concernant :
+<ol>
+<li>Un tableau contenant un message qui en informe l'utilisateur est affiché.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. Impossible de récupérer les tickets :
+<ol>
+<li>Un tableau contenant un message qui en informe l'utilisateur est affiché.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-14--gestion-du-profil-dun-compte-inscrit">Cas d'utilisation 14 : Gestion du profil d'un compte inscrit</h4>
+<p><strong>Nom :</strong> Gérer son profil
+<strong>Contexte d'utilisation :</strong> Un utilisateur possédant un compte inscrit souhaite consulter ses informations, changer et/ou récupérer son mot de passe.
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Stratégique
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> IUT
+<strong>Précondition :</strong> Personne possédant un compte inscrit.
+<strong>Garantie minimale :</strong> Les données seront privées et le mot de passe masqué.
+<strong>Déclencheur :</strong> Besoin d'accéder aux informations personnelles du compte.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>L'utilisateur se connecte à son compte.</li>
+<li>Il consulte les informations de son profil.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>
+<p>a. L'utilisateur n'arrive pas à se connecter :</p>
+<ol>
+<li>L'utilisateur fait une demande de récupération de mot de passe.</li>
+</ol>
+</li>
+<li>
+<p>a. L'utilisateur souhaite modifier son mot de passe :</p>
+<ol>
+<li>L'utilisateur entre un nouveau mot de passe.</li>
+<li>Le mot de passe du compte est modifié.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Exceptions :</strong>
+2. a. L'utilisateur n'a pas accès à ses informations :
+1. Un message d'erreur est affiché pour l'utilisateur.</p>
+<hr>
+<h4 id="cas-dutilisation-15--récupérer-mot-de-passe">Cas d'utilisation 15 : Récupérer mot de passe</h4>
+<p><strong>Nom :</strong> Récupérer mot de passe<br>
+<strong>Contexte d'utilisation :</strong> Un utilisateur cherche à faire une demande de récupération de mot de passe.<br>
+<strong>Portée :</strong> Sous-système<br>
+<strong>Niveau :</strong> Utilisateur<br>
+<strong>Acteur principal :</strong> Utilisateur<br>
+<strong>Intervenants :</strong> IUT<br>
+<strong>Précondition :</strong> Utilisateur sur le site.<br>
+<strong>Garantie minimale :</strong> Son mot de passe ne sera pas divulgué à des personnes extérieures.<br>
+<strong>Déclencheur :</strong> Demande de récuperation de mot de passe.<br>
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Affichage d'une page en maintenance</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-16--consulter-son-profil">Cas d'utilisation 16 : Consulter son profil</h4>
+<p><strong>Nom :</strong> Consulter son profil
+<strong>Contexte d'utilisation :</strong> Un utilisateur consulte les informations de son profil.
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> IUT
+<strong>Précondition :</strong> Personne connectée au site avec succès.
+<strong>Garantie minimale :</strong> Les informations de l'utilisateur ne sont visibles que par lui.
+<strong>Garantie en cas de succès :</strong> Afficher les informations de l'utilisateur.
+<strong>Déclencheur :</strong> Utilisateur cherche informations sur son profil.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Recoit une demande d'accés à son profil</li>
+<li>Accéde à la base de données</li>
+<li>Comparaison les données de l'utilisateur</li>
+<li>Affiche les informations de l'utilisateur</li>
+</ol>
+<p><strong>Exceptions :</strong>
+2. a. Impossible d'accéder à la base de données :
+1. Afficher une erreur. (ECHEC)
+3. a. Données utilisateur introuvables :
+1.Deconnexion du compte</p>
+<hr>
+<h4 id="cas-dutilisation-17--changement-du-mot-de-passe">Cas d'utilisation 17 : Changement du mot de passe</h4>
+<p><strong>Nom :</strong> Changer mot de passe
+<strong>Contexte d'utilisation :</strong> Un utilisateur cherche à changer son mot de passe.
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> IUT
+<strong>Précondition :</strong> Utilisateur inscrit.
+<strong>Garantie minimale :</strong> Son mot de passe n'est pas divulgué à des personnes extérieures.
+<strong>Garantie en cas de succès :</strong> Le mot de passe de l'utilisateur est modifié.
+<strong>Déclencheur :</strong> Réception d'une demande d'un changement de mot de passe.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Réception du formulaire</li>
+<li>Accède à la base de données</li>
+<li>Vérification des informations du formulaire avec celles contenues dans la base de données</li>
+<li>Changement du mot de passe entre l'ancien et le nouveau dans la base de données</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. L'utilisateur n'a pas remplit tous les champs obligatoires du formulaire :
+<ol>
+<li>Envoi d'un message d'échec de changement de mot de passe (ECHEC)</li>
+</ol>
+</li>
+<li>a. Impossible d'accéder à la base de données :
+<ol>
+<li>Envoi d'un message d'échec de changement de mot de passe (ECHEC)</li>
+</ol>
+</li>
+<li>a. Le login de l'utilisateur n'est pas dans la base de données :
+<ol>
+<li>Déconnexion de la session</li>
+</ol>
+</li>
+<li>b. Le mot de passe renseigné n'est pas validé :
+<ol>
+<li>Envoi d'un message d'échec de changement de mot de passe (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-18--administration">Cas d'utilisation 18 : Administration</h4>
+<p><strong>Nom :</strong> Administration
+<strong>Contexte d'utilisation :</strong> La plateforme doit permettre aux administrateurs de pouvoir gérer les éléments extérieurs aux tickets.
+<strong>Portée :</strong> Organisation boîte noire
+<strong>Niveau :</strong> Stratégique
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong> IUT, Administrateur système
+<strong>Garantie en cas de succès :</strong> Mise à jour des métadonnées (comptes techniciens et/ou libellés).
+<strong>Déclencheur :</strong> Besoin de mettre à jour les métadonnées de la plateforme.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>L'administrateur web accède aux métadonnées</li>
+<li>Les métadonnées sont modifiées par l'administrateur</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. Impossible d'accéder à la base de données :
+<ol>
+<li>Envoi d'un message d'échec de chargement des métadonnées (ECHEC)</li>
+</ol>
+</li>
+<li>a. Erreur lors de la modification :
+<ol>
+<li>Envoi d'un message d'échec de modification des métadonnées (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-19--gérer-les-utilisateurs">Cas d'utilisation 19 : Gérer les utilisateurs</h4>
+<p><strong>Nom :</strong> Gerer les utilisateurs
+<strong>Contexte d'utilisation :</strong> La plateforme doit permettre aux administrateurs de gérer les comptes utilisateur.
+<strong>Portée :</strong> Organisation boîte blanche
+<strong>Niveau :</strong> Stratégique
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong> IUT
+<strong>Précondition :</strong> L'administrateur web est connecté
+<strong>Garantie en cas de succès :</strong> Création d'un compte utilisateur
+<strong>Déclencheur :</strong> Réception d'un formulaire de création d'utilisateur
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Réception du formulaire</li>
+<li>Accès à la base de données</li>
+<li>Création du nouveau compte utilisateur</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>a. Les champs obligatoires du formulaire n'ont pas tous été remplis:
+<ol>
+<li>Envoi d'un message d'échec de création du compte utilisateur (ECHEC)</li>
+</ol>
+</li>
+<li>a. Impossible d'accéder à la base de données :
+<ol>
+<li>Envoi d'un message d'échec de création du compte utilisateur (ECHEC)</li>
+</ol>
+</li>
+<li>a. Erreur lors de la création du compte :
+<ol>
+<li>Envoi d'un message d'échec de création du compte utilisateur (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-20--inscription">Cas d'utilisation 20 : Inscription</h4>
+<p><strong>Nom :</strong> S'inscrire
+<strong>Contexte d'utilisation :</strong> On utilise les données renseignées dans un formulaire d'inscription pour créer un nouveau compte sur la plateforme.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> IUT
+<strong>Précondition :</strong> Utilisateur non inscrit
+<strong>Garantie minimale :</strong> Les données seront privées et le mot de passe encrypté
+<strong>Garantie en cas de succès :</strong> Création d'un compte utilisateur dans la base de données
+<strong>Déclencheur :</strong> Récéption d'un formulaire d'inscription remplit par l'utilisateur
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Réception d'un formulaire d'inscription</li>
+<li>Encryptage du mot de passe</li>
+<li>Insertion des données du formulaire dans la base de données =&gt; Création d'un nouveau compte sur la plateforme</li>
+<li>Envoi d'un message de confirmation d'inscription à l'utilisateur</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>
+<p>a. L'utilisateur n'a pas remplit tous les champs obligatoires du formulaire :</p>
+<ol>
+<li>Envoi d'un message d'échec de création de compte à l'utilisateur (ECHEC)</li>
+</ol>
+</li>
+<li>
+<p>a. Le login de l'utilisateur est déjà présent dans la base de données :</p>
+<ol>
+<li>Envoi d'un message d'échec de création de compte à l'utilisateur (ECHEC)</li>
+</ol>
+<p>b. Impossible d'accéder à la base de données :</p>
+<ol>
+<li>Envoi d'un message d'échec de création de compte à l'utilisateur (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-21--créer-un-compte-technicien">Cas d'utilisation 21 : Créer un compte technicien</h4>
+<p><strong>Nom :</strong> Créer un compte technicien
+<strong>Contexte d'utilisation :</strong>  L'administrateur web crée un compte technicien
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong> IUT, Technicien
+<strong>Précondition :</strong> Administrateur web est connecté.
+<strong>Garantie minimale :</strong> Le compte n'est pas crée et les informations du compte ne sont pas divulguées.
+<strong>Garantie en cas succès :</strong> Le compte technicien est crée.
+<strong>Déclencheur :</strong> L'administrateur crée un compte technicien.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Réception d'un formulaire d'inscription</li>
+<li>Encryptage du mot de passe</li>
+<li>Insertion des données du formulaire dans la base de données =&gt; Création d'un nouveau compte technicien sur la plateforme</li>
+<li>Envoi d'un message de confirmation d'inscription à l'utilisateur</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>
+<p>a. L'utilisateur n'a pas remplit tous les champs obligatoires du formulaire :</p>
+<ol>
+<li>Envoi d'un message d'échec de création du compte technicien (ECHEC)</li>
+</ol>
+</li>
+<li>
+<p>a. Le login de l'utilisateur est déjà présent dans la base de données :</p>
+<ol>
+<li>Envoi d'un message d'échec de création du compte technicien  (ECHEC)</li>
+</ol>
+<p>b. Impossible d'accéder à la base de données :</p>
+<ol>
+<li>Envoi d'un message d'échec de création du compte technicien (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-22--consulter-les-journaux-dactivité-de-connexion-ratée">Cas d'utilisation 22 : Consulter les journaux d'activité de connexion ratée</h4>
+<p><strong>Nom :</strong> Consulter les jounaux d'activité de création de connexion ratée
+<strong>Contexte d'utilisation :</strong> L'administrateur système consulte le journal d'activité de connexion ratée.
+<strong>Portée :</strong> Sous-système
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur système
+<strong>Garantie minimale :</strong> Les journaux d'activités de connexion ratée ne sont pas divulgués.
+<strong>Garantie en cas succès :</strong> Les journaux d'activités de connexion ratée sont affichés.
+<strong>Déclencheur :</strong> L'administrateur système souhaite consulter un journal d'activité de connexion ratée.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Les journaux d'activité de connexion ratée sont affichés sur la page de l'administrateur système.</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol>
+<li>a. Aucun journal d'activité de connexion ratée n'est enregistré :
+<ol>
+<li>Un tableau contenant un message qui en informe l'administrateur système est affiché.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-23--gérer-les-libellés">Cas d'utilisation 23 : Gérer les libellés</h4>
+<p><strong>Nom :</strong> Gérer les libellés
+<strong>Contexte d'utilisation :</strong>  Manipuler la base de données des libellés
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Stratégique
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong> IUT
+<strong>Précondition :</strong> Administrateur web est connecté.
+<strong>Garantie en cas succès :</strong> Possibilité d'une action sur les libellés
+<strong>Déclencheur :</strong> Demande d'action sur les libellés
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Récupére la demande d'action sur le libellé</li>
+<li>Accéder à la base de données</li>
+<li>Gérer la demande en fonction de l'action demandée</li>
+</ol>
+<p><strong>Exceptions :</strong>
+2. a. Impossible d'accéder à la base de données :
+1. Afficher une erreur. (ECHEC)</p>
+<hr>
+<h4 id="cas-dutilisation-24--créer-un-libellé">Cas d'utilisation 24 : Créer un libellé</h4>
+<p><strong>Nom :</strong> Créer un libellé
+<strong>Contexte d'utilisation :</strong>  Ajout d'un nouveau libellé
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong>  IUT
+<strong>Précondition :</strong> Administrateur web est connecté à la base de données
+<strong>Garantie minimales :</strong> Le libellé n'est pas enregisté
+<strong>Garantie en cas succès :</strong> Un nouveau libellé est créé
+<strong>Déclencheur :</strong> Demande d'ajout de libellé
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Saisir les informations du libellé</li>
+<li>Insertion du libellé dans la base de données</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>
+<p>a. Les informations du libéllé ne sont pas completes :</p>
+<ol>
+<li>Envoi d'un message d'échec de création de libellé (ECHEC)</li>
+</ol>
+</li>
+<li>
+<p>a. Le libellé est déjà existant :</p>
+<ol>
+<li>Envoi d'un message d'échec de création de libellé (ECHEC)</li>
+</ol>
+<p>b. Le libellé n'a pas pu être inséré :</p>
+<ol>
+<li>Envoi d’un message d’échec de création de libellé (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 id="cas-dutilisation-25--archiver-un-libéllé">Cas d'utilisation 25 : Archiver un libéllé</h3>
+<p><strong>Nom :</strong> Archiver un libellé
+<strong>Contexte d'utilisation :</strong>  Mise en archive d'un libellé
+<strong>Portée :</strong> Sous-système
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong>  IUT
+<strong>Précondition :</strong> Administrateur web est connecté à la base de données
+<strong>Garantie minimales :</strong> Le libellé n'est pas supprimé
+<strong>Garantie en cas succès :</strong> Le libellé est supprimé
+<strong>Déclencheur :</strong> Demande de suppression d'un libellé
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Saisir le libellé supprimé</li>
+<li>Suppression du libellé</li>
+</ol>
+<p><strong>Extensions :</strong></p>
+<ol start="2">
+<li>a. Le libellé possède des sous-libellés
+<ol>
+<li>Suppression de ses sous-libellés</li>
+</ol>
+</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>
+<p>a. Les informations du libéllé supprimé ne sont pas complètes :</p>
+<ol>
+<li>Envoi d'un message d'échec de suppression de libellé (ECHEC)</li>
+</ol>
+</li>
+<li>
+<p>a. Le libellé n'existe pas :</p>
+<ol>
+<li>Envoi d'un message d'échec de suppression de libellé (ECHEC)</li>
+</ol>
+<p>b. Le libellé n'a pas pu être supprimé :</p>
+<ol>
+<li>Envoi d’un message d’échec de suppression de libellé (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 id="cas-dutilisation-26--modifier-lintitulé-dun-libéllé">Cas d'utilisation 26 : Modifier l'intitulé d'un libéllé</h3>
+<p><strong>Nom :</strong> Modifier intitulé d'un libellé
+<strong>Contexte d'utilisation :</strong>  Modification d'un libellé
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong>  IUT
+<strong>Précondition :</strong> Administrateur web est connecté à la base de données
+<strong>Garantie minimales :</strong> Le libellé n'est pas modifié
+<strong>Garantie en cas succès :</strong> Le libellé est modifié
+<strong>Déclencheur :</strong> Demande de modification d'un libellé
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Saisir les informations du libellé modifiés</li>
+<li>Modification du libellé dans la base de données</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>
+<p>a. Les informations de modification du libellé ne sont pas complètes :</p>
+<ol>
+<li>Envoi d'un message d'échec de suppression de libellé (ECHEC)</li>
+</ol>
+</li>
+<li>
+<p>a. Le libellé n'existe pas :</p>
+<ol>
+<li>Envoi d'un message d'échec de suppression de libellé (ECHEC)</li>
+</ol>
+<p>b. Le libellé n'a pas pu être modifié :</p>
+<ol>
+<li>Envoi d’un message d’échec de suppression de libellé (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 id="cas-dutilisation-27--définir-un-libéllé-supérieur">Cas d'utilisation 27 : Définir un libéllé supérieur</h3>
+<p><strong>Nom :</strong> Définir un libéllé supérieur
+<strong>Contexte d'utilisation :</strong>  Affecter le libellé comme étant un sous-libellé d'un libellé
+<strong>Portée :</strong> Système boîte blanche
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Administrateur web
+<strong>Intervenants :</strong>  IUT
+<strong>Précondition :</strong> Administrateur web est connecté à la base de données
+<strong>Garantie minimales :</strong> Les libellés ne sont pas affectés
+<strong>Garantie en cas succès :</strong> Le libellé est affecté à son supérieur
+<strong>Déclencheur :</strong> Demande d'affectation d'un sous-libellé
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Saisir les informations du libellé affecter</li>
+<li>Modifier le libellé comme étant sous-libellé d'un supérieur donné</li>
+</ol>
+<p><strong>Exceptions :</strong></p>
+<ol>
+<li>
+<p>a. Les informations données ne sont pas complètes :</p>
+<ol>
+<li>Envoi d'un message d'échec de suppression de libellé (ECHEC)</li>
+</ol>
+</li>
+<li>
+<p>a. Un des libellés n'existe pas :</p>
+<ol>
+<li>Envoi d'un message d'échec de suppression de libellé (ECHEC)</li>
+</ol>
+<p>b. Le libellé n'a pas pu être affecté :</p>
+<ol>
+<li>Envoi d’un message d’échec de suppression de libellé (ECHEC)</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="cas-dutilisation-28--page-daccueil">Cas d'utilisation 28 : Page d'accueil</h4>
+<p><strong>Nom :</strong> Consulter page d'accueil
+<strong>Contexte d'utilisation :</strong> Une personne accédant au site doit arriver sur une page d'accueil.
+<strong>Portée :</strong> Système boîte noire
+<strong>Niveau :</strong> Utilisateur
+<strong>Acteur principal :</strong> Utilisateur
+<strong>Intervenants :</strong> IUT
+<strong>Précondition :</strong> Personne connectée connectée au site avec succès.
+<strong>Garantie minimale :</strong> Affichage d'une explication sur le but du site, d'une vidéo de présentation et des 10 derniers tickets. Ainsi qu'un accès à un formulaire de connexion et d'inscription.
+<strong>Déclencheur :</strong> Personne consultant la plateforme.
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Afficher le contenu statique de la page</li>
+<li>Accéder à la base de données</li>
+<li>Afficher les 10 derniers tickets</li>
+</ol>
+<p><strong>Extensions :</strong>
+3. a. Aucun ticket n'est ouvert :
+1. Afficher un message pour en informer l'utilisateur</p>
+<hr>
+<h4 id="cas-dutilisation-29--authentification">Cas d'utilisation 29 : Authentification</h4>
+<p><strong>Nom :</strong> Authentification
+<strong>Contexte d'utilisation :</strong> Un utilisateur souhaite passer d'un état connecté/déconnecté à l'autre
+<strong>Portée :</strong> Sous-système
+<strong>Niveau :</strong> Sous-fonction
+<strong>Acteur principal :</strong> Système
+<strong>Intervenants :</strong> Utilisateur, IUT
+<strong>Précondition :</strong> Utilisateur inscrit
+<strong>Garantie minimale :</strong> Les données seront privées et le mot de passe encrypté
+<strong>Garantie en cas de succès :</strong> Déconnexion/Connexion au compte de l'utilisateur
+<strong>Déclencheur :</strong> Réception d'une demande d'authentification
+<strong>Scénario nominal CONNEXION :</strong></p>
+<ol>
+<li>Réception d'une formulaire de connexion</li>
+<li>Accéder à la base de données</li>
+<li>Vérification des informations du formulaire avec celles contenues dans la base de données</li>
+<li>Connexion au compte utilisateur</li>
+</ol>
+<p><strong>Exceptions CONNEXION :</strong></p>
+<ol>
+<li>
+<p>a. L'utilisateur n'a pas remplit tous les champs obligatoires du formulaire :</p>
+<ol>
+<li>Envoi d'un message d'échec de connexion à l'utilisateur (ECHEC)</li>
+<li>Enregistrement d'un journal de connexion infructueuse</li>
+</ol>
+</li>
+<li>
+<p>a. Impossible d'accéder à la base de données :</p>
+<ol>
+<li>Envoi d'un message d'échec de connexion à l'utilisateur (ECHEC)</li>
+<li>Enregistrement d'un journal de connexion infructueuse</li>
+</ol>
+</li>
+<li>
+<p>a. Le login de l'utilisateur n'est pas dans la base de données :</p>
+<ol>
+<li>Envoi d'un message d'échec de connexion à l'utilisateur (ECHEC)</li>
+<li>Enregistrement d'un journal de connexion infructueuse</li>
+</ol>
+<p>b. Le mot de passe renseigné n'est pas validé :</p>
+<ol>
+<li>Envoi d'un message d'échec de connexion à l'utilisateur (ECHEC)</li>
+<li>Enregistrement d'un journal de connexion infructueuse</li>
+</ol>
+</li>
+<li>
+<p>a. Échec de la connexion :</p>
+<ol>
+<li>Envoi d'un message d'échec de connexion à l'utilisateur (ECHEC)</li>
+<li>Enregistrement d'un journal de connexion infructueuse</li>
+</ol>
+</li>
+</ol>
+<p><strong>Scénario nominal DÉCONNEXION :</strong></p>
+<ol>
+<li>Réception d'une demande de déconnexion</li>
+<li>Déconnexion du compte utilisateur</li>
+<li>Envoi d'un message de confirmation de déconnexion de l'utilisateur</li>
+</ol>
+<p><strong>Exceptions DÉCONNEXION :</strong>
+2. a. Échec de la déconnexion
+1. Envoi d'un message d'échec de déconnexion à l'utilisateur (ECHEC)</p>
+<hr>
+<h4 id="cas-dutilisation-30--journal-dactivité-de-connexion-infructueuse">Cas d'utilisation 30 : Journal d'activité de connexion infructueuse</h4>
+<p><strong>Nom :</strong> Enregistrer journal d'activité de connexion ratée
+<strong>Contexte d'utilisation :</strong> Enregistrement dans un log d'une connexion infructueuse
+<strong>Portée :</strong> Sous-système
+<strong>Niveau :</strong> Sous-fonction
+<strong>Acteur principal :</strong> Système
+<strong>Intervenants :</strong> Utilisateur, IUT
+<strong>Précondition :</strong> Un test de connexion est raté
+<strong>Garantie en cas de succès :</strong> Enregistrement d'un journal d'activité de connexion infructueuse
+<strong>Déclencheur :</strong> Connexion échouée
+<strong>Scénario nominal :</strong></p>
+<ol>
+<li>Réception d'une connexion échouée</li>
+<li>Création d'un journal d'activité de connexion infructueuse</li>
+<li>Enregistrement du journal</li>
+</ol>
+<p><strong>Exceptions :</strong>
+2. a. Échec de la création d'un journal d'activité
+1. L'information n'est pas stockée (ECHEC)</p>
+<hr>
+<h4 id="cas-dutilisation-31--aller-sur-le-site-web">Cas d'utilisation 31 : Aller sur le site web</h4>
+<p><strong>Nom :</strong> Aller sur le site web
+<strong>Contexte d'utilisation :</strong> On assure la connexion au site web.
+<strong>Portée</strong> : Sous-système
+<strong>Niveau</strong> : Sous-fonction
+<strong>Garantie en cas de succès :</strong> Connexion au site web.</p>
+<hr>
+<h2 id="intégration"><a id="part5"></a>Intégration</h2>
+<h3 id="introduction-1">Introduction</h3>
+<p>Il nous est demandé dans le cahier des charges d’intégrer notre site sur un Raspberry Pi 4b fourni par le client. Ainsi y doivent être centralisés la base de données, le serveur web et les fichiers source. Naturellement, nous avons pensé à utiliser une solution contenairisée : Docker / Podman, NixOS… Finalement, nous avons opté pour une solution proposée directement par Raspberry sur GitHub, <code>pi-gen</code>.</p>
+<h3 id="pi-gen">Pi-Gen</h3>
+<p>Pi-Gen est un outil de génération d’image Linux et plus précisément RaspOS, la distribution de Raspberry basée sur Debian. L’outil assemble des stages Linux du <em>bootstrap</em> à l'environnement graphique complet. Ces stages sont représentés sous forme de dossiers avec des scripts et des listes de paquets à installer exécutables sur l’hôte et l’invité. En effet, après le <em>bootstrap</em> initial, l'environnement RaspOS est <em>chrootable</em> c’est-à-dire qu’on peut émuler ses composants “à froid”, sans <em>boot</em>. La construction est donc entièrement personnalisable et nous permet de produire une image sur-mesure sans intervention manuelle.</p>
+<p>Notre image se limite au stage 2 qui équivaut à une installation <em>lite</em> ou minimale en ligne de commande. Nous avons ajouté une étape au stage 2 en ajoutant un sous-dossier au dossier du stage avec à l’intérieur de quoi installer entre autres mariadb (mysql), php et apache2 et un script qui ajoute l’utilisateur &quot;p6nj&quot;, lui permet un <em>sudo</em> sans mot de passe, clone la repo de Macrosoft en exécutant le script d’installation qui y est contenu et configure la connexion automatique en local.
+Un snapshot de la repo dans laquelle cette configuration a eu lieu vous sera fournie en zip.</p>
+<p>Ce processus pose tout-de-même un problème ; même si la portabilité de l’outil est garanti par un script passant par Docker (<a href="http://install-docker.sh">install-docker.sh</a>), la génération prend au moins 30 minutes pendants lesquelles on ne peut ni toucher aux scripts ni éteindre la machine sur laquelle le script tourne. Il faut aussi une bonne puissance et une bonne connexion réseau. Nous avons donc pensé à déléguer cette tâche à un serveur en ligne, et nous sommes partis sur une <em>GitHub Action</em>.</p>
+<h3 id="github-actions">Github Actions</h3>
+<p>Une action GitHub est un fichier en YML décrivant une procédure à effectuer en rapport avec le projet GitHub sur laquelle elle est exécutée. Cela peut servir à compiler du code, effectuer des tests avant un commit ou un merge, etc. Nous avons ainsi détaillé la génération de l’image customisée par une machine virtuelle sous Ubuntu à réaliser à chaque commit. Cette image est ensuite mise en ligne dans une release avec une description informative.
+La génération a lieu sur un &quot;runner&quot; public de GitHub (image Docker sur un serveur) ; toute erreur est traçable avec un log et notifiée par mail. Cela rend le tout plus pratique et portable tout en fournissant un accès constant aux différentes images qui sont lourdes à déplacer (&gt;1Go compressées).</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Cette pile permet donc de générer des images prêtes à l’emploi de manière complètement automatique.
+Ces images sont ensuite simplement gravées sur une carte SD (via dd) et insérées dans la Raspberry.</p>
+
+            
+            
+        </body>
+        </html>
