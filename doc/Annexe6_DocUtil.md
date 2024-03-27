@@ -104,22 +104,17 @@ Une fois clôturé, il rejoindra de la même manière votre liste de tickets fer
 #### Technicien
 
 Pour vous connecter en tant que Technicien au site, vous devez vous connecter avec un compte Technicien. Ces derniers ont des
-logins spécifiques définis par l'administrateur web. Au moment de rédiger ce document, les logins de technicien disponibles sont
-les suivants :
-- megatech
-- tec1
-- tec2
-- tec3
-- tec4
-- tec5
-- tec6
+logins spécifiques définis par l'administrateur web. Lors de l'installation initiale du site ou de la réinitialisation de la base de données, les logins de technicien suivants vous sont disponibles :
+- megatech (mot de passe "megatech")
 
-En se connectant à l'un de ces comptes, le technicien arrivera sur cette page:
+Nous vous invitons à communiquer avec votre administrateur système pour ajouter votre compte à cette liste.
+
+En se connectant depuis la page de connexion, le technicien arrivera sur cette page :
 
 ![](img/manuel_util/technicien.png)
 
 Ici, vous avez deux grandes catégories. La première concerne les tickets qui vous ont été attribués, et que vous devez régler
-puis clôturer. La deuxième concerne les tickets encore ouverts et pas encore attribués à un technicien.
+puis clôturer. La deuxième concerne les tickets encore ouverts et pas encore attribués à un technicien. Nous verrons plus loin comment vous en attribuer un.
 
 Le bouton Profil en haut à droite vous montre votre login.
 
@@ -148,6 +143,54 @@ Ce qui archivera le ticket et le supprimera définitivement de la liste.
 
 #### Administrateur web
 
+Le ou les administrateur(s) web du site ont aussi leur compte qui est créé directement en base de données. Par défaut, un compte est disponible :
+- adminweb (mot de passe "adminweb")
+
+En vous connectant sur la page de connexion vous arriverez sur la page suivante :
+![](img/manuel_util/adminweb.png)
+
+Comme vous pouvez le voir, cette page a deux parties. La première partie vous présente un nuage de libellés cliquables :
+![](img/manuel_util/adminweb_libelles.png)
+Ce sont tous les libellés disponibles non archivés.
+
+La seconde partie est une liste de tickets cliquables également :
+![](img/manuel_util/adminweb_tickets.png)
+
+Ce sont les tickets actuellement ouverts ou en cours de traitement.
+
+Cliquer sur un libellé vous présentera un dialogue de modification de ce libellé :
+![](img/manuel_util/modlib.png)
+
+Vous pourrez sélectionner un libellé supérieur (libellé qui contiendra le libellé en cours de modification) :
+![](img/manuel_util/modlib_details.png)
+
+Dans cet exemple, le résultat est le suivant :
+![](img/manuel_util/modlib_after.png)
+
+Vous pouvez également archiver le libellé pour qu'il ne soit plus ni affiché ni disponible pour les utilisateurs. C'est comme s'ils étaient supprimés sauf qu'ils sont toujours en base (pas de panique donc) :
+![](img/manuel_util/modlib_archive.png)
+
+Cliquer sur un ticket vous donnera aussi un dialogue de modification :
+![](img/manuel_util/adminweb_modticket.png)
+
+On peut alors assigner ou réassigner le technicien d'un ticket :
+
+![](img/manuel_util/adminweb_modticket_tech.png)
+
+Dans cet exemple, le résultat est le suivant :
+![](img/manuel_util/adminweb_tickets_modifie.png)
+
+Ensuite, vous verrez que le menu en haut de la page vous permet plus d'actions :
+![](img/manuel_util/adminweb_header.png)
+
+Vous pouvez ajouter un libellé :
+![](img/manuel_util/newlib.png)
+![](img/manuel_util/newlib_after.png)
+
+Ou un technicien dans la base :
+![](img/manuel_util/newtech.png)
+
+Cet ajout prend effet immédiatement et permet au nouveau technicien de se connecter à la plateforme à son tour pour prendre en charge et cloturer des tickets.
 
 #### Administrateur système
 
