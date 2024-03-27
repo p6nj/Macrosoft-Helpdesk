@@ -165,7 +165,8 @@ abstract class Client
      * @param string $lib Id de l'utilisateur
      * @return bool
      */
-    public function utilisateurExiste(string $id): bool {
+    public function utilisateurExiste(string $id): bool
+    {
         $result = $this->select("COUNT(*) as count from Utilisateur where login = '$id'");
         return $result[0]['count'] > 0;
     }
@@ -253,7 +254,7 @@ final class Utilisateur extends AccesseurLibellé
      */
     public function ajoutTicket(int $lib, int $niv_urgence, string $desc, string $cible = '')
     {
-        if(empty($lib)) {
+        if (empty($lib)) {
             throw new RequêteIllégale("Le champ d'intitulé du libellé est vide.", 1);
         } elseif (!($this->libelleExiste($lib))) {
             throw new RequêteIllégale("Le libellé n'existe pas.", 2);
@@ -261,6 +262,8 @@ final class Utilisateur extends AccesseurLibellé
             throw new RequêteIllégale("Le niveau d'urgence est incorrect.", 3);
         } elseif (!empty($cible) && !$this->utilisateurExiste($cible)) {
             throw new RequêteIllégale("Cible introuvable.", 4);
+        } elseif (strlen($desc) > 255) {
+            throw new RequêteIllégale("Description trop longue.", 5);
         }
         $this->insert("into Ticket (lib, niv_urgence, etat, description, date, IP, og_niv_urgence, demandeur, cible) values ($lib, $niv_urgence, 'Ouvert', '$desc', CURRENT_DATE, '" . $_SERVER['REMOTE_ADDR'] . "', $niv_urgence, '" . $this->getLogin() . "', '" . ($cible != '' ? $cible : $this->getLogin()) . "')");
     }
@@ -270,7 +273,8 @@ final class Utilisateur extends AccesseurLibellé
      * @param int $lib Id du Libellé
      * @return bool
      */
-    private function libelleExiste(int $lib): bool {
+    private function libelleExiste(int $lib): bool
+    {
         $result = $this->select("COUNT(*) as count from Libelle where idL = $lib");
         return $result[0]['count'] > 0;
     }
@@ -296,11 +300,14 @@ final class Visiteur extends Client
      * @throws ConnexionImpossible
      * @throws Exception role inexistant
      */
-    public function connecte($id, $mdp): Client {
+    public function connecte($id, $mdp): Client
+    {
         if (!$this->utilisateurExiste($id)) {
+            $this->echecConnexion($id, $mdp);
             throw new ConnexionImpossible("Échec de connexion - utilisateur non trouvé.");
         }
         if (!$this->motDePasseValide($id, $mdp)) {
+            $this->echecConnexion($id, $mdp);
             throw new ConnexionImpossible("Mot de passe invalide.");
         }
         // À ce stade, l'utilisateur existe et le mot de passe est valide
@@ -345,7 +352,8 @@ final class Visiteur extends Client
      * @return void
      * @throws RequêteIllégale
      */
-    public function inscription(string $id, string $mdp) {
+    public function inscription(string $id, string $mdp)
+    {
         if (empty($id)) {
             throw new RequêteIllégale("Le champ d'identifiant est vide.", 1);
         } elseif ($this->utilisateurExiste($id)) {
@@ -375,7 +383,8 @@ final class Visiteur extends Client
      * @param string $mdp Mdp de l'utilisateur
      * @return bool
      */
-    private function motDePasseValide($id, $mdp): bool {
+    private function motDePasseValide($id, $mdp): bool
+    {
         $mdpencr = encrypt(file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/includes/key"), $mdp);
         $result = $this->select("COUNT(*) as count from Utilisateur where login = '$id' and mdp = '$mdpencr'");
         return $result[0]['count'] > 0;
@@ -386,7 +395,8 @@ final class Visiteur extends Client
      * @param string $id Id de l'utilisateur
      * @return bool
      */
-    private function UtilisateurArole($id): bool {
+    private function UtilisateurArole($id): bool
+    {
         $result = $this->select("role from Utilisateur where login = '$id'");
         if (count($result) === 0) {
             return false;
@@ -403,7 +413,8 @@ final class Visiteur extends Client
      * @param string $role Role du client actuel
      * @return bool
      */
-    private function roleReconnu($role): bool {
+    private function roleReconnu($role): bool
+    {
         $rolesReconnus = ['UTILISATEUR', 'TECHNICIEN', 'ADMIN_SYS', 'ADMIN_WEB'];
         return in_array($role, $rolesReconnus);
     }
@@ -524,7 +535,8 @@ final class Technicien extends Compte
      * 
      * @return bool
      */
-    private function estTechnicien(): bool {
+    private function estTechnicien(): bool
+    {
         $login = $this->getLogin();
         $result = $this->select("role from Utilisateur where login = '$login'");
         return !empty($result) && $result[0]['role'] === 'Technicien';
@@ -537,7 +549,8 @@ final class Technicien extends Compte
      * @param int $id L'identifiant du Ticket
      * @return bool
      */
-    private function ticketExiste(int $id): bool {
+    private function ticketExiste(int $id): bool
+    {
         $result = $this->select("COUNT(*) as count from Ticket where idT = '$id' AND etat = 'Ouvert'");
         return !empty($result) && $result[0]['count'] > 0;
     }

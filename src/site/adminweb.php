@@ -248,11 +248,11 @@ try {
           } ?>
         </select>
         <br><br>
-        <label for="archive">Archivé </label>
-        <input type="checkbox" name="archive" id="archive">
-        <br><br>
         <button type="submit">Enregistrer</button>
         <input type="button" onclick="event.target.parentElement.parentElement.close()" value="Annuler">
+        <br><br>
+        <label for="archive">Archivé </label>
+        <input type="checkbox" name="archive" id="archive">
       </form>
     </dialog>
 

@@ -26,7 +26,7 @@ CREATE TABLE Ticket (
     etat VARCHAR(22) NOT NULL CHECK (
         etat IN ('Ouvert', 'En cours de traitement', 'Fermé')
     ),
-    description TEXT,
+    description VARCHAR(255),
     date DATE NOT NULL,
     IP VARCHAR(15) NOT NULL CHECK (IP LIKE '%.%.%.%'),
     og_niv_urgence INT NOT NULL CHECK (og_niv_urgence IN (1, 2, 3, 4)),

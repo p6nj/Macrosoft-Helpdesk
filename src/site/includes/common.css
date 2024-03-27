@@ -353,7 +353,7 @@ img#logo {
 }
 
 ::backdrop {
-    background-color: var(--gray);
+    background-color: #ebebeb;
     opacity: .75
 }
 

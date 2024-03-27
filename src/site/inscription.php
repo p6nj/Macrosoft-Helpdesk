@@ -1,7 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 // GET vars : 'erreur', 'message'
-$confirmation = false;
 ?>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -63,7 +62,8 @@ $confirmation = false;
                             if ($recaptchaVerification->success) {
                                 if ($_POST['password'] == $_POST['cpassword']) {
                                     $_SESSION['client']->inscription(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
-                                    $confirmation = true;
+                                    $_SESSION['client'] = $_SESSION['client']->connecte(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
+                                    redirect('accueil.php');
                                 } else
                                     echo 'Le mot de passe et la confirmation du mot de passe sont différents.';
                             } else
@@ -78,9 +78,9 @@ $confirmation = false;
                 ?>
             </div>
             <div class="message">
-                <?php if ($confirmation) : ?>
-                    Inscription réussie : vous pouvez vous connecter.
-                <?php endif; ?>
+                <?php
+                if (isset($_GET['message'])) echo $_GET['message'];
+                ?>
             </div>
         </div>
     </main>

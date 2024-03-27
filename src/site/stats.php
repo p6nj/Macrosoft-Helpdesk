@@ -44,7 +44,7 @@ try {
             }
             ?>
         </div>
-        <iframe src="http://192.168.1.168:3838/R/" frameborder="0"></iframe>
+        <iframe src="http://192.168.1.168:3838/R/" frameborder="0" style="height: 50vh;"></iframe>
 
     </main>
     <?php include_once('includes/footer.html'); ?>
