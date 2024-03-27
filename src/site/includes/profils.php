@@ -627,7 +627,8 @@ final class AdminWeb extends AccesseurLibellé
     public function ajoutTechnicien(string $id, string $mdp)
     {
         try {
-            $this->insert("into Utilisateur(login, mdp, role) values ('$id','$mdp','Technicien')");
+            $mdpencr = encrypt(file_get_contents("includes/key"), $mdp);
+            $this->insert("into Utilisateur(login, mdp, role) values ('$id','$mdpencr','Technicien')");
             (new Système())->créeTechnicien($id, $mdp);
         } catch (mysqli_sql_exception $e) {
             throw new RequêteIllégale($e->getCode() == 1062 ? "le technicien '$id' existe déjà" : "impossible de créer le technicien '$id'", 8, $e);
