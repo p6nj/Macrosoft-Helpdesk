@@ -318,10 +318,10 @@ Admettons que l'utilisateur "MDufaud" est déjà présent sur la base de donnée
 
 | Référence du test appliqué | Responsable             | Date de l'application du test | Résultat du test | Occurrences des résultats |
 | -------------------------- | ----------------------- | ----------------------------- | ---------------- | ------------------------- |
-| inscription                | Lucas DA SILVA FERREIRA | à completer                   | NON FAIT         | PASSED                    |
-| ajoutTicket                | Lucas DA SILVA FERREIRA | à completer                   | NON FAIT         | PASSED                    |
-| connecte                   | Lucas DA SILVA FERREIRA | à completer                   | NON FAIT         | PASSED                    |
-| assigneTicket              | Lucas DA SILVA FERREIRA | à completer                   | NON FAIT         | PASSED                    |
+| inscription                | Lucas DA SILVA FERREIRA | 25/03/2024                    |     FAIT         | PASSED                    |
+| ajoutTicket                | Lucas DA SILVA FERREIRA | 25/03/2024                    |     FAIT         | PASSED                    |
+| connecte                   | Lucas DA SILVA FERREIRA | 25/03/2024                    |     FAIT         | PASSED                    |
+| assigneTicket              | Lucas DA SILVA FERREIRA | 25/03/2024                    |     FAIT         | PASSED                    |
 
 ## **4. Conclusion**
 
